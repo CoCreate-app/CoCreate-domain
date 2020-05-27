@@ -1,2 +1,2 @@
-# CoCreate-Server
-CoCreate Server
+# CoCreateJS-Server
+CoCreateJS Server
