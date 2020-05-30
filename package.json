@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "PORT=3000 node app.js & PORT=3001 node app.js & PORT=3002 node app.js"
+    "start": "PORT=3000 node app.cluster.js",
+    "start-nodes": "PORT=3000 node app.js & PORT=3001 node app.js & PORT=3002 node app.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
