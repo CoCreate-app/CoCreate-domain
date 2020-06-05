@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <title>TEst socket</title>
+    <body>
+       <h1>See your console in browser</h1>
+    </body>
+</html>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+<script type="text/javascript" >
+    socket=io("/");
+    socket.emit("pingSocket",{'h':'test'});
+    
+    socket.on("pingSocketResponse",function(data){
+        console.log("From server ",data)
+    })
+</script>

@@ -15,13 +15,6 @@ socketController.socket(io);
 
 global.appRoot = path.resolve(__dirname);
 
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-app.use('/', require('./src/routes/index'));
-app.use('/users', require('./src/routes/users'));
-app.use('/api', require('./src/routes/api'));
-app.use('/stripe', require('./src/routes/stripe'));
-
 server.listen(port, () => {
   console.log('server is running on port', server.address().port);
 });

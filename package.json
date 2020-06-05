@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "PORT=3000 node app.cluster.js",
+    "start-cluster": "PORT=3000 node app.cluster.js",
+    "start": "PORT=8080 node app.js",
     "start-nodes": "PORT=3000 node app.js & PORT=3001 node app.js & PORT=3002 node app.js"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "cookie-parser": "~1.4.3",
     "express": "^4.17.1",
     "mongodb": "^3.2.3",
