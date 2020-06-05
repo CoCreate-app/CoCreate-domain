@@ -30,7 +30,11 @@ let user_conecteds = {};
 function init() {
   io.on('connection', (socket) => {
     
-    
+        socket.on('pingSocket',function(data){
+        console.log('response from pingSocket ',data)
+        socket.emit('pingSocketResponse',{'kery':'from server'});
+    })//end
+
 
   })
 }
