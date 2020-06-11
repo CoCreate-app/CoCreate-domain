@@ -13,15 +13,16 @@ module.exports.socket = function(_io) {
     var mongo_uri = config.db_url;
     io = _io;
     
-    MongoClient
+    /*MongoClient
       .connect(mongo_uri, { useNewUrlParser: true, poolSize: 10 })
       .then(client => {
           console.log('connected');
         db = client.db('mydb');
-        
+        */
         init();
-      })
+      /*})
       .catch(error => console.error(error));
+      */
 }
 
 
@@ -29,7 +30,12 @@ let user_conecteds = {};
 
 function init() {
   io.on('connection', (socket) => {
-    
+        console.log("Conecto al server")
+        try {
+          require('./controllers/sockets/Cocreate-reseller')({'io':io,'socket':socket})
+        } catch (err) {
+          console.error('Error import Cocreate-socket-modules')
+        }
         socket.on('pingSocket',function(data){
         console.log('response from pingSocket ',data)
         socket.emit('pingSocketResponse',{'kery':'from server'});
