@@ -99,7 +99,7 @@ CocreateAPiSocket.prototype.socket = (data,that)=>{
  * @param parentInfo : parent selector of input
  */
 CocreateAPiSocket.prototype.objToAtt = function(object, attributeName, addInfo = "", parentInfo = "") {
-    let inputs = document.querySelectorAll(`${parentInfo} input[data-${attributeName}]${addInfo}, ${parentInfo} input[name]${addInfo}, ${parentInfo} textarea[data-${attributeName}]${addInfo}, ${parentInfo} textarea[name]${addInfo}`);
+    let inputs = document.querySelectorAll(`${parentInfo} [data-${attributeName}]${addInfo}, ${parentInfo} [name]${addInfo}`);
     for (let input of inputs) {
         let key;
         key = input.dataset[attributeName];
@@ -108,7 +108,9 @@ CocreateAPiSocket.prototype.objToAtt = function(object, attributeName, addInfo =
         if (type == "button" || type == "submit" || type == "reset") continue;
         if (type == "radio" && key in object) input.checked = object[key] == input.getAttribute("value") ? true : false;
         else if (type == "checkbox" && key in object) input.checked = (object[key] == input.getAttribute("value")) || (Array.isArray(object[key]) && object[key].includes(input.getAttribute("value"))) ? true : false; // checked value = on
-        else if (key in object) input.value = object[key];
+        else if (key in object)
+            if (input.tagName == "input" || input.tagName == "textarea")input.value = object[key];
+            else input.innerHTML = object[key];
     }
 }
 

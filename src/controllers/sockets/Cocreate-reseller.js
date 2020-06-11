@@ -11,42 +11,42 @@ module.exports=function(options) {
     let socket = options.socket;
     
     /*Socket to management Request from ours APi to WildDuck*/
-    socket.on('dns', function(data) {
-        let data_original = data;
-        let type = data['type'];
-        //delete data['type'];
-        let url = '';
-        let method = '';
-        let send_response ='dns';
-        type = type.substr(0,type.indexOf( (type.indexOf('Delete') !=-1 ) ? 'RecordDeleteBtn' : 'RecordBtn')).toLowerCase();
-        //delete first point to class
-        type = type.substr(1);
-        console.log("DATA ORIGIN ",data)
-        /*DNS in Reseller */
-        switch (type) {
-          case 'txt':
-          case 'mx':
-          case 'cname':
-          case 'ipv4':
-          case 'ipv6':
-          case 'svr':
-          case 'ns':
-                  resellerclub
-                      	.dnsRecord({ opt : type,  options : data , extra_options: { url_api: url_reseller } })
-                      	.then(result => {
-                      	    result["type"] = type;
-                        		console.log("resulto bien la peticion ",result)
-                        		utils.send_response(socket,result,send_response)
-                      	})
-                      	.catch(err => {
-                      	    let result = {'type':type,'error':err};
-                      	    console.log("Error ",type)
-                        	utils.send_response(socket,result,send_response)
-                      	})
-              break;
-          };
-          console.log("Final Rquest");
-    });// socket.on('dns',
+    // socket.on('dns', function(data) {
+    //     let data_original = data;
+    //     let type = data['type'];
+    //     //delete data['type'];
+    //     let url = '';
+    //     let method = '';
+    //     let send_response ='dns';
+    //     type = type.substr(0,type.indexOf( (type.indexOf('Delete') !=-1 ) ? 'RecordDeleteBtn' : 'RecordBtn')).toLowerCase();
+    //     //delete first point to class
+    //     type = type.substr(1);
+    //     console.log("DATA ORIGIN ",data)
+    //     /*DNS in Reseller */
+    //     switch (type) {
+    //       case 'txt':
+    //       case 'mx':
+    //       case 'cname':
+    //       case 'ipv4':
+    //       case 'ipv6':
+    //       case 'svr':
+    //       case 'ns':
+    //               resellerclub
+    //                   	.dnsRecord({ opt : type,  options : data , extra_options: { url_api: url_reseller } })
+    //                   	.then(result => {
+    //                   	    result["type"] = type;
+    //                     		console.log("resulto bien la peticion ",result)
+    //                     		utils.send_response(socket,result,send_response)
+    //                   	})
+    //                   	.catch(err => {
+    //                   	    let result = {'type':type,'error':err};
+    //                   	    console.log("Error ",type)
+    //                     	utils.send_response(socket,result,send_response)
+    //                   	})
+    //           break;
+    //       };
+    //       console.log("Final Rquest");
+    // });// socket.on('dns',
     
     // socket.on('domain_customer', function(data) {
     //     // let data_original = data;
