@@ -32,35 +32,33 @@ var CocreateDomainAPi = function() {
             switch(type){
                 case 'searchdomain':
                     if(typeof(data["result"]) != 'undefined'){
-                        CocreateResult.drawTemplate(type,data["response"]);
+                        this.drawTemplate(type,data["result"]);
                     }
-                break;
-                case "customer":
-                    let customer_id = (data["result"]) ? data["response"] : '';
-                    document.querySelector('input[name="id_customer"]').value = customer_id
                 break;
             }
         }
     }//end  setResult
     
-    CocreateResult.customFillElementTemplate = function(type,template,element,row,attr,value){
-        switch(type){
+    this.customFillElementTemplate = function(type,template,element,row,attr) {
+            switch(type){
                 case 'searchdomain':
                     switch (attr) {
                         case 'price':
-                            element.innerHTML = (value==null) ?  '0$' : value+' $'
+                            element.innerHTML = (row[attr]==null) ?  '0$' : row[attr]+' $'
                         break;
                         case 'status':
                             element.style.color='white';
-                            let status = value.toLowerCase();
-                            element.style.backgroundColor = (status!='available') ? 'red' : 'green';
-                            element.innerHTML = (status!='available') ?  'Unavailable' : value
+                            let status = row[attr].toLowerCase();
+                            if(status!='available')
+                                element.style.backgroundColor='red';
+                            else
+                                element.style.backgroundColor='green';
+                            element.innerHTML = (status!='available') ?  'Unavailable' : row[attr]
                         break;
                     }
                 break;
             }
     }
-    
     /*
     Using this function we can do it validations, return False
     */

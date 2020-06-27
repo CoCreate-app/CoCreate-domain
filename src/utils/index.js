@@ -33,7 +33,7 @@ module.exports.req=(url,method,params,socket,send_response,data_original)=>{
         
     }).catch(function (error) {
         console.log("Error",error.data)
-        send_response(socket,{result :  false,errors : error.data,'data_request':data_original},send_response);
+        send_response(socket,{result :  false,response : error.data,'data_request':data_original},send_response);
     });
 }
 

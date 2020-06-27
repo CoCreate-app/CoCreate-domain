@@ -23,7 +23,44 @@ CocreateAPiSocket.prototype.init = function (){
     })
 }
 
+
+CocreateAPiSocket.prototype.findInJsonDeep = function(json,path) {
+        try {
+            let subpath = path.split('.');
+            let find = subpath.shift();
+            if (subpath.length > 0){
+                return this.findInJsonDeep(json[find],subpath.join('.'))
+            }
+            return json[find];
+        }catch(error){
+            return '-';
+        }
+}
+
+CocreateAPiSocket.prototype.customFillElementTemplate = function(type,template,element,row,attr) {
+    
+}
+
+CocreateAPiSocket.prototype.drawTemplate = function(type,dataResult) {
+    let template_div = document.querySelector('.template[data-results="'+type+'"]')
+    if (!template_div) return;
+    document.querySelectorAll('.clone_'+type).forEach(e => e.parentNode.removeChild(e));
+    let template = template_div.cloneNode(true);
+    template.classList.remove('template');
+    template.classList.add('clone_'+type);
+    dataResult.forEach(row=>{
+        template.querySelectorAll('[data-result]').forEach(e=>{
+            let attr = e.getAttribute('data-result');
+            let value = this.findInJsonDeep(row,attr);
+            e.innerHTML = (typeof value == 'undefined') ? '' : value;
+            this.customFillElementTemplate(type,template,e,row,attr);
+        });
+        template_div.insertAdjacentHTML('beforebegin', template.outerHTML);
+    })
+}
+
 CocreateAPiSocket.prototype.setResult = function(data) {
+    return true;
 }
 
 CocreateAPiSocket.prototype.actionsBtn = function(){

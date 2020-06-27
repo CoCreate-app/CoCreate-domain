@@ -32,7 +32,7 @@ function init() {
   io.on('connection', (socket) => {
         console.log("Conecto al server")
         try {
-          require('./controllers/sockets/Cocreate-reseller')({'io':io,'socket':socket})
+          require('./controllers/sockets/Cocreate-domain')({'io':io,'socket':socket})
         } catch (err) {
           console.error('Error import Cocreate-socket-modules')
         }

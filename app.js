@@ -9,6 +9,7 @@ const server = require('http').createServer(app);
 
 var io = require('socket.io')(server);
 
+
 io.adapter(redis(config.redis));
 
 socketController.socket(io);

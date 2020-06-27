@@ -9,6 +9,7 @@ var utils= require('../../utils/index');
 module.exports=function(options) {
     let io = options.io;
     let socket = options.socket;
+    console.log("Init Socket")
     
     /*Socket to management Request from ours APi to WildDuck*/
     // socket.on('dns', function(data) {
@@ -191,9 +192,11 @@ module.exports=function(options) {
     //       console.log("Final Request");
     // });
     
-    socket.on('domain', function(data) {
-        let data_original = data;
+    socket.on('domain', async function(data) {
+        console.log("REqust in Domain")
+        let data_original = {...data};
         let type = data['type'];
+        let domainName = '';
         //delete data['type'];
         let url = '';
         let method = '';
@@ -206,6 +209,7 @@ module.exports=function(options) {
 
         //delete first point to class
         type = type.substr(1);
+        console.log("Type ",type)
         console.log("DATA ORIGIN ",data)
 
         switch (type) {
@@ -237,24 +241,24 @@ module.exports=function(options) {
                     if (customer_id != "") {
                         resellerclub.editCustomer({customerId:customer_id, customerDetails:data, extra_options : { url_api: url_reseller }})
                             .then(result => {
-                          	    let res = {'type':type,'result':result};
+                          	    let res = {'type':type , result :  true,response : result,'data_request':data_original};
                             		console.log("edit_customer ok")
                             		utils.send_response(socket,res,send_response)
                           	})
                             .catch(err => {
-                          	    let result = {'type':type,'error':err};
+                          	    let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
                           	    console.log("Error1 ")
                               	utils.send_error(socket,result,send_response)
                           	});
                     } else {
                         resellerclub.createCustomer({ customerDetails : data, extra_options : { url_api: url_reseller } })
                             .then(result => {
-                                let res = {'type':type,'result':result};
+                                let res = {'type':type , result :  true,response : result,'data_request':data_original};
                             		console.log("create_customer ok")
                             		utils.send_response(socket,res,send_response)
                           	})
                     	      .catch(err => {
-                          	    let result = {'type':type,'error':err};
+                          	    let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
                           	    console.log("create_customer error ")
                               	utils.send_error(socket,result,send_response)
                           	})
@@ -262,12 +266,12 @@ module.exports=function(options) {
                 } else {
                     resellerclub.deleteCustomer({customerId:customer_id, extra_options : { url_api: url_reseller } })
                         .then(result => {
-                    	    let res = {'type':type,'result':result};
+                    	    let res = {'type':type , result :  true,response : result,'data_request':data_original};
                         		console.log("delete_customer ok")
                         		utils.send_response(socket,res,send_response)
                     	})
                         .catch(err => {
-                    	    let result = {'type':type,'error':err};
+                    	    let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
                     	    console.log("Error4 ")
                         	utils.send_error(socket,result,send_response)
                     	});
@@ -284,12 +288,12 @@ module.exports=function(options) {
                   if (contact_id != "") {
                     resellerclub.editContact({contactId:contact_id, contactDetails:data, extra_options : { url_api: url_reseller }})
                         .then(result => {
-                      	    let res = {'type':type,'result':result};
+                      	    let res = {'type':type , result :  true,response : result,'data_request':data_original};
                         		console.log("edit_contact ok")
                         		utils.send_response(socket,res,send_response)
                       	})
                         .catch(err => {
-                      	    let result = {'type':type,'error':err};
+                      	    let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
                       	    console.log("Error1 ")
                           	utils.send_error(socket,result,send_response)
                       	});
@@ -297,12 +301,12 @@ module.exports=function(options) {
                   } else {
                       resellerclub.createContact({ contactDetails : data, extra_options : { url_api: url_reseller } })
                         .then(result => {
-                            let res = {'type':type,'result':result};
+                            let res = {'type':type , result :  true,response : result,'data_request':data_original};
                         		console.log("create_contact ok")
                         		utils.send_response(socket,res,send_response)
                       	})
                 	      .catch(err => {
-                      	    let result = {'type':type,'error':err};
+                      	    let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
                       	    console.log("create_contact error ")
                           	utils.send_error(socket,result,send_response)
                       	})
@@ -310,12 +314,12 @@ module.exports=function(options) {
                 } else {
                   resellerclub.deleteContact({contactId:contact_id, extra_options : { url_api: url_reseller } })
                       .then(result => {
-                    	    let res = {'type':type,'result':result};
+                    	    let res = {'type':type , result :  true,response : result,'data_request':data_original};
                         		console.log("delete_contact ok")
                         		utils.send_response(socket,res,send_response)
                     	})
                       .catch(err => {
-                    	    let result = {'type':type,'error':err};
+                    	    let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
                     	    console.log("Error4 ")
                         	utils.send_error(socket,result,send_response)
                     	});
@@ -323,15 +327,15 @@ module.exports=function(options) {
                     
                 break;
             case "register":
-                let domainName = data['domain-name'];
+                domainName = data['domain-name'];
                 resellerclub.register({ domainName, options:data, extra_options : { url_api: url_reseller } })
                     .then(result => {
-                        let res = {'type':type,'result':result};
+                        let res = {'type':type , result :  true,response : result,'data_request':data_original};
                         console.log("register_domain ok")
                         utils.send_response(socket,res,send_response)
                     })
                     .catch(err => {
-                        let result = {'type':type,'error':err};
+                        let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
                         utils.send_error(socket,result,send_response)
                     });
                 console.log("Final Request");
@@ -339,12 +343,12 @@ module.exports=function(options) {
             case "search":
                 resellerclub.searchDomain({options : data, count: data['no-of-records'], page: data['page-no'], extra_options : { url_api: url_reseller } })
                     .then(result => {
-                        let res = {'type':type,'result':result};
+                        let res = {'type':type , result :  true,response : result,'data_request':data_original};
                       	console.log("search_domain ok")
                       	utils.send_response(socket,res,send_response)
                     })
                     .catch(err => {
-                        let result = {'type':type,'error':err};
+                        let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
                         console.log("search_domain error")
                     	utils.send_error(socket,result,send_response)
                     });
@@ -354,17 +358,128 @@ module.exports=function(options) {
                 let domain = data['domain-name'];
                 resellerclub.transfer({ domain:domain, options:data, extra_options : { url_api: url_reseller }  })
                     .then(result => {
-                        let res = {'type':type,'result':result};
+                        let res = {'type':type , result :  true,response : result,'data_request':data_original};
                       	console.log("transfer_domain ok")
                       	utils.send_response(socket,res,send_response)
                     })
                     .catch(err => {
-                        let result = {'type':type,'error':err};
+                        let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
                         console.log("transfer_domain error")
                     	utils.send_error(socket,result,send_response)
                     });
                 console.log("Final Request");
                 break;
+            case 'searchdomain':
+                let tlds_list = ["company","business","com", "net", "biz", "tk","org","club","site","info","online","xyz"];
+                domainName = data['domain-name']
+            	let tlds = data['tlds[]']
+            	tlds_list = validationForm( (typeof tlds != 'undefined' && tlds.length > 0) ? tlds : tlds_list,domainName);
+            	console.log("tlds ",tlds_list)
+                var allPricing = await resellerclub.getResellerCostPricing({extra_options: { url_api: url_reseller }});
+            	resellerclub
+            	.checkAvailability({ domainName: domainName, tlds: tlds_list , suggestAlternatives: true})
+            	.then(res_reseller => {
+            		let $data = getDomainsPrice(allPricing,res_reseller)
+            		let $domainUnAvaibles = []
+            		let $domainAvaibles = []
+            		for(var tld in tlds_list){
+            	    	let $domain={};
+            	        let $fulldomainname = domainName + "." + tlds_list[tld];
+            	        let row = getElementFromArray($data, $fulldomainname);
+            	        $domain['name'] = $fulldomainname;
+            	        $domain['status'] = row[$fulldomainname]['status'];
+            	        $domain['price'] = typeof row[$fulldomainname]['price'] != 'undefined' ? row[$fulldomainname]['price'] : null;
+            	        $domain['test'] = {'hey': {'name': 'test with frankie pagan'}}
+            	        if($domain['status'] == 'available')
+            	        	$domainAvaibles.push($domain);
+            	        else
+            	        	$domainUnAvaibles.push($domain);
+            	    }
+        	  	    let res = {'type':type , result :  true,response : $domainUnAvaibles.concat($domainAvaibles),'data_request':data_original};
+                    console.log("search_domain ok")
+                    utils.send_response(socket,res,send_response)
+            	})
+            	.catch(err => {
+            		console.log(err)
+            		let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
+                    console.log("transfer_domain error")
+                	utils.send_error(socket,result,send_response);
+            		});
+                break;
         }
     })
 }
+
+
+//*Domain search*/
+function getElementFromArray($array, keyFind){
+	for(var key in $array){
+		for(var j in $array[key]){
+			if(keyFind == j)
+				return $array[key];
+		}
+	}
+	return [];
+}
+
+function getDomainsPrice($allPricing, $domains){
+	let $domainsWithPrice = [];
+	let $classKey = '';
+	let num_domains = Object.keys($domains).length;
+	if(num_domains  > 0) {
+		for(var key in $domains){
+			let domain = key;
+			var row = {};
+			row[domain] = {};
+			row[domain]['status'] = ( $domains[domain].hasOwnProperty('status') && typeof $domains[domain]['status'] != 'undefined' ) ? $domains[domain]['status'] : '';
+			if(row[domain]['status'] == 'available' ) {
+				$classKey = $domains[domain]['classkey'];
+				row[domain]['classKey'] = $classKey;
+				let $prices = $allPricing[$classKey]['addnewdomain'];
+				let $price = 0;
+				for(var key_p in $prices){
+					$price = $prices[key_p];
+				}
+				row[domain]['price'] = $price;
+			}
+
+			$domainsWithPrice.push(row);
+		}
+	}
+	return $domainsWithPrice;
+}
+
+function validationForm(tlds,domainName){
+    let tlds_list = [];
+	if(typeof tlds != 'undefined' && tlds.length > 0)
+		tlds_list = tlds
+
+	if (domainName != ""){
+		let $arr = domainName.split('.');
+		let $checkStr = $arr[0];
+		let $extension = 0;
+		let $pos = 0;
+		if ($checkStr == "www")
+			domainName = $arr[1];
+		if ($arr[0] != "www" && $arr.hasOwnProperty(1)){
+			domainName = $arr[0];
+			$extension = $arr[1];
+			$pos = tlds_list.indexOf($extension);
+			if ($pos !== -1){
+				tlds_list.splice($pos,1);
+			}
+			tlds_list.unshift($extension);
+		}
+		if ($arr[0] == "www" && $arr.hasOwnProperty(2)){
+			domainName = $arr[1];
+			$extension = $arr[2];
+			$pos = tlds_list.indexOf($extension);
+			if ($pos !== -1){
+				tlds_list.splice($pos,1);
+			}
+			tlds_list.unshift($extension);
+		}
+	}
+	return tlds_list;
+}//end validationForm
+//*Domain search*/
