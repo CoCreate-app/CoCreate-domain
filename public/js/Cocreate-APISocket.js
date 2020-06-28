@@ -17,9 +17,13 @@ CocreateAPiSocket.prototype.init = function (){
     this.actionsBtn();
     /*TEMP only to see result */
     console.log("SocketOn Client -> ",this.req_socket)
-    socket.on(this.req_socket,function(data){
+    /*socket.on(this.req_socket,function(data){
             console.log("REsponseSocket",data);
             _this.setResult(data);
+    })*/
+    CoCreateSocket.listen(this.req_socket,data=>{
+        console.log("REsponseSocket",data);
+        _this.setResult(data);
     })
 }
 
@@ -108,7 +112,8 @@ CocreateAPiSocket.prototype.getDataJSON = function(btn,that){
 
 CocreateAPiSocket.prototype.socket = (data,that)=>{ 
     console.log(".... Sending Request Socket to endPint ["+that.req_socket+"].....");
-    socket.emit(that.req_socket,data);
+    //socket.emit(that.req_socket,data);
+    CoCreateSocket.send(that.req_socket,data);
     console.log(".... Send to socket ..... to -> "+that.req_socket,' data = ',data);
 }
 
