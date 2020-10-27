@@ -27,10 +27,12 @@ var CocreateDomainAPi = function() {
     CocreateAPiSocket.call(this);
     
     this.setResult = function(data) {
+        console.log("SET RESULT")
         if(typeof(data["type"]) != 'undefined'){
             let type = data["type"];
             switch(type){
                 case 'searchdomain':
+                    console.log("Search Domain")
                     if(typeof(data["result"]) != 'undefined'){
                         this.drawTemplate(type,data["result"]);
                     }
@@ -42,6 +44,7 @@ var CocreateDomainAPi = function() {
     this.customFillElementTemplate = function(type,template,element,row,attr) {
             switch(type){
                 case 'searchdomain':
+                    console.log("Search Domain -> customFillElementTemplate")
                     switch (attr) {
                         case 'price':
                             element.innerHTML = (row[attr]==null) ?  '0$' : row[attr]+' $'

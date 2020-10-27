@@ -17,17 +17,51 @@ CocreateAPiSocket.prototype.init = function (){
     this.actionsBtn();
     /*TEMP only to see result */
     console.log("SocketOn Client -> ",this.req_socket)
-    /*socket.on(this.req_socket,function(data){
+    socket.on(this.req_socket,function(data){
             console.log("REsponseSocket",data);
             _this.setResult(data);
-    })*/
-    CoCreateSocket.listen(this.req_socket,data=>{
-        console.log("REsponseSocket",data);
-        _this.setResult(data);
+    })
+}
+
+
+CocreateAPiSocket.prototype.findInJsonDeep = function(json,path) {
+        try {
+            let subpath = path.split('.');
+            let find = subpath.shift();
+            if (subpath.length > 0){
+                return this.findInJsonDeep(json[find],subpath.join('.'))
+            }
+            return json[find];
+        }catch(error){
+            return '-';
+        }
+}
+
+CocreateAPiSocket.prototype.customFillElementTemplate = function(type,template,element,row,attr) {
+    
+}
+
+CocreateAPiSocket.prototype.drawTemplate = function(type,dataResult) {
+    console.log("REsult")
+    let template_div = document.querySelector('.template[data-results="'+type+'"]')
+    if (!template_div) return;
+    document.querySelectorAll('.clone_'+type).forEach(e => e.parentNode.removeChild(e));
+    let template = template_div.cloneNode(true);
+    template.classList.remove('template');
+    template.classList.add('clone_'+type);
+    dataResult.forEach(row=>{
+        template.querySelectorAll('[data-result]').forEach(e=>{
+            let attr = e.getAttribute('data-result');
+            let value = this.findInJsonDeep(row,attr);
+            e.innerHTML = (typeof value == 'undefined') ? '' : value;
+            this.customFillElementTemplate(type,template,e,row,attr);
+        });
+        template_div.insertAdjacentHTML('beforebegin', template.outerHTML);
     })
 }
 
 CocreateAPiSocket.prototype.setResult = function(data) {
+    return true;
 }
 
 CocreateAPiSocket.prototype.actionsBtn = function(){
@@ -112,8 +146,7 @@ CocreateAPiSocket.prototype.getDataJSON = function(btn,that){
 
 CocreateAPiSocket.prototype.socket = (data,that)=>{ 
     console.log(".... Sending Request Socket to endPint ["+that.req_socket+"].....");
-    //socket.emit(that.req_socket,data);
-    CoCreateSocket.send(that.req_socket,data);
+    socket.emit(that.req_socket,data);
     console.log(".... Send to socket ..... to -> "+that.req_socket,' data = ',data);
 }
 

@@ -17,61 +17,50 @@ CocreateAPiSocket.prototype.init = function (){
     this.actionsBtn();
     /*TEMP only to see result */
     console.log("SocketOn Client -> ",this.req_socket)
-    socket.on(this.req_socket,function(data){
+    /*socket.on(this.req_socket,function(data){
             console.log("REsponseSocket",data);
             _this.setResult(data);
-    })
-}
-
-
-CocreateAPiSocket.prototype.findInJsonDeep = function(json,path) {
-        try {
-            let subpath = path.split('.');
-            let find = subpath.shift();
-            if (subpath.length > 0){
-                return this.findInJsonDeep(json[find],subpath.join('.'))
-            }
-            return json[find];
-        }catch(error){
-            return '-';
-        }
-}
-
-CocreateAPiSocket.prototype.customFillElementTemplate = function(type,template,element,row,attr) {
-    
-}
-
-CocreateAPiSocket.prototype.drawTemplate = function(type,dataResult) {
-    let template_div = document.querySelector('.template[data-results="'+type+'"]')
-    if (!template_div) return;
-    document.querySelectorAll('.clone_'+type).forEach(e => e.parentNode.removeChild(e));
-    let template = template_div.cloneNode(true);
-    template.classList.remove('template');
-    template.classList.add('clone_'+type);
-    dataResult.forEach(row=>{
-        template.querySelectorAll('[data-result]').forEach(e=>{
-            let attr = e.getAttribute('data-result');
-            let value = this.findInJsonDeep(row,attr);
-            e.innerHTML = (typeof value == 'undefined') ? '' : value;
-            this.customFillElementTemplate(type,template,e,row,attr);
-        });
-        template_div.insertAdjacentHTML('beforebegin', template.outerHTML);
+    })*/
+    CoCreateSocket.listen(this.req_socket,data=>{
+        console.log("REsponseSocket",data);
+        _this.setResult(data);
     })
 }
 
 CocreateAPiSocket.prototype.setResult = function(data) {
-    return true;
 }
 
 CocreateAPiSocket.prototype.actionsBtn = function(){
         let that = this;
-        this.classBtns.forEach(selectorBtn => {
+       /* this.classBtns.forEach(selectorBtn => {
             let list_btns_actions = document.querySelectorAll(selectorBtn);
             list_btns_actions.forEach(btn => {
                 btn.addEventListener("click", that.click_btn,false);
                 btn.refClass = that;
                 btn.selector = selectorBtn;
             });
+        });
+        */
+        document.addEventListener("click",function(e){
+            let btn = e.target;
+            let classList = btn.classList;
+            classList = [...classList]
+            //console.log(classList,classList.length)
+            if(classList.length){
+                
+                let classBtns = that.classBtns;
+              //  console.log(classBtns)
+                let intercept = classBtns.filter(x => classList.includes(x.substr(1)));
+                //console.log("verify ",intercept)
+                if(!intercept.length)
+                 return;
+              //   console.log("Click listener ",intercept)
+                //btn.addEventListener("click", that.click_btn,false);
+                btn.refClass = that;
+                btn.selector = intercept[0];
+                e.preventDefault();
+                that.click_btn_fn(btn);
+            }
         });
     }
     
@@ -117,6 +106,19 @@ CocreateAPiSocket.prototype.click_btn = function(event){
         //that.socket(selector,dataToSend)
         that.socket(dataToSend,that)
     }
+    
+CocreateAPiSocket.prototype.click_btn_fn = function(btn){
+        let that = btn.refClass;
+        let selector = btn.selector
+        if(!that.preview_validate_btn(btn,event))
+            return false;
+        let dataToSend = that.getDataJSON(btn,that);
+        console.log('dataToSend',dataToSend)
+        dataToSend['type'] = selector;
+        dataToSend = that.manipulateDataToSend(btn,dataToSend);
+        //that.socket(selector,dataToSend)
+        that.socket(dataToSend,that)
+    }    
 
 CocreateAPiSocket.prototype.getDataJSON = function(btn,that){
     let form = btn.closest("form");
@@ -145,7 +147,8 @@ CocreateAPiSocket.prototype.getDataJSON = function(btn,that){
 
 CocreateAPiSocket.prototype.socket = (data,that)=>{ 
     console.log(".... Sending Request Socket to endPint ["+that.req_socket+"].....");
-    socket.emit(that.req_socket,data);
+    //socket.emit(that.req_socket,data);
+    CoCreateSocket.send(that.req_socket,data);
     console.log(".... Send to socket ..... to -> "+that.req_socket,' data = ',data);
 }
 
