@@ -4,8 +4,23 @@
  <title>Domain Customer | Canme record</title>
 
  <head>     
-      <h1>Add RECORD to Domain</h1>
-      
+    <h1>DKIM1</h1>
+    <form style="margin: 1em 0em;">
+        
+        <input data-domain="executeAction.id" value="id-two">
+
+        <button 
+        		data-actions='executeAction'>Excuete1</button>
+    </form>
+    <h1>DKIM2</h1>
+    <form style="margin: 1em 0em;">
+        
+        <input data-domain="executeAction.id" value="id-three">
+
+        <button id="id-two"
+        		data-actions='executeAction'>exce2</button>
+    </form>
+    <h1>Cname</h1>
     <form style="margin: 1em 0em;">
         <input 
                 type="text" 
@@ -13,15 +28,10 @@
                 value="cocreatejs.com" 
                 placeholder="Domain Id" 
                 class="floating-label_field">
-        <input 
-                type="text" 
-                data-domain="cnameRecord.value" 
-                placeholder="Value" 
-                class="floating-label_field">
         
-        <button 
-        		data-actions='cnameRecord'>SendData Cname</button>
-		    
+        <button id="id-three"
+        		data-actions='cnameRecord'>Exce3</button>
+	
 	</form>
 
 <script type="text/javascript" >
@@ -39,9 +49,8 @@
   <script src="https://server.cocreate.app/js/CoCreate.min.js"></script>
 
   <!--CoCreate Plugins-->
-  <script src="https://server.cocreate.app/CoCreate-components/CoCreate-api/dist/CoCreate-api.js"></script>
-  <!--<script src="https://server.cocreate.app/js/CoCreate-api.js"></script>-->
-  <script src="../../src/CoCreate-domain.js"></script>
+  <script src="https://server.cocreate.app/js/CoCreate-api.js"></script>
+  <script src="https://server.cocreate.app/CoCreate-plugins/CoCreate-domain/src/CoCreate-domain.js"></script>
 
 
 

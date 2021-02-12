@@ -18,9 +18,11 @@
                 placeholder="Value" 
                 class="floating-label_field">
         
-        <button 
-        		data-actions='cnameRecord'>Save Dkim1</button>
+        <input data-domain="executeAction.id" value="id-two">
 
+        <button 
+        		data-actions='cnameRecord, executeAction'>Save Dkim1</button>
+    </form>
     <h1>DKIM2</h1>
     <form style="margin: 1em 0em;">
         <input 
@@ -35,9 +37,11 @@
                 placeholder="Value" 
                 class="floating-label_field">
         
-        <button 
-        		data-actions='cnameRecord'>Save Dkim2</button>
+        <input data-domain="executeAction.id" value="id-three">
 
+        <button id="id-two"
+        		data-actions='cnameRecord, executeAction'>Save Dkim2</button>
+    </form>
     <h1>Cname</h1>
     <form style="margin: 1em 0em;">
         <input 
@@ -52,7 +56,7 @@
                 placeholder="Value" 
                 class="floating-label_field">
         
-        <button 
+        <button id="id-three"
         		data-actions='cnameRecord'>Save cname</button>
 	
 	</form>
@@ -73,7 +77,7 @@
 
   <!--CoCreate Plugins-->
   <script src="https://server.cocreate.app/js/CoCreate-api.js"></script>
-  <script src="../../src/CoCreate-domain.js"></script>
+  <script src="https://server.cocreate.app/CoCreate-plugins/CoCreate-domain/src/CoCreate-domain.js"></script>
 
 
 

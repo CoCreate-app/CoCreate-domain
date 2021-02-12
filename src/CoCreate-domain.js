@@ -16,6 +16,7 @@ const CoCreateDomain = {
 		'registerRecord',
 		'txtRecord',
 		'txtRecordDelete',
+		'executeAction'
 	],
 
 	render_cnameRecord: function (data) {
@@ -64,9 +65,19 @@ const CoCreateDomain = {
 	render_txtRecordDelete: function (data) {
 		console.log(data);
 	},
+	render_executeAction: function (data) {
+		console.log(data)
+		alert(data["id"])
+		var btn = document.getElementById(data["id"]);
+		//btn.dispatchEvent(new Event('click'));
+		btn.click();
+	},
 
 
 
 }
 
-CoCreateApi.register(CoCreateDomain.id, CoCreateDomain);
+CoCreate.api.init({
+	name: 'CoCreateDomain', 
+	module:	'CoCreateDomain.id'
+});
