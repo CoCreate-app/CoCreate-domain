@@ -1,5 +1,2 @@
+# ignore
 node_modules
-npm-debug.log
-package-lock.json
-test/*.log
-reseller.js
