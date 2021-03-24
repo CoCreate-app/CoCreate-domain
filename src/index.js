@@ -1,3 +1,5 @@
+import api from '../../../CoCreate-components/CoCreate-api/src'
+import {socket, crud} from '../../../CoCreateJS/src';
 
 const CoCreateDomain = {
 	id: 'domain',
@@ -78,6 +80,8 @@ const CoCreateDomain = {
 }
 
 CoCreate.api.init({
-	name: 'CoCreateDomain', 
-	module:	'CoCreateDomain.id'
+	name: CoCreateDomain.id, 
+	module:	CoCreateDomain
 });
+
+export default CoCreateDomain;
