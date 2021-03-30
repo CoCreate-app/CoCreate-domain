@@ -1,5 +1,4 @@
 import api from '@cocreate/api/src'
-//import {socket, core, utlis} from '@cocreate/cocreatejs';
 
 const CoCreateDomain = {
 	id: 'domain',
