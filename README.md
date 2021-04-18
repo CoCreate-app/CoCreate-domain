@@ -9,7 +9,7 @@ A simple domain component in vanilla javascript. Easily configured using HTML5 d
 
 ![CoCreate-domain](https://cdn.cocreate.app/docs/CoCreate-domain.gif)
 
-## [Docs & Demo](https://cocreate.app/docs/clone)
+## [Docs & Demo](https://cocreate.app/docs/domain)
 
 For a complete guide and working demo refer to the [doumentation](https://cocreate.app/docs/domain)
 
