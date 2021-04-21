@@ -16,13 +16,6 @@ resellerclub.connect = ({ clientID, clientSecret }) => {
         if (!clientSecret) {
             reject("ClientSecret is mandatory");
         } else {
-          /**Producction
-           '732854'
-            '9jQBWrjYNhtIakQppbhkCkpExkvoiDkd'*/
-          /**Testing
-           clientID: 654546,
-            clientSecret: "4WmYPtBgJzfbpKlHCH1ADS8QaXcLo2CS"
-            */
             this.clientID = clientID;
             this.clientSecret = clientSecret;
             this.ENVIRONMENT = 'development';
@@ -41,20 +34,11 @@ this.request = ({ request, url, params, options }) => {
         } else if (!this.clientSecret) {
             reject("connection not establised");
         } else {
-            //console.log(this.urlAPI+'/api/'+url+'.json');
-            
             params_function = {
                                     "auth-userid": this.clientID,
                                     "api-key": this.clientSecret
                                 }
             Object.keys(params).forEach(key => params_function[key] = params[key]);
-            /*Object.keys(params).forEach(key => {
-              if(!Array.isArray(params[key]))
-               params_function[key] = params[key]
-            });*/
-
-            //console.log(params_function);
-
             options = typeof options !== 'undefined' ? options : false;
             ext = typeof options['ext'] !== 'undefined' ? options['ext'] : 'json';
             url_api = typeof options['url_api'] !== 'undefined' ? options['url_api'] : this.urlAPI;
@@ -63,11 +47,11 @@ this.request = ({ request, url, params, options }) => {
             console.log(url_completa)
             
 
-            console.log('1*****************');
+            console.log('1=>*****************');
             console.log(params_function);
             console.log(Qs.stringify(params_function, { arrayFormat: "repeat" }))
             console.log(url_completa);
-            console.log('1*****************');
+            console.log('1=>*****************');
 
 
             if(request=='get'){

@@ -1,19 +1,15 @@
 /* global Y */
 'use strict'
-const confReseller = require("./config/reseller");
-let resellerclub = confReseller.resellerclub;
-let url_reseller = confReseller.url_reseller;
-var utils= require('../utils');
+const resellerclub = require("./lib/resellerclub");
+const  api = require("@cocreate/api");
 
-
-
-const CoCreateBase = require("../../base");
-//const {ObjectID, Binary} = require("mongodb");
-
-class CoCreateDomain extends CoCreateBase {
-	constructor(wsManager, db) {
-		super(wsManager, db);
+class CoCreateDomain {
+	constructor(wsManager) {
+		this.module_id = 'domain';
+		this.enviroment = 'prod'; //'test'
+		this.wsManager = wsManager;
 		this.init();
+		
 	}
 	
 	init() {
@@ -24,25 +20,48 @@ class CoCreateDomain extends CoCreateBase {
 	async sendDomain(socket, data) {
 	    let that = this;
 	    console.log("REqust in Domain")
-        let data_original = {...data};
+        //let data_original = {...data};
+        let data_original = {...data["data"]}
+		const params = data['data'];
         let type = data['type'];
+        let type_origin = data['type'];
         let domainName = '';
+
+    	 // connect domain reseller api
+    	 try{
+    	    let enviroment = typeof params['enviroment'] != 'undefined' ? params['enviroment'] : this.enviroment;
+            let org_row = await api.getOrg(params,this.module_id);
+            var url_reseller = org_row['apis.'+this.module_id+'.'+enviroment+'.url_reseller'];//'https://httpapi.com'
+            let apiKeys = {
+                               'clientID' :org_row['apis.'+this.module_id+'.'+enviroment+'.apikeys.clientID'],
+                               'clientSecret':org_row['apis.'+this.module_id+'.'+enviroment+'.apikeys.clientSecret']
+                            }
+            console.log(apiKeys)
+            resellerclub.connect(apiKeys)
+            					.then(res => console.log(res))
+            					.catch(err => console.log(err));
+            					
+    	 }catch(e){
+    	   	console.log(this.module_id+" : Error Connect to api Reseller",e)
+    	   	return false;
+    	 }
+	 
+        
         //delete data['type'];
         let url = '';
         let method = '';
         let send_response ='domain';
         let isDelete = (type.indexOf('Delete') != -1);
-        // type = type.substr(0,type.indexOf( (type.indexOf('Delete') !=-1 ) ? 'RecordDeleteBtn' : 'RecordBtn')).toLowerCase();
-        
-        // get type for transer, search, ...
+        if (type.indexOf('Record') !== -1)
         type = type.substr(0, type.indexOf('Record')).toLowerCase();
-
-        //delete first point to class
-        type = type.substr(1);
-        console.log("Type ",type)
-        console.log("DATA ORIGIN ",data)
-
+        data = {'type':data['type'] ,...data_original["data"]}
+        let data_response = {'type':type_origin ,'response':data_original["data"]}
+        
         switch (type) {
+            case 'executeAction':
+                console.log(" data_response ",data_response)
+                api.send_response(that.wsManager,socket,data_response,send_response)
+            break;
             case 'txt':
             case 'mx':
             case 'cname':
@@ -55,42 +74,46 @@ class CoCreateDomain extends CoCreateBase {
                   	.then(result => {
                   	    result["type"] = type;
                     		console.log("resulto bien la peticion ",result)
-                    		utils.send_response(that.wsManager,socket,result,send_response)
+                    		data_response['result'] = result
+                    		api.send_response(that.wsManager,socket,data_response,send_response)
                   	})
                   	.catch(err => {
                   	    let result = {'type':type,'error':err};
                   	    console.log("Error ",type)
-                    	utils.send_response(that.wsManager,socket,result,send_response)
+                  	    data_response['result'] = result
+                    	api.send_response(that.wsManager,socket,data_response,send_response)
                   	})
                 break;
             case "customer":
                 let customer_id = data['id_customer'];
                 delete data['type'];
                 delete data['id_customer'];
+                console.log("isDelete",isDelete,customer_id)
                 if (!isDelete) {
-                    if (customer_id != "") {
+                    if (customer_id != "" && typeof(customer_id) != 'undefined') {
                         resellerclub.editCustomer({customerId:customer_id, customerDetails:data, extra_options : { url_api: url_reseller }})
                             .then(result => {
                           	    let res = {'type':type , result :  true,response : result,'data_request':data_original};
                             		console.log("edit_customer ok")
-                            		utils.send_response(that.wsManager,socket,res,send_response)
+                            		api.send_response(that.wsManager,socket,res,send_response)
                           	})
                             .catch(err => {
-                          	    let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
+                          	    let result = {result :  false,response : err,'data_request':data_original,'type':type}
                           	    console.log("Error1 ")
-                              	utils.send_error(that.wsManager,socket,result,send_response)
+                              	api.send_error(that.wsManager,socket,result,send_response)
                           	});
                     } else {
                         resellerclub.createCustomer({ customerDetails : data, extra_options : { url_api: url_reseller } })
                             .then(result => {
-                                let res = {'type':type , result :  true,response : result,'data_request':data_original};
+                                let res = {'type':type ,'action':'add', result :  true,response : result,'data_request':data_original};
                             		console.log("create_customer ok")
-                            		utils.send_response(that.wsManager,socket,res,send_response)
+                            		api.send_response(that.wsManager,socket,res,send_response)
                           	})
                     	      .catch(err => {
-                          	    let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
+                    	          console.log(err)
+                          	    let result = {result :  false,response : err,'data_request':data_original,'type':type,'action':'add'}
                           	    console.log("create_customer error ")
-                              	utils.send_error(that.wsManager,socket,result,send_response)
+                              	api.send_error(that.wsManager,socket,result,send_response)
                           	})
                     }
                 } else {
@@ -98,16 +121,17 @@ class CoCreateDomain extends CoCreateBase {
                         .then(result => {
                     	    let res = {'type':type , result :  true,response : result,'data_request':data_original};
                         		console.log("delete_customer ok")
-                        		utils.send_response(that.wsManager,socket,res,send_response)
+                        		api.send_response(that.wsManager,socket,res,send_response)
                     	})
                         .catch(err => {
-                    	    let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
+                    	    let result = {result :  false,response : err,'data_request':data_original,'type':type}
                     	    console.log("Error4 ")
-                        	utils.send_error(that.wsManager,socket,result,send_response)
+                        	api.send_error(that.wsManager,socket,result,send_response)
                     	});
                 }
                 break;
             case "contact":
+                console.log("!Create Contact Switch")
                 let contact_id = data['id_contact'];
                 data['customer-id'] = data.customer_id;
                 data['type'] = data['contact_type'];
@@ -115,58 +139,65 @@ class CoCreateDomain extends CoCreateBase {
                 delete data['id_contact'];
                 delete data['customer_id'];
                 if (!isDelete) {
-                  if (contact_id != "") {
+                  if (contact_id != "" && typeof(contact_id) != 'undefined'){
                     resellerclub.editContact({contactId:contact_id, contactDetails:data, extra_options : { url_api: url_reseller }})
                         .then(result => {
-                      	    let res = {'type':type , result :  true,response : result,'data_request':data_original};
+                      	    let res = {'type':type ,'action':'add', result :  true,response : result,'data_request':data_original};
                         		console.log("edit_contact ok")
-                        		utils.send_response(that.wsManager,socket,res,send_response)
+                        		api.send_response(that.wsManager,socket,res,send_response)
                       	})
                         .catch(err => {
-                      	    let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
+                      	    let result = {result :  false,response : err,'data_request':data_original,'type':type,'action':'add'}
                       	    console.log("Error1 ")
-                          	utils.send_error(that.wsManager,socket,result,send_response)
+                          	api.send_error(that.wsManager,socket,result,send_response)
                       	});
         
                   } else {
+                      console.log("!Create Contact")
                       resellerclub.createContact({ contactDetails : data, extra_options : { url_api: url_reseller } })
                         .then(result => {
-                            let res = {'type':type , result :  true,response : result,'data_request':data_original};
+                            let res = {'type':type ,'action':'add', result :  true,response : result,'data_request':data_original};
                         		console.log("create_contact ok")
-                        		utils.send_response(that.wsManager,socket,res,send_response)
+                        		api.send_response(that.wsManager,socket,res,send_response)
                       	})
                 	      .catch(err => {
-                      	    let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
+                	          console.log(type)
+                	          console.log(err)
+                      	    let result = {result :  false,response : err,'data_request':data_original,'type':type,'action':'add'}
                       	    console.log("create_contact error ")
-                          	utils.send_error(that.wsManager,socket,result,send_response)
+                          	api.send_error(that.wsManager,socket,result,send_response)
                       	})
                   }
                 } else {
                   resellerclub.deleteContact({contactId:contact_id, extra_options : { url_api: url_reseller } })
                       .then(result => {
-                    	    let res = {'type':type , result :  true,response : result,'data_request':data_original};
+                    	    let res = {'type':type ,'action':'add', result :  true,response : result,'data_request':data_original};
                         		console.log("delete_contact ok")
-                        		utils.send_response(that.wsManager,socket,res,send_response)
+                        		api.send_response(that.wsManager,socket,res,send_response)
                     	})
                       .catch(err => {
-                    	    let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
+                    	    let result = {result :  false,response : err,'data_request':data_original,'type':type,'action':'add'}
                     	    console.log("Error4 ")
-                        	utils.send_error(that.wsManager,socket,result,send_response)
+                        	api.send_error(that.wsManager,socket,result,send_response)
                     	});
                 }
                     
                 break;
             case "register":
                 domainName = data['domain-name'];
+                data['ns'] = (typeof(data['ns'])!='undefined') ? data['ns'].split(',') : [];
+                
+                
                 resellerclub.register({ domainName, options:data, extra_options : { url_api: url_reseller } })
                     .then(result => {
-                        let res = {'type':type , result :  true,response : result,'data_request':data_original};
+                        let result_return = (Object.keys(result).indexOf('status') != -1 && ['error','ERROR'].indexOf(result['status'])!=-1 ) ? false : true;
+                        let res = {'type':type , result :  result_return,response : result,'data_request':data_original};
                         console.log("register_domain ok")
-                        utils.send_response(that.wsManager,socket,res,send_response)
+                        api.send_response(that.wsManager,socket,res,send_response)
                     })
                     .catch(err => {
-                        let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
-                        utils.send_error(that.wsManager,socket,result,send_response)
+                        let result = {result :  false,response : err,'data_request':data_original,'type':type}
+                        api.send_error(that.wsManager,socket,result,send_response)
                     });
                 console.log("Final Request");
                 break;
@@ -175,27 +206,43 @@ class CoCreateDomain extends CoCreateBase {
                     .then(result => {
                         let res = {'type':type , result :  true,response : result,'data_request':data_original};
                       	console.log("search_domain ok")
-                      	utils.send_response(that.wsManager,socket,res,send_response)
+                      	api.send_response(that.wsManager,socket,res,send_response)
                     })
                     .catch(err => {
                         let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
                         console.log("search_domain error")
-                    	utils.send_error(that.wsManager,socket,result,send_response)
+                    	api.send_error(that.wsManager,socket,result,send_response)
                     });
                 console.log("Final Request");
                 break;
+            case "checktransfer":
+                let domainCheckTransfer = data['domain-name'];
+                resellerclub
+                	.validateTransfer({domain : domainCheckTransfer,extra_options: { url_api: url_reseller }})
+                	.then(result => {
+                	    let result_return = (Object.keys(result).indexOf('status') != -1 && ['error','ERROR'].indexOf(result['status'])!=-1 ) ? false : true;
+                		console.log("resulto bien la peticion "+result)
+                		let res = {'type':type , result :  result_return,response : result,'data_request':data_original};
+                		api.send_response(that.wsManager,socket,res,send_response)
+                	})
+                	.catch(err => {
+                		 let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
+                        console.log("check  error")
+                    	api.send_error(that.wsManager,socket,result,send_response)
+                	})
+            break;
             case "transfer":
                 let domain = data['domain-name'];
                 resellerclub.transfer({ domain:domain, options:data, extra_options : { url_api: url_reseller }  })
                     .then(result => {
                         let res = {'type':type , result :  true,response : result,'data_request':data_original};
                       	console.log("transfer_domain ok")
-                      	utils.send_response(that.wsManager,socket,res,send_response)
+                      	api.send_response(that.wsManager,socket,res,send_response)
                     })
                     .catch(err => {
                         let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
                         console.log("transfer_domain error")
-                    	utils.send_error(that.wsManager,socket,result,send_response)
+                    	api.send_error(that.wsManager,socket,result,send_response)
                     });
                 console.log("Final Request");
                 break;
@@ -227,13 +274,13 @@ class CoCreateDomain extends CoCreateBase {
             	    }
         	  	    let res = {'type':type , result :  true,response : $domainUnAvaibles.concat($domainAvaibles),'data_request':data_original};
                     console.log("search_domain ok")
-                    utils.send_response(that.wsManager,socket,res,send_response)
+                    api.send_response(that.wsManager,socket,res,send_response)
             	})
             	.catch(err => {
             		console.log(err)
             		let result = {result :  false,response : err.data,'data_request':data_original,'type':type}
                     console.log("transfer_domain error")
-                	utils.send_error(that.wsManager,socket,result,send_response);
+                	api.send_error(that.wsManager,socket,result,send_response);
             		});
                 break;
         }
