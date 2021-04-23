@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.0.3...v1.0.4) (2021-04-23)
+
+
+### Bug Fixes
+
+* readme and documentation. Removed securitykeys ([7752f71](https://github.com/CoCreate-app/CoCreate-domain/commit/7752f7100dd8735e5a1ba74b5c81ac97f64545bb))
+
 ## [1.0.3](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.0.2...v1.0.3) (2021-04-23)
 
 
