@@ -1,3 +1,12 @@
+## [1.0.3](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.0.2...v1.0.3) (2021-04-23)
+
+
+### Bug Fixes
+
+* ci and build process ([bdf4abb](https://github.com/CoCreate-app/CoCreate-domain/commit/bdf4abbcce94eda56b7ba496932828a4aeacde3f))
+* npm publish and cdn deployment ([1fdacaf](https://github.com/CoCreate-app/CoCreate-domain/commit/1fdacaf1d4d62eaf01f2f7763bf2c4094136d9c8))
+* One package for server and client ([4a79a55](https://github.com/CoCreate-app/CoCreate-domain/commit/4a79a550b0150fdcf31cf2f40ffa1c4f74ecfbb8))
+
 ## [1.0.2](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.0.1...v1.0.2) (2021-03-30)
 
 
