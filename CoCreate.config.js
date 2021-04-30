@@ -10,7 +10,7 @@ module.exports = {
             "path": "./docs/index.html",
             "collection": "files",
             "document_id": "60282fe871064611a678a19f",
-            "key": "html",
+            "key": "src",
             "data":{
                 "name": "domain Doc",
                 "domains": ["cocreate.app", "server.cocreate.app", "ws.cocreate.app"],
