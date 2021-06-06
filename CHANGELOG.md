@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.0.7...v1.0.8) (2021-06-06)
+
+
+### Bug Fixes
+
+* update packages, add uuid, add data-parse to demos ([1da5fb0](https://github.com/CoCreate-app/CoCreate-domain/commit/1da5fb0169d000aa12d6f456d7a4bc503e922031))
+
 ## [1.0.7](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.0.6...v1.0.7) (2021-05-08)
 
 
