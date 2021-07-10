@@ -1,22 +1,68 @@
 {
-  "name": "@CoCreate/crud",
-  "version": "0.0.0",
-  "private": true,
+  "name": "@cocreate/domain",
+  "version": "1.0.14",
+  "description": "A simple domain component in vanilla javascript. Easily configured using HTML5 data-attributes and/or JavaScript API.",
+  "keywords": [
+    "domain",
+    "cocreate",
+    "low-code-framework",
+    "no-code-framework",
+    "cocreatejs",
+    "cocreatejs-component",
+    "cocreate-framework",
+    "no-code",
+    "low-code",
+    "collaborative-framework",
+    "realtime",
+    "realtime-framework",
+    "collaboration",
+    "shared-editing",
+    "html5-framework",
+    "javascript-framework"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "start-cluster": "PORT=3000 node app.cluster.js",
-    "start": "PORT=8080 node app.js",
-    "start-nodes": "PORT=3000 node app.js & PORT=3001 node app.js & PORT=3002 node app.js"
+    "start": "npx webpack --config webpack.config.js",
+    "build": "NODE_ENV=production npx webpack --config webpack.config.js",
+    "dev": "npx webpack --config webpack.config.js --watch",
+    "docs": "node ./node_modules/@cocreate/docs/src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoCreate-app/CoCreate-domain.git"
+  },
+  "author": "CoCreate LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CoCreate-app/CoCreate-domain/issues"
+  },
+  "homepage": "https://cocreate.app/docs/domain",
+  "funding": {
+    "type": "GitHub Sponsors ❤",
+    "url": "https://github.com/sponsors/CoCreate-app"
+  },
+  "main": "./src/index.js",
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "mini-css-extract-plugin": "^1.5.0",
+    "style-loader": "^2.0.0",
+    "terser-webpack-plugin": "^5.1.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0",
+    "webpack-log": "^3.0.1"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "cookie-parser": "~1.4.3",
-    "express": "^4.17.1",
-    "mongodb": "^3.2.3",
-    "mongoose": "^5.9.12",
-    "morgan": "~1.9.0",
-    "redis": "^2.8.0",
-    "socket.io": "^2.3.0",
-    "socket.io-redis": "^5.2.0",
-    "stripe": "^7.14.0"
+    "@cocreate/api": "^1.0.17",
+    "@cocreate/docs": "^1.1.14",
+    "axios": "^0.21.1",
+    "qs": "^6.10.1"
   }
 }
