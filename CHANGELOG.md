@@ -1,3 +1,11 @@
+## [1.0.16](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.0.15...v1.0.16) (2021-07-13)
+
+
+### Bug Fixes
+
+* add yarn lockfile to git ignore ([3d58a7b](https://github.com/CoCreate-app/CoCreate-domain/commit/3d58a7bd2e3486e356bc8b880959aa61e6cc1185))
+* remove yarn.lock ([cf946f5](https://github.com/CoCreate-app/CoCreate-domain/commit/cf946f5f4430c228c52344b0ab24bf616cddcd35))
+
 ## [1.0.15](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.0.14...v1.0.15) (2021-07-10)
 
 
