@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.0.18...v1.1.0) (2021-07-28)
+
+
+### Bug Fixes
+
+* remove data- from fetch, pass and filter ([16c7f83](https://github.com/CoCreate-app/CoCreate-domain/commit/16c7f833e588a41f9a757db146c39b9636747998))
+
+
+### Features
+
+* add new is{attribute} system and remove data- from attributtes ([f40816a](https://github.com/CoCreate-app/CoCreate-domain/commit/f40816aad64fba83ad89da5426873474a5ab89b2))
+
 ## [1.0.18](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.0.17...v1.0.18) (2021-07-17)
 
 
