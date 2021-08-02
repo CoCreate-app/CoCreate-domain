@@ -35,11 +35,11 @@
 	<body class="padding:20px">
 
 		<div class="margin-top:20px display:flex">
-			<div class="padding:14px_21px border-radius:2px_2px_0_0 font-size:20px cursor:pointer background:silver background:darkgrey:hover background:gainsboro tab background:red@sm" data-show="#register" data-hide="#transfer">
-			 	<a href="#register"  data-toggle="active" data-toggle_target=".tab">Register</a>
+			<div class="padding:14px_21px border-radius:2px_2px_0_0 font-size:20px cursor:pointer background:silver background:darkgrey:hover background:gainsboro tab background:red@sm" show="#register" hide="#transfer">
+			 	<a href="#register"  toggle="active" toggle-target=".tab">Register</a>
 			</div>
-			<div class="padding:14px_21px border-radius:2px_2px_0_0 font-size:20px cursor:pointer background:silver background:darkgrey:hover tab" data-show="#transfer" data-hide="#register">
-			 	<a href="#transfer" data-toggle="active" data-toggle_target=".tab">Transfer</a>
+			<div class="padding:14px_21px border-radius:2px_2px_0_0 font-size:20px cursor:pointer background:silver background:darkgrey:hover tab" show="#transfer" hide="#register">
+			 	<a href="#transfer" toggle="active" toggle-target=".tab">Transfer</a>
 			</div>
 		</div>
 	
@@ -80,7 +80,7 @@
 					</div>
 				</div>
 				<!--<h3 value="test.hey.name"></h3>-->
-				<form data-real_time="true" id="customer-form" collection="modules" data-form_id="resller">
+				<form realtime="true" id="customer-form" collection="modules" data-form_id="resller">
 					<input type="hidden" name="domain-name" data-domain="domain-name" value="name" placeholder="domain-name"/>
 				</form>
 			</div>
@@ -123,10 +123,10 @@
 			<input type="text" name="ns" data-domain="ns" value="ns1.onlyfordemo.net,ns2.onlyfordemo.net" placeholder="ns"/>
 			<input type="text" name="customer-id" data-domain="customer-id" value="22216052" placeholder="customer-id"/>
 			<input type="text" name="contact-id" data-domain="contact-id" value="91369147" placeholder="contact-id"/>
-			<input type="text" name="reg-contact-id" data-domain="reg-contact-id" data-get_value="contact-id" placeholder="reg-contact-id"/>
-			<input type="text" name="admin-contact-id" data-domain="admin-contact-id" data-get_value="contact-id" placeholder="admin-contact-id"/>
-			<input type="text" name="tech-contact-id" data-domain="tech-contact-id" data-get_value="contact-id" placeholder="tech-contact-id"/>
-			<input type="text" name="billing-contact-id" data-domain="billing-contact-id" data-get_value="contact-id" placeholder="billing-contact-id"/>
+			<input type="text" name="reg-contact-id" data-domain="reg-contact-id" get-value="contact-id" placeholder="reg-contact-id"/>
+			<input type="text" name="admin-contact-id" data-domain="admin-contact-id" get-value="contact-id" placeholder="admin-contact-id"/>
+			<input type="text" name="tech-contact-id" data-domain="tech-contact-id" get-value="contact-id" placeholder="tech-contact-id"/>
+			<input type="text" name="billing-contact-id" data-domain="billing-contact-id" get-value="contact-id" placeholder="billing-contact-id"/>
 			<input type="text" name="invoice-option" data-domain="invoice-option" value="NoInvoice" placeholder="invoice-option"/>
 			<input type="text" name="auto-renew" data-domain="auto-renew" placeholder="auto-renew"/>
 			<input type="text" name="attr-name" data-domain="attr-name" placeholder="attr-name"/>
