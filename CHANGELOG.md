@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.1...v1.1.2) (2021-08-12)
+
+
+### Bug Fixes
+
+* module_id to document_id ([9b95638](https://github.com/CoCreate-app/CoCreate-domain/commit/9b956388fd317aaf158961fb7af48ccadc312593))
+
 ## [1.1.1](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.0...v1.1.1) (2021-08-02)
 
 
