@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.3...v1.1.4) (2021-08-15)
+
+
+### Bug Fixes
+
+* remove data- from data-parse and data-save attributes ([cf97492](https://github.com/CoCreate-app/CoCreate-domain/commit/cf97492afafbe7fe7b86443734c50a6be753b9b0))
+
 ## [1.1.3](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.2...v1.1.3) (2021-08-14)
 
 
