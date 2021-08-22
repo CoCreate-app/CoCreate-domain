@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.4...v1.1.5) (2021-08-22)
+
+
+### Bug Fixes
+
+* bump package versions ([edc1515](https://github.com/CoCreate-app/CoCreate-domain/commit/edc1515ba862db73ecc1bbb84543e92ac7f6f9c4))
+
 ## [1.1.4](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.3...v1.1.4) (2021-08-15)
 
 
