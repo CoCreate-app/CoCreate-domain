@@ -1,3 +1,11 @@
+## [1.1.26](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.25...v1.1.26) (2021-10-05)
+
+
+### Bug Fixes
+
+* update dependencies ([107de2d](https://github.com/CoCreate-app/CoCreate-domain/commit/107de2dfed0b61f5328d13563d175766bb7ca5fe))
+* website_id in CoCreate.config ([a98197c](https://github.com/CoCreate-app/CoCreate-domain/commit/a98197c4f8045550c8c9a1453e02566727ace9e6))
+
 ## [1.1.25](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.24...v1.1.25) (2021-10-04)
 
 
