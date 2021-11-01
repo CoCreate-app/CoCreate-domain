@@ -1,3 +1,10 @@
+## [1.1.36](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.35...v1.1.36) (2021-11-01)
+
+
+### Bug Fixes
+
+* update package dependencies ([6897a48](https://github.com/CoCreate-app/CoCreate-domain/commit/6897a489a91bf624df4b77f09ca51ae24b6a97fc))
+
 ## [1.1.35](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.34...v1.1.35) (2021-10-29)
 
 
