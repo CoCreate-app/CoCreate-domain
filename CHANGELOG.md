@@ -1,3 +1,10 @@
+## [1.1.49](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.48...v1.1.49) (2021-11-26)
+
+
+### Bug Fixes
+
+* docs sidenav width ([ade07c0](https://github.com/CoCreate-app/CoCreate-domain/commit/ade07c02a3ff0d4aa26e0717eed760f20c9c5cb6))
+
 ## [1.1.48](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.47...v1.1.48) (2021-11-26)
 
 
