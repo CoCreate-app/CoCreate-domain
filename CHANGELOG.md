@@ -1,3 +1,10 @@
+## [1.1.58](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.57...v1.1.58) (2022-02-03)
+
+
+### Bug Fixes
+
+* replaced show and hide class hidden with attribute hidden ([659a727](https://github.com/CoCreate-app/CoCreate-domain/commit/659a72700757b0a331505755e8dac5410940d5c4))
+
 ## [1.1.57](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.56...v1.1.57) (2022-02-01)
 
 
