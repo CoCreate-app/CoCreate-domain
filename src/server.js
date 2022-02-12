@@ -8,19 +8,16 @@ class CoCreateDomain {
 		this.module_id = 'domain';
 		this.enviroment = 'prod'; //'test'
 		this.wsManager = wsManager;
-		this.init();
-		
+		this.init();		
 	}
 	
 	init() {
 		if (this.wsManager) {
-			this.wsManager.on('domain',		(socket, data) => this.sendDomain(socket, data));
+			this.wsManager.on('domain',	(socket, data) => this.sendDomain(socket, data));
 		}
 	}
 	async sendDomain(socket, data) {
 	    let that = this;
-	    console.log("REqust in Domain")
-        //let data_original = {...data};
         let data_original = {...data["data"]}
 		const params = data['data'];
         let type = data['type'];
@@ -30,19 +27,20 @@ class CoCreateDomain {
     	 // connect domain reseller api
     	 try{
     	    let enviroment = typeof params['enviroment'] != 'undefined' ? params['enviroment'] : this.enviroment;
-            let org_row = await api.getOrg(params,this.module_id);
-            var url_reseller = org_row['apis.'+this.module_id+'.'+enviroment+'.url_reseller'];//'https://httpapi.com'
+            let org = await api.getOrg(params, this.module_id);
+			var url_reseller = org['apis.'+this.module_id+'.'+enviroment+'.url_reseller'];//'https://httpapi.com'
             let apiKeys = {
-                               'clientID' :org_row['apis.'+this.module_id+'.'+enviroment+'.apikeys.clientID'],
-                               'clientSecret':org_row['apis.'+this.module_id+'.'+enviroment+'.apikeys.clientSecret']
-                            }
-            console.log(apiKeys)
+				'clientID' :org['apis.'+this.module_id+'.'+enviroment+'.clientID'],
+				'clientSecret':org['apis.'+this.module_id+'.'+enviroment+'.clientSecret'],
+				'url_reseller':org['apis.'+this.module_id+'.'+enviroment+'.url_reseller']
+			}
+			console.log("domain ", type, apiKeys, url_reseller)
             resellerclub.connect(apiKeys)
-            					.then(res => console.log(res))
-            					.catch(err => console.log(err));
+				.then(res => console.log(res))
+				.catch(err => console.log(err));
             					
     	 }catch(e){
-    	   	console.log(this.module_id+" : Error Connect to api Reseller",e)
+    	   	console.log(this.module_id+" : Error Connecting to api Reseller", e)
     	   	return false;
     	 }
 	 
@@ -55,13 +53,28 @@ class CoCreateDomain {
         if (type.indexOf('Record') !== -1)
         type = type.substr(0, type.indexOf('Record')).toLowerCase();
         data = {'type':data['type'] ,...data_original["data"]}
-        let data_response = {'type':type_origin ,'response':data_original["data"]}
+        let data_response = {'type': type_origin, 'response': data_original["data"]}
         
         switch (type) {
             case 'executeAction':
-                console.log(" data_response ",data_response)
-                api.send_response(that.wsManager,socket,data_response,send_response)
+                console.log(" data_response ", data_response)
+                api.send_response(that.wsManager, socket, data_response, send_response)
             break;
+            case 'activateDns':
+                resellerclub
+                  	.activateDns({ opt : type,  options : data , extra_options: { url_api: url_reseller } })
+                  	.then(result => {
+                  	    result["type"] = type;
+                    		data_response['result'] = result
+                    		api.send_response(that.wsManager, socket, data_response, send_response)
+                  	})
+                  	.catch(err => {
+                  	    let result = {'type':type,'error':err};
+                  	    console.log("Error ",type)
+                  	    data_response['result'] = result
+                    	api.send_response(that.wsManager, socket, data_response, send_response)
+                  	})
+                break;
             case 'txt':
             case 'mx':
             case 'cname':
@@ -75,13 +88,13 @@ class CoCreateDomain {
                   	    result["type"] = type;
                     		console.log("resulto bien la peticion ",result)
                     		data_response['result'] = result
-                    		api.send_response(that.wsManager,socket,data_response,send_response)
+                    		api.send_response(that.wsManager, socket, data_response, send_response)
                   	})
                   	.catch(err => {
                   	    let result = {'type':type,'error':err};
                   	    console.log("Error ",type)
                   	    data_response['result'] = result
-                    	api.send_response(that.wsManager,socket,data_response,send_response)
+                    	api.send_response(that.wsManager, socket, data_response, send_response)
                   	})
                 break;
             case "customer":

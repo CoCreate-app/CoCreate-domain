@@ -3,6 +3,7 @@ import api from '@cocreate/api'
 const CoCreateDomain = {
 	id: 'domain',
 	actions: [
+		'activateDns',
 		'cnameRecord',
 		'cnameRecordDelete',
 		'contactRecord',
@@ -17,8 +18,13 @@ const CoCreateDomain = {
 		'registerRecord',
 		'txtRecord',
 		'txtRecordDelete',
-		'executeAction'
+		'executeAction',
+		'searchDomain'
 	],
+	
+	render_activateDns: function (data) {
+		console.log(data);
+	},
 
 	render_cnameRecord: function (data) {
 		console.log(data);
@@ -72,6 +78,9 @@ const CoCreateDomain = {
 		var btn = document.getElementById(data["id"]);
 		//btn.dispatchEvent(new Event('click'));
 		btn.click();
+	},
+	render_searchDomain: function (data) {
+		console.log(data)
 	},
 
 

@@ -7,7 +7,7 @@ const resellerclub = {};
 //axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 
 
-resellerclub.connect = ({ clientID, clientSecret }) => {
+resellerclub.connect = ({ clientID, clientSecret, url_reseller }) => {
     return new Promise((resolve, reject) => {
         if (!clientID) {
             reject("`clientID` is mandatory");
@@ -19,7 +19,7 @@ resellerclub.connect = ({ clientID, clientSecret }) => {
             this.clientID = clientID;
             this.clientSecret = clientSecret;
             this.ENVIRONMENT = 'development';
-            this.urlAPI = 'https://domaincheck.httpapi.com';
+            this.urlAPI = url_reseller; //'https://domaincheck.httpapi.com';
             resolve("RESELLER : Connection Established ["+this.clientID+"]");
         }
     });
@@ -35,23 +35,21 @@ this.request = ({ request, url, params, options }) => {
             reject("connection not establised");
         } else {
             params_function = {
-                                    "auth-userid": this.clientID,
-                                    "api-key": this.clientSecret
-                                }
-            Object.keys(params).forEach(key => params_function[key] = params[key]);
+                "auth-userid": this.clientID,
+                "api-key": this.clientSecret
+            }
+            if (params)
+                Object.keys(params).forEach(key => params_function[key] = params[key]);
+            console.log('options', options)
             options = typeof options !== 'undefined' ? options : false;
             ext = typeof options['ext'] !== 'undefined' ? options['ext'] : 'json';
             url_api = typeof options['url_api'] !== 'undefined' ? options['url_api'] : this.urlAPI;
-            
+            console.log('options', options, 'ext', ext)
             url_completa = url_api + '/api/' + url + '.' + ext;
-            console.log(url_completa)
-            
-
+            console.log(url_completa)          
             console.log('1=>*****************');
             console.log(params_function);
             console.log(Qs.stringify(params_function, { arrayFormat: "repeat" }))
-            console.log(url_completa);
-            console.log('1=>*****************');
 
 
             if(request=='get'){
@@ -81,7 +79,7 @@ this.request = ({ request, url, params, options }) => {
                         resolve(response.data);
                     })
                     .catch(error => {
-                      console.log("ERROR_post:")
+                      console.log("ERROR_post: ", error.response.data)
                         reject(error.response.data);
                     });
             }//end else
@@ -700,11 +698,11 @@ resellerclub.searchContact = ({ contactId, contactDetails, count, page }) => {
 /***DNS */
 
 /*Activate dns free*/
-resellerclub.editContact = ({ order }) => {
-    options =  {
-        "order-id" : order
-    }
-    return this.request({ request: 'post', url: 'dns/activate', params: options });
+resellerclub.activateDns = ({ options }) => {
+    // options["ext"] = 'xml';
+    params = { "order-id": options['order-id'] }
+    console.log('activateDns-lib-options', options)
+    return this.request({ request: 'post', url: 'dns/activate', params, options});
 }
 /*Add dns record in a domain*/
 resellerclub.addNsRecord = ({ domainName, options }) => {
