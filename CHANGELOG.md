@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.60...v1.2.0) (2022-02-12)
+
+
+### Features
+
+* activateDns api ([53b7ef5](https://github.com/CoCreate-app/CoCreate-domain/commit/53b7ef55ae0234bdd7b9218733986731b15ac185))
+
 ## [1.1.60](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.59...v1.1.60) (2022-02-10)
 
 
