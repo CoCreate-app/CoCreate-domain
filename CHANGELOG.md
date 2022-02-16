@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.2.0...v1.3.0) (2022-02-16)
+
+
+### Features
+
+* fetch environment from db, reduced and improved code ([fceb919](https://github.com/CoCreate-app/CoCreate-domain/commit/fceb919b6f47c61751988410de6c77d5ddd4bcb2))
+
 # [1.2.0](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.1.60...v1.2.0) (2022-02-12)
 
 
