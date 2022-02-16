@@ -1,78 +1,72 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
- <title>Domain Customer | Canme record</title>
-
- <head>   
+<title>Domain Customer | Canme record</title>
+</head> 
+<body>
     <h1>Activate DNS</h1>
-    <form style="margin: 1em 0em;">
-        <input domain="activateDns.order-id" value="87694979">
+    <form>
+        <input domain="activateDns.order-id" value="87694979" class="floating-label">
         <button actions='activateDns'>activateDns</button>
         </form>
     <h1>DKIM1</h1>
-    <form style="margin: 1em 0em;">
-        <input 
-                type="text" 
+    <form>
+        <input type="text" 
                 domain="cnameRecord.domain-name" 
                 value="cocreatejs.com" 
                 placeholder="Domain Id" 
-                class="floating-label_field">
-        <input 
-                type="text" 
+                class="floating-label">
+        <input type="text" 
                 domain="cnameRecord.value" 
                 placeholder="Value" 
-                class="floating-label_field">
+                class="floating-label">
         
-        <input domain="executeAction.id" value="id-two">
+        <input domain="executeAction.id" value="id-two" class="floating-label">
 
-        <button 
-        		actions='cnameRecord, executeAction'>Save Dkim1</button>
+        <button actions='cnameRecord, executeAction'>Save Dkim1</button>
     </form>
     
     <h1>DKIM2</h1>
-    <form style="margin: 1em 0em;">
-        <input 
-                type="text" 
+    <form>
+        <input type="text" 
                 domain="cnameRecord.domain-name" 
                 value="cocreatejs.com" 
                 placeholder="Domain Id" 
-                class="floating-label_field">
-        <input 
-                type="text" 
+                class="floating-label">
+        <input type="text" 
                 domain="cnameRecord.value" 
                 placeholder="Value" 
-                class="floating-label_field">
+                class="floating-label">
         
-        <input domain="executeAction.id" value="id-three">
+        <input domain="executeAction.id" value="id-three" class="floating-label">
 
-        <button id="id-two"
-        		actions='cnameRecord, executeAction'>Save Dkim2</button>
+        <button actions='cnameRecord, executeAction'>Save Dkim2</button>
     </form>
     
     <h1>Cname</h1>
-    <form style="margin: 1em 0em;">
-        <input 
-                type="text" 
+    <form>
+        <input type="text" 
                 domain="cnameRecord.domain-name" 
                 value="cocreatejs.com" 
                 placeholder="Domain Id" 
-                class="floating-label_field">
-        <input 
-                type="text" 
+                class="floating-label">
+        <input type="text" 
                 domain="cnameRecord.value" 
                 placeholder="Value" 
-                class="floating-label_field">
+                class="floating-label">
         
         <button id="id-three" actions='cnameRecord'>Save cname</button>
 	
-	</form>
+        </form>
 
-  <!--CoCreateJS-->
-  <!-- <script src="https://cdn.cocreate.app/latest/CoCreate.min.js" ></script> -->
-  <script src="http://127.0.0.1:4000/CoCreateJS/dist/CoCreate.js"></script>
-  
-  <!--CoCreate Plugins-->
-  <!-- <script src="https://server.cocreate.app/CoCreate-plugins/CoCreate-domain/src/CoCreate-domain.js"></script> -->
+    <!-- CoCreateJS -->
+    <!-- <script src="https://cdn.cocreate.app/1.12.13/CoCreate.min.js"></script> -->
+    <!-- <script src="../../../CoCreateJS/dist/CoCreate.js"></script> -->
+    <script src="http://127.0.0.1:4000/CoCreateJS/dist/CoCreate.js" ></script>
+
+    <!-- CoCreate Plugins-->
+    <!-- <script src="../dist/CoCreate-domain.js"></script> -->
 
 
-
+  </body>
+</html>

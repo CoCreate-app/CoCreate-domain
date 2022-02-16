@@ -1,47 +1,33 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
- <title>Domain Customer | Canme record</title>
-
- <head>     
-      <h1>Add RECORD to Domain</h1>
+  <title>Domain Customer | Cname record</title>
+</head> 
+<body class="padding:15px"> 
+    <h1>Add cname</h1>
       
-    <form style="margin: 1em 0em;">
-        <input 
-                type="text" 
-                domain="cnameRecord.domain-name" 
-                value="cocreatejs.com" 
-                placeholder="Domain Id" 
-                class="floating-label_field">
-        <input 
-                type="text" 
-                domain="cnameRecord.value" 
-                placeholder="Value" 
-                class="floating-label_field">
-        
-        <button 
-        		actions='cnameRecord'>SendData Cname</button>
-		    
+    <form>    
+      <input type="text" 
+        domain="cnameRecord.domain-name" 
+        value="cocreatejs.com" 
+        placeholder="Domain Id" 
+        class="floating-label">
+      <input type="text" 
+        domain="cnameRecord.value" 
+        placeholder="Value" 
+        class="floating-label">
+      
+      <button actions='cnameRecord' class="margin-top:20px">SendData Cname</button>
 	</form>
 
-<script type="text/javascript" >
-</script>
+    <!-- CoCreateJS -->
+    <!-- <script src="https://cdn.cocreate.app/1.12.13/CoCreate.min.js"></script> -->
+    <!-- <script src="../../../CoCreateJS/dist/CoCreate.js"></script> -->
+    <script src="http://127.0.0.1:4000/CoCreateJS/dist/CoCreate.js" ></script>
 
-  <script>
-    var config = {
-      apiKey: 'c2b08663-06e3-440c-ef6f-13978b42883a',
-      organization_Id: '5de0387b12e200ea63204d6c',
-    }
-  </script>
-
-  <!--CoCreateJS-->
-  <!--<script src="https://server.cocreate.app/CoCreateJS/dist/CoCreate.js"></script>-->
-
-  <!--CoCreate Plugins-->
-  
-  <!---->
-<!--  <script src="../../dist/CoCreate-domain.js"></script>-->
-<script src="https://server.cocreate.app/CoCreateJS/dist/CoCreate.js"></script>
+    <!-- CoCreate Plugins-->
+    <!-- <script src="../dist/CoCreate-domain.js"></script> -->
 
 
-
+  </body>
+</html>

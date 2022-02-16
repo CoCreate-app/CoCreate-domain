@@ -7,7 +7,7 @@ const resellerclub = {};
 //axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 
 
-resellerclub.connect = ({ clientID, clientSecret, url_reseller }) => {
+resellerclub.connect = ({ clientID, clientSecret, apiUrl }) => {
     return new Promise((resolve, reject) => {
         if (!clientID) {
             reject("`clientID` is mandatory");
@@ -19,7 +19,7 @@ resellerclub.connect = ({ clientID, clientSecret, url_reseller }) => {
             this.clientID = clientID;
             this.clientSecret = clientSecret;
             this.ENVIRONMENT = 'development';
-            this.urlAPI = url_reseller; //'https://domaincheck.httpapi.com';
+            this.apiUrl = apiUrl;
             resolve("RESELLER : Connection Established ["+this.clientID+"]");
         }
     });
@@ -40,49 +40,43 @@ this.request = ({ request, url, params, options }) => {
             }
             if (params)
                 Object.keys(params).forEach(key => params_function[key] = params[key]);
-            console.log('options', options)
             options = typeof options !== 'undefined' ? options : false;
             ext = typeof options['ext'] !== 'undefined' ? options['ext'] : 'json';
-            url_api = typeof options['url_api'] !== 'undefined' ? options['url_api'] : this.urlAPI;
+            apiUrl = typeof options['apiUrl'] !== 'undefined' ? options['apiUrl'] : this.apiUrl;
             console.log('options', options, 'ext', ext)
-            url_completa = url_api + '/api/' + url + '.' + ext;
+            url_completa = apiUrl + '/api/' + url + '.' + ext;
             console.log(url_completa)          
-            console.log('1=>*****************');
-            console.log(params_function);
             console.log(Qs.stringify(params_function, { arrayFormat: "repeat" }))
 
-
-            if(request=='get'){
-                    axios
-                        .get(url_completa, {
-                            params: params_function,
-                            paramsSerializer: function (params) {
-                                return Qs.stringify(params, { arrayFormat: "repeat" });
-                            }
-                        })
-                         .then(response => {
-                             console.log("OK_get");
-                            resolve(response.data);
-                        })
-                        .catch(error => {
-                            console.log("ERROR_get")
-                            reject(error.response);
-                        });
-                        
+            if(request === 'get'){
+                axios.get(url_completa, {
+                    params: params_function,
+                    paramsSerializer: function (params) {
+                        return Qs.stringify(params, { arrayFormat: "repeat" });
                     }
+                })
+                .then(response => {
+                    console.log("OK_get");
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    console.log("ERROR_get")
+                    reject(error.response);
+                });
+                
+            }
                     
             else{
-                axios
-                    .post(url_completa, Qs.stringify(params_function,{ arrayFormat: "repeat" }))
+                axios.post(url_completa, Qs.stringify(params_function,{ arrayFormat: "repeat" }))
                     .then(response => {
-                        console.log("OK_post");
+                        console.log("OK_post",);
                         resolve(response.data);
                     })
                     .catch(error => {
-                      console.log("ERROR_post: ", error.response.data)
+                        console.log("ERROR_post: ", error.response.data)
                         reject(error.response.data);
                     });
-            }//end else
+            }
         }
     });
 };
@@ -102,9 +96,10 @@ this.request = ({ request, url, params, options }) => {
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.checkAvailability = ({ domainName, tlds, suggestAlternatives }) => {
+resellerclub.checkAvailability = ({ domainName, tlds, suggestAlternatives, options}) => {
     suggestAlternatives = typeof suggestAlternatives !== 'undefined' ? suggestAlternatives : false;
-    return this.request({ request: 'get', url: 'domains/available', params: { 'domain-name': domainName, tlds: tlds, 'suggest-alternative': suggestAlternatives }});
+    options = {apiUrl: 'https://domaincheck.httpapi.com'}
+    return this.request({ request: 'get', url: 'domains/available', params: { 'domain-name': domainName, tlds, 'suggest-alternative': suggestAlternatives }, options});
 };
 
 /**
@@ -128,7 +123,7 @@ resellerclub.checkAvailabilityIdn = ({ domainName, tld, idnLanguageCode }) => {
         punyDomain.push(domainName);
     }
     params = { 'domain-name': punyDomain, tld: tld, 'idnLanguageCode': idnLanguageCode };
-    return this.request({ request: 'get', url: 'domains/idn-available', params: params });
+    return this.request({ request: 'get', url: 'domains/idn-available',  params });
 };
 
 
@@ -138,15 +133,15 @@ resellerclub.checkAvailabilityIdn = ({ domainName, tld, idnLanguageCode }) => {
  * @see http://manage.resellerclub.com/kb/answer/1948
  * @param keyWord string Keyword to search for.
  * @param tlds mixed Array or String of TLD(s).
- * @param options array See references.
+ * @param params array See references.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.checkAvailabilityPremium = ({ keyWord, tlds, options }) => {
-    options = typeof options !== 'undefined' ? options : {};
-    options['key-word'] = keyWord;
-    options['tlds'] = tlds;
-    return this.request({ request: 'get', url: 'domains/premium/available', params: options });
+resellerclub.checkAvailabilityPremium = ({ keyWord, tlds, params }) => {
+    params = typeof params !== 'undefined' ? params : {};
+    params['key-word'] = keyWord;
+    params['tlds'] = tlds;
+    return this.request({ request: 'get', url: 'domains/premium/available', params });
 };
 
 /**
@@ -159,15 +154,15 @@ resellerclub.checkAvailabilityPremium = ({ keyWord, tlds, options }) => {
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.domainSuggestions = ({ keyWord, tld, exactMatch, extra_options}) => {
-    extra_options = typeof extra_options !== 'undefined' ? extra_options : false;
+resellerclub.domainSuggestions = ({ keyWord, tld, exactMatch, extra_params}) => {
+    options = typeof  options !== 'undefined' ?  options : false;
     tld = typeof tld !== 'undefined' ? tld : null;
     exactMatch = typeof exactMatch !== 'undefined' ? exactMatch : false;
-    options = {};
-    options['keyword'] = keyWord;
-    options['tld-only'] = tld;
-    options['exact-match'] = exactMatch;
-    return this.request({ request: 'get', url: 'domains/v5/suggest-names', params: options, options: extra_options});
+    params = {};
+    params['keyword'] = keyWord;
+    params['tld-only'] = tld;
+    params['exact-match'] = exactMatch;
+    return this.request({ request: 'get', url: 'domains/v5/suggest-names', params, options});
 }
 
 
@@ -176,14 +171,14 @@ resellerclub.domainSuggestions = ({ keyWord, tld, exactMatch, extra_options}) =>
  *
  * @see http://manage.resellerclub.com/kb/answer/752
  * @param domainName string Domain name.
- * @param options array Options, see reference.
+ * @param params array Options, see reference.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.register = ({ domainName, options, extra_options}) => {
-    extra_options = typeof extra_options !== 'undefined' ? extra_options : false;
-    options['domain-name'] = domainName;
-    return this.request({ request: 'post', url: 'domains/register', params: options, options: extra_options});
+resellerclub.register = ({ domainName, params, options}) => {
+    options = typeof  options !== 'undefined' ?  options : false;
+    params['domain-name'] = domainName;
+    return this.request({ request: 'post', url: 'domains/register', params, options});
 }
 
 
@@ -192,14 +187,14 @@ resellerclub.register = ({ domainName, options, extra_options}) => {
  *
  * @see http://manage.resellerclub.com/kb/answer/758
  * @param domain string Domain name.
- * @param options array Options, see references.
+ * @param params array Options, see references.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.transfer = ({ domain, options, extra_options }) => {
-    extra_options = typeof extra_options !== 'undefined' ? extra_options : false;
-    options['domain-name'] = domain;
-    return this.request({ request: 'post', url: 'domains/transfer', params: options, options: extra_options });
+resellerclub.transfer = ({ domain, params, options }) => {
+    options = typeof  options !== 'undefined' ?  options : false;
+    params['domain-name'] = domain;
+    return this.request({ request: 'post', url: 'domains/transfer', params, options });
 }
 
 
@@ -212,13 +207,13 @@ resellerclub.transfer = ({ domain, options, extra_options }) => {
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.submitAuthCode = ({ orderId, authCode, extra_options }) => {
-    extra_options = typeof extra_options !== 'undefined' ? extra_options : false;
-    options ={
+resellerclub.submitAuthCode = ({ orderId, authCode,  options }) => {
+    options = typeof  options !== 'undefined' ?  options : false;
+    params ={
         'order-id' : orderId,
         'auth-code' : authCode,
     }
-    return this.request({ request: 'post', url: 'domains/submit-auth-code', params: options, options: extra_options });
+    return this.request({ request: 'post', url: 'domains/submit-auth-code', params, options });
 }
 
 
@@ -231,12 +226,12 @@ resellerclub.submitAuthCode = ({ orderId, authCode, extra_options }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 
-resellerclub.validateTransfer = ({domain,extra_options}) => {
-    extra_options = typeof extra_options !== 'undefined' ? extra_options : false;
-    options = {
-        'domain-name' : domain,
+resellerclub.validateTransfer = ({params,  options}) => {
+    options = typeof  options !== 'undefined' ?  options : false;
+    params = {
+        'domain-name' : params['domain-name'],
     }
-    return this.request({ request: 'get', url: 'domains/validate-transfer', params: options , options: extra_options});
+    return this.request({ request: 'get', url: 'domains/validate-transfer', params, options});
 }
 
 /**
@@ -244,31 +239,30 @@ resellerclub.validateTransfer = ({domain,extra_options}) => {
  *
  * @see http://manage.resellerclub.com/kb/answer/746
  * @param orderid integer Order Id.
- * @param options array Options. See reference.
+ * @param params array of params. See reference.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.renew = ({ orderid, options }) => {
-    options['order-id'] = orderid;
-    return this.request({ request: 'post', url: 'domains/renew', params: options });
+resellerclub.renew = ({ params }) => {
+    return this.request({ request: 'post', url: 'domains/renew',  params });
 }
 
 /**
  * Search a domain.
  *
  * @see http://manage.resellerclub.com/kb/answer/771
- * @param options array Search options. See reference.
+ * @param params array Search options. See reference.
  * @param int page Page number.
  * @param int count Number of records to fetch.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.searchDomain = ({ options, page , count, extra_options }) => {
-    page = page != '' ? page : 1;
-    count = count != '' ? count : 10;
-    options['no-of-records'] = count;
-    options['page-no'] = page;
-    return this.request({ request: 'get', url: 'domains/search', params: options, options:extra_options });
+resellerclub.searchDomain = ({ params, options }) => {
+    if (!params['no-of-records'])
+        params['no-of-records'] = 10;
+    if (!params['page-no'])
+        params['page-no'] = 1;
+    return this.request({ request: 'get', url: 'domains/search', params, options });
 }
 
 
@@ -281,10 +275,8 @@ resellerclub.searchDomain = ({ options, page , count, extra_options }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getDefaultNameServer = ({ customerId }) => {
-    options ={
-        'customer-id' : customerId,
-    }
-    return this.request({ request: 'get', url: 'domains/customer-default-ns', params: options });
+    params = {'customer-id': customerId}
+    return this.request({ request: 'get', url: 'domains/customer-default-ns',  params });
 }
 
 
@@ -296,11 +288,9 @@ resellerclub.getDefaultNameServer = ({ customerId }) => {
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.getOrderId = ({ domain }) => {
-    options = {
-        'domain-name' : domain,
-    }
-    return this.request({ request: 'get', url: 'domains/orderid', params: options });
+resellerclub.getOrderId = ({ params }) => {
+    params = {'domain-name' : params['domain-name']}
+    return this.request({ request: 'get', url: 'domains/orderid',  params });
 }
 
 /**
@@ -308,19 +298,14 @@ resellerclub.getOrderId = ({ domain }) => {
  *
  * @see http://manage.resellerclub.com/kb/answer/770
  * @param orderId integer Order ID.
- * @param options string Options. See references.
+ * @param params string Options. See references.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.getDomainDetailsByOrderId = ({ orderId, options }) => {
-    // Since a parameter name is options, we are using variable as apiOptions
-    apiOptions = {
-        'order-id' : orderId,
-    }
-    if (typeof options === 'string') {
-        apiOptions['options'] = options;
-    }
-    return this.request({ request: 'get', url: 'domains/details', params: apiOptions });
+resellerclub.getDomainDetailsByOrderId = ({ orderId, params }) => {
+    // Since a parameter name is params, we are using variable as apiOptions
+    params = {'order-id': params['order-id']}
+    return this.request({ request: 'get', url: 'domains/details', params });
 }
 
 /**
@@ -328,19 +313,14 @@ resellerclub.getDomainDetailsByOrderId = ({ orderId, options }) => {
  *
  * @see http://manage.resellerclub.com/kb/answer/1755
  * @param domain string Domain name.
- * @param options string See references for possible values.
+ * @param params string See references for possible values.
  * @return array API options.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.getDomainDetailsByDomain = ({ orderId, options }) => {
-    // Since a parameter name is options, we are using variable as apiOptions
-    apiOptions = {
-        'domain-name' : domain,
-    }
-    if (typeof options === 'string') {
-        apiOptions['options'] = options;
-    }
-    return this.request({ request: 'get', url: 'domains/details-by-name', params: apiOptions });
+resellerclub.getDomainDetailsByDomain = ({ orderId, params }) => {
+    // Since a parameter name is params, we are using variable as apiOptions
+    params = {'domain-name' : params['domain-name']}
+    return this.request({ request: 'get', url: 'domains/details-by-name', params });
 }
 
 /**
@@ -352,12 +332,12 @@ resellerclub.getDomainDetailsByDomain = ({ orderId, options }) => {
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.setNameServer = ({ orderId, ns }) => {
-    options = {
-        'order-id' : orderId,
-        'ns' : ns,
+resellerclub.setNameServer = ({ params }) => {
+    params = {
+        'order-id': params['order-id'],
+        'ns' : params['ns']
     }
-    return this.request({ request: 'post', url: 'domains/modify-ns', params: options });
+    return this.request({ request: 'post', url: 'domains/modify-ns', params });
 }
 
 
@@ -371,13 +351,13 @@ resellerclub.setNameServer = ({ orderId, ns }) => {
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.setChildNameServer = ({ orderId, cns, ips }) => {
-    options = {
-        'order-id' : orderId,
-        'cns' : cns,
-        'ip' : ips,
+resellerclub.setChildNameServer = ({ params }) => {
+    params = {
+        'order-id': params['order-id'],
+        'cns': params['cns'],
+        'ip': params['ip']
     }
-    return this.request({ request: 'post', url: 'domains/add-cns', params: options });
+    return this.request({ request: 'post', url: 'domains/add-cns',  params });
 }
 
 /**
@@ -390,13 +370,13 @@ resellerclub.setChildNameServer = ({ orderId, cns, ips }) => {
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.modifyChildNameServerHost = ({ orderId, oldCns, newCns }) => {
-    options = {
-        'order-id' : orderId,
-        'old-cns' : oldCns,
-        'new-cns' : newCns,
+resellerclub.modifyChildNameServerHost = ({ params }) => {
+    params = {
+        'order-id': params['order-id'],
+        'old-cns': params['old-cns'],
+        'new-cns': params['new-cns']
     }
-    return this.request({ request: 'post', url: 'domains/modify-cns-name', params: options });
+    return this.request({ request: 'post', url: 'domains/modify-cns-name',  params });
 }
 
   /**
@@ -410,14 +390,14 @@ resellerclub.modifyChildNameServerHost = ({ orderId, oldCns, newCns }) => {
    * @return array API output.
    * @throws \Resellerclub\ApiConnectionException
    */
-resellerclub.modifyChildNameServerHost = ({ orderId, cns, oldIp, newIp }) => {
-    options = {
-      'order-id' : orderId,
-      'cns' : cns,
-      'old-ip' : oldIp,
-      'new-ip' : newIp,
+resellerclub.modifyChildNameServerHost = ({ params }) => {
+    params = {
+        'order-id': params['order-id'],
+        'cns': params['cns'],
+        'old-ip': params['old-ip'],
+        'new-ip': params['new-ip']
     }
-    return this.request({ request: 'post', url: 'domains/modify-cns-ip', params: options });
+    return this.request({ request: 'post', url: 'domains/modify-cns-ip',  params });
   }
 
   /**
@@ -431,12 +411,12 @@ resellerclub.modifyChildNameServerHost = ({ orderId, cns, oldIp, newIp }) => {
    * @throws \Resellerclub\ApiConnectionException
    */
 resellerclub.deleteChildNameServer = ({ orderId, cns, ip }) => {
-    options = {
+    params = {
       'order-id' : orderId,
       'cns' : cns,
       'ip' : ip,
     }
-    return this.request({ request: 'post', url: 'domains/delete-cns-ip', params: options });
+    return this.request({ request: 'post', url: 'domains/delete-cns-ip',  params });
   }
 
   /**
@@ -448,10 +428,8 @@ resellerclub.deleteChildNameServer = ({ orderId, cns, ip }) => {
    * @return array API output.
    * @throws \Resellerclub\ApiConnectionException
    */
-resellerclub.modifyDomainContacts = ({ orderId, contactIds }) => {
-    options = contactIds;
-    options['order-id'] = orderId
-    return this.request({ request: 'post', url: 'domains/modify-contact', params: options });
+resellerclub.modifyDomainContacts = ({ params }) => {
+    return this.request({ request: 'post', url: 'domains/modify-contact',  params });
   }
 
   /**
@@ -464,11 +442,11 @@ resellerclub.modifyDomainContacts = ({ orderId, contactIds }) => {
    * @throws \Resellerclub\ApiConnectionException
    */
 resellerclub.addPrivacyProtection = ({ orderId, invoiceOption }) => {
-    options = {
+    params = {
       'order-id' : orderId,
       'invoice-option' : invoiceOption,
     }
-    return this.request({ request: 'post', url: 'domains/purchase-privacy', params: options });
+    return this.request({ request: 'post', url: 'domains/purchase-privacy',  params });
   }
 
   /**
@@ -482,12 +460,12 @@ resellerclub.addPrivacyProtection = ({ orderId, invoiceOption }) => {
    * @throws \Resellerclub\ApiConnectionException
    */
    resellerclub.modifyPrivacyProtection = ({ orderId, protectPrivacy, reason }) => {
-     options = {
+     params = {
       'order-id' : orderId,
       'protect-privacy' : protectPrivacy,
       'reason' : reason,
     }
-    return this.request({ request: 'post', url: 'domains/modify-privacy-protection', params: options });
+    return this.request({ request: 'post', url: 'domains/modify-privacy-protection',  params });
   }
 
   /**
@@ -500,11 +478,11 @@ resellerclub.addPrivacyProtection = ({ orderId, invoiceOption }) => {
    * @throws \Resellerclub\ApiConnectionException
    */
    resellerclub.modifyAuthCode = ({ orderId, authCode }) => {
-    options = {
+    params = {
       'order-id'  : orderId,
       'auth-code'  : authCode,
     }
-    return this.request({ request: 'post', url: 'domains/modify-auth-code', params: options });
+    return this.request({ request: 'post', url: 'domains/modify-auth-code',  params });
   }
 
   /**
@@ -519,12 +497,12 @@ resellerclub.addPrivacyProtection = ({ orderId, invoiceOption }) => {
    */
    resellerclub.modifyTheftProtection = ({ orderId, status }) => {
     // Involves 2 API calls
-    options = {
+    params = {
       'order-id' : orderId,
     }
     apiCall = status ? 'enable-theft-protection': 'disable-theft-protection';
     url = 'domains/'+apiCall;
-    return this.request({ request: 'post', url: url, params: options });
+    return this.request({ request: 'post', url: url,  params });
   }
 
   /**
@@ -537,11 +515,11 @@ resellerclub.addPrivacyProtection = ({ orderId, invoiceOption }) => {
    * @throws \Resellerclub\ApiConnectionException
    */
 resellerclub.suspendDomain = ({ orderId, reason }) => {
-    options = {
+    params = {
       'order-id' : orderId,
       'reason' : reason,
     }
-    return this.request({ request: 'post', url: 'domains/suspend', params: options });
+    return this.request({ request: 'post', url: 'domains/suspend',  params });
   }
 
   /**
@@ -553,10 +531,10 @@ resellerclub.suspendDomain = ({ orderId, reason }) => {
    * @throws \Resellerclub\ApiConnectionException
    */
 resellerclub.unsuspendDomain = ({ orderId }) => {
-    options = {
+    params = {
       'order-id' :orderId,
     }
-    return this.request({ request: 'post', url: 'domains/unsuspend', params: options });
+    return this.request({ request: 'post', url: 'domains/unsuspend',  params });
   }
 
   /**
@@ -568,10 +546,10 @@ resellerclub.unsuspendDomain = ({ orderId }) => {
    * @throws \Resellerclub\ApiConnectionException
    */
    resellerclub.deleteDomain = ({ orderId }) => {
-      options = {
+      params = {
           'order-id' :orderId,
         }
-    return this.request({ request: 'post', url: 'domains/delete', params: options });
+    return this.request({ request: 'post', url: 'domains/delete',  params });
   }
 
   /**
@@ -584,11 +562,11 @@ resellerclub.unsuspendDomain = ({ orderId }) => {
    * @throws \Resellerclub\ApiConnectionException
    */
 resellerclub.restoreDomain = ({ orderId, invoiceOption }) => {
-    options = {
+    params = {
       'order-id' : orderId,
       'invoice-option' : invoiceOption
     }
-    return this.request({ request: 'post', url: 'domains/restore', params: options });
+    return this.request({ request: 'post', url: 'domains/restore',  params });
   }
 /** Products */
 
@@ -601,8 +579,8 @@ resellerclub.restoreDomain = ({ orderId, invoiceOption }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getPrincingCustomer = ({ customerId }) => {
-    customerDetails['customer-id'] = customerId;
-    return this.request({ request: 'post', url: 'products/customer-price', params: customerDetails });
+     params['customer-id'] = customerId;
+    return this.request({ request: 'post', url: 'products/customer-price',  params });
 }
 
 /**
@@ -613,8 +591,8 @@ resellerclub.getPrincingCustomer = ({ customerId }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getProductsKeysMapping = () => {
-    options = {};
-    return this.request({ request: 'post', url: 'products/category-keys-mapping', params: options });
+    params = {};
+    return this.request({ request: 'post', url: 'products/category-keys-mapping',  params });
 }
 
 /** Contacts  */
@@ -624,14 +602,14 @@ resellerclub.getProductsKeysMapping = () => {
  * Creates a contact with given contact details.
  *
  * @see http://manage.resellerclub.com/kb/answer/790
- * @param contactDetails array Details Contact details array as specified in API docs.
+ * @param params array Details Contact details array as specified in API docs.
  * @return array Output of the API call.
  * @throws \Resellerclub\ApiConnectionException
  */
 
-resellerclub.createContact = ({ contactDetails, extra_options }) => {
-    extra_options = typeof extra_options !== 'undefined' ? extra_options : false;
-    return this.request({ request: 'post', url: 'contacts/add', params: contactDetails, options: extra_options});
+resellerclub.createContact = ({ params, options }) => {
+    options = typeof  options !== 'undefined' ?  options : false;
+    return this.request({ request: 'post', url: 'contacts/add', params, options});
 }
 
 /**
@@ -642,10 +620,9 @@ resellerclub.createContact = ({ contactDetails, extra_options }) => {
  * @return array Output of API call
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.deleteContact = ({ contactId, extra_options }) => {
-    let contactDetails = {};
-    contactDetails = {'contact-id' : contactId};
-    return this.request({ request: 'post', url: 'contacts/delete', params: contactDetails, options: extra_options});
+resellerclub.deleteContact = ({ params, options }) => {
+    params = {'contact-id': params['contact-id']};
+    return this.request({ request: 'post', url: 'contacts/delete', params, options});
 }
 
 /**
@@ -653,13 +630,12 @@ resellerclub.deleteContact = ({ contactId, extra_options }) => {
  *
  * @see http://manage.resellerclub.com/kb/answer/791
  * @param contactId array ID of contact to modify.
- * @param contactDetails array Details of contact according to API docs.
+ * @param params array Details of contact according to API docs.
  * @return array Output of API call
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.editContact = ({ contactId, contactDetails, extra_options }) => {
-    contactDetails['contact-id'] = contactId;
-    return this.request({ request: 'post', url: 'contacts/edit', params: contactDetails, options: extra_options});
+resellerclub.editContact = ({ params, options }) => {
+    return this.request({ request: 'post', url: 'contacts/edit', params, options});
 }
 
 /**
@@ -671,8 +647,8 @@ resellerclub.editContact = ({ contactId, contactDetails, extra_options }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getContact = ({ contactId }) => {
-    contactDetails['contact-id'] = contactId;
-    return this.request({ request: 'get', url: 'contacts/details', params: contactDetails });
+    params['contact-id'] = contactId;
+    return this.request({ request: 'get', url: 'contacts/details', params });
 }
 
 /**
@@ -680,39 +656,36 @@ resellerclub.getContact = ({ contactId }) => {
  *
  * @see http://manage.resellerclub.com/kb/answer/793
  * @param customerId integer The Customer for which you want to get the Contact Details.
- * @param contactDetails array Parameters needed to search.
+ * @param params array Parameters needed to search.
  * @param int count Number of records to be shown per page.
  * @param int page Page number.
  * @return array Output of API call.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.searchContact = ({ contactId, contactDetails, count, page }) => {
+resellerclub.searchContact = ({ contactId, params, count, page }) => {
+    //ToDo handle page and count
     page = typeof page !== 'undefined' ? page : 1;
     count = typeof count !== 'undefined' ? count : 10;
-    contactDetails['customer-id'] = customerId;
-    contactDetails['no-of-records'] = count;
-    contactDetails['page-no'] = page;
-    return this.request({ request: 'get', url: 'contacts/search', params: contactDetails });
+    params['no-of-records'] = count;
+    params['page-no'] = page;
+    return this.request({ request: 'get', url: 'contacts/search', params });
 }
 
 /***DNS */
 
 /*Activate dns free*/
-resellerclub.activateDns = ({ options }) => {
-    // options["ext"] = 'xml';
-    params = { "order-id": options['order-id'] }
-    console.log('activateDns-lib-options', options)
-    return this.request({ request: 'post', url: 'dns/activate', params, options});
+resellerclub.activateDns = ({ params }) => {
+    return this.request({ request: 'post', url: 'dns/activate', params});
 }
 /*Add dns record in a domain*/
 resellerclub.addNsRecord = ({ domainName, options }) => {
-    options['domain-name'] = domainName;
-    return this.request({ request: 'post', url: 'dns/manage/add-ns-record', params: options });
+    params['domain-name'] = domainName;
+    return this.request({ request: 'post', url: 'dns/manage/add-ns-record',  params });
 }
 /* Add record A in domain */
 resellerclub.addARecord = ({ domainName, options }) => {
-    options['domain-name'] = domainName;
-    return this.request({ request: 'post', url: 'dns/manage/add-ipv4-record', params: options });
+    params['domain-name'] = domainName;
+    return this.request({ request: 'post', url: 'dns/manage/add-ipv4-record',  params });
 }
 /* add or UPDATE  RECORD  DNS recerod in domain
 txt -> https://manage.resellerclub.com/kb/node/1097 
@@ -720,36 +693,33 @@ mx -> https://manage.resellerclub.com/kb/node/1102
 cname -> https://manage.resellerclub.com/kb/node/1175
 */
 
-resellerclub.dnsRecord = ({ opt, options, extra_options }) => {
-    let urlAction = options['type'];
-    delete options['type'];
-    extra_options = typeof extra_options !== 'undefined' ? extra_options : false;
-    let keys_obj = Object.keys(options);
+resellerclub.dnsRecord = ({ type, params, options, isDelete }) => {
+    let keys_obj = Object.keys(params);
     let url = '';
-    if( urlAction.indexOf('Delete') !=-1  ? false : true )
-        url = ( keys_obj.indexOf('current-value') != -1 && keys_obj.indexOf('new-value') != -1 ) ? 'dns/manage/update-'+opt+'-record' : 'dns/manage/add-'+opt+'-record';
+    if(isDelete)
+        url = 'dns/manage/delete-'+type+'-record'
     else
-        url = 'dns/manage/delete-'+opt+'-record'
-    return this.request({ request: 'post', url: url, params: options, options: extra_options});
+        url = ( keys_obj.indexOf('current-value') != -1 && keys_obj.indexOf('new-value') != -1 ) ? 'dns/manage/update-'+type+'-record' : 'dns/manage/add-'+type+'-record';
+    return this.request({ request: 'post', url, params, options});
 }
 
 /* update record txt in domain
 https://manage.resellerclub.com/kb/node/1097 */
-resellerclub.updateTxtRecord = ({ domainName, options, extra_options }) => {
-    extra_options = typeof extra_options !== 'undefined' ? extra_options : false;
-    options['domain-name'] = domainName;
-    return this.request({ request: 'post', url: 'dns/manage/update-txt-record', params: options, options: extra_options});
+resellerclub.updateTxtRecord = ({ domainName, params, options }) => {
+    options = typeof  options !== 'undefined' ?  options : false;
+    params['domain-name'] = domainName;
+    return this.request({ request: 'post', url: 'dns/manage/update-txt-record', params, options});
 }
 
 /*Add record mx in domain*/
 resellerclub.addMxRecord = ({ domainName, options }) => {
-    options['domain-name'] = domainName;
-    return this.request({ request: 'post', url: 'dns/manage/add-mx-record', params: options });
+    params['domain-name'] = domainName;
+    return this.request({ request: 'post', url: 'dns/manage/add-mx-record',  params });
 }
 /*Add CName recrods in domain*/
 resellerclub.addCnameRecord = ({ domainName, options }) => {
-    options['domain-name'] = domainName;
-    return this.request({ request: 'post', url: 'dns/manage/add-cname-record', params: options });
+    params['domain-name'] = domainName;
+    return this.request({ request: 'post', url: 'dns/manage/add-cname-record',  params });
 }
 
 //Add all required records for CoCreate
@@ -833,13 +803,13 @@ resellerclub.addAllRecords = ({ domain }) => {
  * Creates a Customer Account using the details provided.
  *
  * @see http://manage.resellerclub.com/kb/answer/804
- * @param customerDetails array See reference.
+ * @param  params array See reference.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.createCustomer = ({ customerDetails, extra_options }) => {
-    extra_options = typeof extra_options !== 'undefined' ? extra_options : false;
-    return this.request({ request: 'post', url: 'customers/signup', params: customerDetails , options: extra_options });
+resellerclub.createCustomer = ({ params, options }) => {
+    options = typeof  options !== 'undefined' ?  options : false;
+    return this.request({ request: 'post', url: 'customers/signup', params, options });
 }
 
 
@@ -848,13 +818,12 @@ resellerclub.createCustomer = ({ customerDetails, extra_options }) => {
  *
  * @see http://manage.resellerclub.com/kb/answer/805
  * @param customerId integer Customer Id.
- * @param customerDetails array See reference.
+ * @param  params array See reference.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.editCustomer = ({ customerId, customerDetails, extra_options }) => {
-    customerDetails['customer-id'] = customerId;
-    return this.request({ request: 'post', url: 'customers/modify', params: customerDetails, options: extra_options });
+resellerclub.editCustomer = ({params,  options }) => {
+    return this.request({ request: 'post', url: 'customers/modify', params, options });
 }
 
 /**
@@ -866,8 +835,8 @@ resellerclub.editCustomer = ({ customerId, customerDetails, extra_options }) => 
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getCustomerByUserName = ({ userName }) => {
-    customerDetails['username'] = userName;
-    return this.request({ request: 'get', url: 'customers/details', params: customerDetails });
+     params['username'] = userName;
+    return this.request({ request: 'get', url: 'customers/details',  params });
 }
 
 /**
@@ -877,10 +846,10 @@ resellerclub.getCustomerByUserName = ({ userName }) => {
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.getCustomerByCustomerId = ({ customerId, extra_options }) => {
-    let customerDetails = [];
-    customerDetails['customer-id'] = customerId;
-    return this.request({ request: 'get', url: 'customers/details-by-id', params: customerDetails, options: extra_options });
+resellerclub.getCustomerByCustomerId = ({ customerId,  options }) => {
+    let  params = [];
+     params['customer-id'] = customerId;
+    return this.request({ request: 'get', url: 'customers/details-by-id', params, options });
 }
 
 /**
@@ -894,10 +863,10 @@ resellerclub.getCustomerByCustomerId = ({ customerId, extra_options }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.generateToken = ({ userName, password, ip }) => {
-    customerDetails['username'] = userName;
-    customerDetails['passwd'] = password;
-    customerDetails['ip'] = ip;
-    return this.request({ request: 'get', url: 'customers/generate-token', params: customerDetails });
+     params['username'] = userName;
+     params['passwd'] = password;
+     params['ip'] = ip;
+    return this.request({ request: 'get', url: 'customers/generate-token',  params });
 }
 
 /**
@@ -907,8 +876,8 @@ resellerclub.generateToken = ({ userName, password, ip }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.authenticateToken = ({ token }) => {
-    customerDetails['token'] = token;
-    return this.request({ request: 'post', url: 'customers/authenticate-token', params: customerDetails });
+     params['token'] = token;
+    return this.request({ request: 'post', url: 'customers/authenticate-token',  params });
 }
 
 /**
@@ -921,9 +890,9 @@ resellerclub.authenticateToken = ({ token }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.changePassword = ({ customerId, newPassword }) => {
-    customerDetails['customer-id'] = customerId;
-    customerDetails['new-passwd'] = newPassword;
-    return this.request({ request: 'post', url: 'customers/change-password', params: customerDetails });
+     params['customer-id'] = customerId;
+     params['new-passwd'] = newPassword;
+    return this.request({ request: 'post', url: 'customers/change-password',  params });
 }
 
 /**
@@ -935,26 +904,26 @@ resellerclub.changePassword = ({ customerId, newPassword }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.generateTemporaryPassword = ({ customerId }) => {
-    customerDetails['customer-id'] = customerId;
-    return this.request({ request: 'post', url: 'customers/temp-password', params: customerDetails });
+     params['customer-id'] = customerId;
+    return this.request({ request: 'post', url: 'customers/temp-password', params });
 }
 
 /**
  * Gets details of the Customers that match the Search criteria.
  *
  * @see http://manage.resellerclub.com/kb/answer/1270
- * @param customerDetails array Details of customer. See reference.
+ * @param  params array Details of customer. See reference.
  * @param int page Page number.
  * @param int count Number of records to fetch.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.searchCustomer = ({ customerDetails, count , page  }) => {
+resellerclub.searchCustomer = ({  params, count , page  }) => {
     page = typeof page !== 'undefined' ? page : 1;
     count = typeof count !== 'undefined' ? count : 10;
-    customerDetails['no-of-records'] = count;
-    customerDetails['page-no'] = page;
-    return this.request({ request: 'get', url: 'customers/search', params: customerDetails });
+     params['no-of-records'] = count;
+     params['page-no'] = page;
+    return this.request({ request: 'get', url: 'customers/search',  params });
 }
 
 /**
@@ -966,8 +935,8 @@ resellerclub.searchCustomer = ({ customerDetails, count , page  }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.forgotPassword = ({ userName }) => {
-    customerDetails['forgot-password'] = userName;
-    return this.request({ request: 'post', url: 'customers/forgot-password', params: customerDetails });
+     params['forgot-password'] = userName;
+    return this.request({ request: 'post', url: 'customers/forgot-password',  params });
 }
 
 /**
@@ -978,10 +947,10 @@ resellerclub.forgotPassword = ({ userName }) => {
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.deleteCustomer = ({ customerId , extra_options}) => {
-    let customerDetails = [];
-    customerDetails['customer-id'] = customerId;
-    return this.request({ request: 'post', url: 'customers/delete', params: customerDetails, options:extra_options });
+resellerclub.deleteCustomer = ({ customerId ,  options}) => {
+    let  params = [];
+    params['customer-id'] = customerId;
+    return this.request({ request: 'post', url: 'customers/delete', params, options });
 }
 
 /** Billing  */
@@ -994,10 +963,10 @@ resellerclub.deleteCustomer = ({ customerId , extra_options}) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getCustomerPricing = ({ customerId }) => {
-    options = {
+    params = {
         'customer-id' : customerId,
     }
-    return this.request({ request: 'get', url: 'products/customer-price', params: options });
+    return this.request({ request: 'get', url: 'products/customer-price',  params });
 }
 
 /**
@@ -1009,10 +978,10 @@ resellerclub.getCustomerPricing = ({ customerId }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getResellerPricing = ({ resellerId }) => {
-    options = {
+    params = {
         'reseller-id' : resellerId,
     }
-    return this.request({ request: 'get', url: 'products/reseller-price', params: options });
+    return this.request({ request: 'get', url: 'products/reseller-price',  params });
 }
 
 /**
@@ -1023,10 +992,10 @@ resellerclub.getResellerPricing = ({ resellerId }) => {
  * @return array API call output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.getResellerCostPricing = ({extra_options}) => {
-    extra_options = typeof extra_options !== 'undefined' ? extra_options : false;
-    options = {}
-    return this.request({ request: 'get', url: 'products/reseller-cost-price', params: options , options: extra_options});
+resellerclub.getResellerCostPricing = ({params, options}) => {
+    // options = typeof  options !== 'undefined' ?  options : false;
+    params = {'reseller-id': params['reseller-id']}
+    return this.request({ request: 'get', url: 'products/reseller-cost-price', params, options});
 }
 
 /**
@@ -1038,10 +1007,10 @@ resellerclub.getResellerCostPricing = ({extra_options}) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getCustomerTransactionDetails = ({ transactionIds }) => {
-    options = {
+    params = {
         'transaction-ids' : transactionIds,
     }
-    return this.request({ request: 'get', url: 'products/customer-transactions', params: options });
+    return this.request({ request: 'get', url: 'products/customer-transactions',  params });
 }
 
 /**
@@ -1053,10 +1022,10 @@ resellerclub.getCustomerTransactionDetails = ({ transactionIds }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getResellerTransactionDetails = ({ transactionIds }) => {
-    options =  {
+    params =  {
         'transaction-ids' : transactionIds,
     }
-    return this.request({ request: 'get', url: 'products/reseller-transactions', params: options });
+    return this.request({ request: 'get', url: 'products/reseller-transactions',  params });
 }
 
 /**
@@ -1071,11 +1040,11 @@ resellerclub.getResellerTransactionDetails = ({ transactionIds }) => {
 resellerclub.payTransactions = ({ invoiceIds, debitIds }) => {
     invoiceIds = typeof invoiceIds !== 'undefined' ? invoiceIds : [];
     debitIds = typeof debitIds !== 'undefined' ? debitIds : [];
-    options = {
+    params = {
         'invoice-ids' : invoiceIds,
         'debit-ids' : debitIds,
     }
-    return this.request({ request: 'post', url: 'billing/customer-pay', params: options });
+    return this.request({ request: 'post', url: 'billing/customer-pay',  params });
 }
 
 /**
@@ -1091,11 +1060,11 @@ resellerclub.payTransactions = ({ invoiceIds, debitIds }) => {
 resellerclub.cancelInvoiceDebitNote = ({ invoiceIds, debitIds }) => {
     invoiceIds = typeof invoiceIds !== 'undefined' ? invoiceIds : [];
     debitIds = typeof debitIds !== 'undefined' ? debitIds : [];
-    options = {
+    params = {
         'invoice-ids' : invoiceIds,
         'debit-ids' : debitIds,
     }
-    return this.request({ request: 'post', url: 'billing/cancel/customer-transactions', params: options });
+    return this.request({ request: 'post', url: 'billing/cancel/customer-transactions',  params });
 }
 
 /**
@@ -1107,10 +1076,10 @@ resellerclub.cancelInvoiceDebitNote = ({ invoiceIds, debitIds }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getCustomerBalance = ({ customerId }) => {
-    options = {
+    params = {
         'customer-id' :customerId,
     }
-    return this.request({ request: 'get', url: 'billing/customer-balance', params: options });
+    return this.request({ request: 'get', url: 'billing/customer-balance',  params });
 }
 
 /**
@@ -1124,50 +1093,50 @@ resellerclub.getCustomerBalance = ({ customerId }) => {
  */
 resellerclub.executeOrderWithoutPayment = ({ invoiceIds, cancelInvoice }) => {
     cancelInvoice = typeof cancelInvoice !== 'undefined' ? cancelInvoice : false;
-    options = {
+    params = {
         'invoice-ids' : invoiceIds,
         'cancel-invoice' : cancelInvoice,
     }
-    return this.request({ request: 'post', url: 'billing/execute-order-without-payment', params: options });
+    return this.request({ request: 'post', url: 'billing/execute-order-without-payment',  params });
 }
 
 /**
  * Gets a detailed list of Customer's Transactions, matching the search criteria.
  *
  * @see http://manage.resellerclub.com/kb/answer/964
- * @param options array Search criteria. See reference for options.
+ * @param params array Search criteria. See reference for options.
  * @param int page Page number.
  * @param int count Number of records to fetch.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
 /** ojo */
-resellerclub.searchCustomerTransaction = ({ options, page, count  }) => {
+resellerclub.searchCustomerTransaction = ({ params, page, count  }) => {
     page = typeof page !== 'undefined' ? page : 1;
     count = typeof count !== 'undefined' ? count : 10;
-    options['no-of-records'] = count;
-    options['page-no'] = page;
+    params['no-of-records'] = count;
+    params['page-no'] = page;
     //TODO: Check
-    return this.request({ request: 'get', url: 'billing/search/customer-transactions', params: options });
+    return this.request({ request: 'get', url: 'billing/search/customer-transactions',  params });
 }
 
 /**
  * Gets a detailed list of Reseller's Transactions, matching the search criteria.
  *
  * @see http://manage.resellerclub.com/kb/answer/1153
- * @param options array Search criteria. See reference for options.
+ * @param params array Search criteria. See reference for options.
  * @param int page Page number.
  * @param int count Number of records to fetch.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
 /** ojo */
-resellerclub.searchResellerTransaction = ({ options, page, count }) => {
+resellerclub.searchResellerTransaction = ({ params, page, count }) => {
     page = typeof page !== 'undefined' ? page : 1;
     count = typeof count !== 'undefined' ? count : 10;
-    options['no-of-records'] = count;
-    options['page-no'] = page;
-    return this.request({ request: 'get', url: 'billing/search/reseller-transactions', params: options });
+    params['no-of-records'] = count;
+    params['page-no'] = page;
+    return this.request({ request: 'get', url: 'billing/search/reseller-transactions',  params });
 }
 
 /**
@@ -1179,10 +1148,10 @@ resellerclub.searchResellerTransaction = ({ options, page, count }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getResellerBalance = ({ resellerId }) => {
-    options = {
+    params = {
         'reseller-id' : resellerId,
     }
-    return this.request({ request: 'get', url: 'billing/reseller-balance', params: options });
+    return this.request({ request: 'get', url: 'billing/reseller-balance',  params });
 }
 
 /**
@@ -1197,13 +1166,13 @@ resellerclub.getResellerBalance = ({ resellerId }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.discountInvoice = ({ invoiceId, discount, transactionKey, role }) => {
-    options = {
+    params = {
         'invoice-id' : invoiceId,
         'discount-without-tax': discount,
         'transaction-key' : transactionKey,
         'role' : role,
     }
-    return this.request({ request: 'post', url: 'billing/customer-processdiscount', params: options });
+    return this.request({ request: 'post', url: 'billing/customer-processdiscount',  params });
 }
 
 /**
@@ -1211,13 +1180,13 @@ resellerclub.discountInvoice = ({ invoiceId, discount, transactionKey, role }) =
  *
  * @see http://manage.resellerclub.com/kb/answer/1152
  * @param customerId integer Customer id.
- * @param options array Details like amount, see reference.
+ * @param params array Details like amount, see reference.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.addFundsCustomer = ({ customerId, options }) => {
-    options['customer-id'] = customerId;
-    return this.request({ request: 'post', url: 'billing/add-customer-fund', params: options });
+    params['customer-id'] = customerId;
+    return this.request({ request: 'post', url: 'billing/add-customer-fund',  params });
 }
 
 /**
@@ -1225,13 +1194,13 @@ resellerclub.addFundsCustomer = ({ customerId, options }) => {
  *
  * @see http://manage.resellerclub.com/kb/answer/1151
  * @param resellerId integer Reseller id.
- * @param options array Details like amount, see reference.
+ * @param params array Details like amount, see reference.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.addFundsReseller = ({ resellerId, options }) => {
-    options['reseller-id'] = resellerId;
-    return this.request({ request: 'post', url: 'billing/add-reseller-fund', params: options });
+    params['reseller-id'] = resellerId;
+    return this.request({ request: 'post', url: 'billing/add-reseller-fund',  params });
 }
 
 /**
@@ -1239,13 +1208,13 @@ resellerclub.addFundsReseller = ({ resellerId, options }) => {
  *
  * @see http://manage.resellerclub.com/kb/answer/1166
  * @param customerId integer Customer id.
- * @param options array Details like amount, see reference.
+ * @param params array Details like amount, see reference.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.addDebitNoteCustomer = ({ customerId, options }) => {
-    options['customer-id'] = customerId;
-    return this.request({ request: 'post', url: 'billing/add-customer-debit-note', params: options });
+    params['customer-id'] = customerId;
+    return this.request({ request: 'post', url: 'billing/add-customer-debit-note',  params });
 }
 
 /**
@@ -1253,13 +1222,13 @@ resellerclub.addDebitNoteCustomer = ({ customerId, options }) => {
  *
  * @see http://manage.resellerclub.com/kb/answer/1167
  * @param resellerId integer Reseller id.
- * @param options array Details like amount, see reference.
+ * @param params array Details like amount, see reference.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.addDebitNoteReseller = ({ resellerId, options }) => {
-    options['reseller-id'] = resellerId;
-    return this.request({ request: 'post', url: 'billing/add-reseller-debit-note', params: options });
+    params['reseller-id'] = resellerId;
+    return this.request({ request: 'post', url: 'billing/add-reseller-debit-note',  params });
 }
 
 /**
@@ -1272,11 +1241,11 @@ resellerclub.addDebitNoteReseller = ({ resellerId, options }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.suspendOrder = ({ orderId, reason }) => {
-    options = {
+    params = {
         'order-id' : orderId,
         'reason' :  reason,
     }
-    return this.request({ request: 'post', url: 'orders/suspend', params: options });
+    return this.request({ request: 'post', url: 'orders/suspend',  params });
 }
 
 /**
@@ -1288,46 +1257,46 @@ resellerclub.suspendOrder = ({ orderId, reason }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.unsuspendOrder = ({ orderId }) => {
-    options = {
+    params = {
         'order-id' : orderId,
     }
-    return this.request({ request: 'post', url: 'orders/unsuspend', params: options });
+    return this.request({ request: 'post', url: 'orders/unsuspend',  params });
 }
 
 /**
  * Gets the Current Actions based on the criteria specified.
  *
  * @see http://manage.resellerclub.com/kb/answer/908
- * @param options array Search parameters. See reference.
+ * @param params array Search parameters. See reference.
  * @param int page Page number.
  * @param int count Number of records to fetch.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.getCurrentActions = ({ options, page ,count }) => {
+resellerclub.getCurrentActions = ({ params, page ,count }) => {
     page = typeof page !== 'undefined' ? page : 1;
     count = typeof count !== 'undefined' ? count : 10;
-    options['no-of-records'] = count;
-    options['page-no'] = page;
-    return this.request({ request: 'get', url: 'actions/search-current', params: options });
+    params['no-of-records'] = count;
+    params['page-no'] = page;
+    return this.request({ request: 'get', url: 'actions/search-current',  params });
 }
 
 /**
  * Searches the Archived Actions based on the criteria specified.
  *
  * @see http://manage.resellerclub.com/kb/answer/909
- * @param options array Search parameters. See reference.
+ * @param params array Search parameters. See reference.
  * @param int page Page number.
  * @param int count Number of records to fetch.
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.getArchiveActions = ({ options, page, count }) => {
+resellerclub.getArchiveActions = ({ params, page, count }) => {
     page = typeof page !== 'undefined' ? page : 1;
     count = typeof count !== 'undefined' ? count : 10;
-    options['no-of-records'] = count;
-    options['page-no'] = page;
-    return this.request({ request: 'get', url: 'actions/search-archived', params: options });
+    params['no-of-records'] = count;
+    params['page-no'] = page;
+    return this.request({ request: 'get', url: 'actions/search-archived',  params });
 }
 
 /**
@@ -1339,10 +1308,10 @@ resellerclub.getArchiveActions = ({ options, page, count }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getLegalAggrement = ({ type }) => {
-    options = {
+    params = {
         'type' : type
     }
-    return this.request({ request: 'get', url: 'commons/legal-agreements', params: options });
+    return this.request({ request: 'get', url: 'commons/legal-agreements',  params });
 }
 
 /**
@@ -1354,11 +1323,11 @@ resellerclub.getLegalAggrement = ({ type }) => {
  */
 resellerclub.getAllowedPaymentGatewayCustomer = ({ customerId, paymentType }) => {
     paymentType = typeof paymentType !== 'undefined' ? paymentType : null;
-    options['customer-id'] = customerId;
+    params['customer-id'] = customerId;
     if (paymentType != null) {
-        options['payment-type'] = paymentType;
+        params['payment-type'] = paymentType;
     }
-    return this.request({ request: 'get', url: 'pg/allowedlist-for-customer', params: options });
+    return this.request({ request: 'get', url: 'pg/allowedlist-for-customer',  params });
 }
 
 /**
@@ -1366,8 +1335,8 @@ resellerclub.getAllowedPaymentGatewayCustomer = ({ customerId, paymentType }) =>
  * @return array Parsed output of API call
  */
 resellerclub.getAllowedPaymentGatewayReseller = () => {
-    options = {}
-    return this.request({ request: 'get', url: 'pg/list-for-reseller', params: options });
+    params = {}
+    return this.request({ request: 'get', url: 'pg/list-for-reseller',  params });
 }
 
 /**
@@ -1378,8 +1347,8 @@ resellerclub.getAllowedPaymentGatewayReseller = () => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.getCurrencyDetails = () => {
-    options = {}
-    return this.request({ request: 'get', url: 'currency/details', params: options });
+    params = {}
+    return this.request({ request: 'get', url: 'currency/details',  params });
 }
 
 /**
@@ -1389,8 +1358,8 @@ resellerclub.getCurrencyDetails = () => {
  * @return array Parsed output of API call
  */
 resellerclub.getCountryList = () => {
-    options = {}
-    return this.request({ request: 'get', url: 'currency/list', params: options });
+    params = {}
+    return this.request({ request: 'get', url: 'currency/list',  params });
 }
 
 /**
@@ -1401,10 +1370,10 @@ resellerclub.getCountryList = () => {
  * @return array Parsed output of API call
  */
 resellerclub.getStateList = ({ countryCode }) => {
-    options = {
+    params = {
         'country-code': countryCode,
     }
-    return this.request({ request: 'post', url: 'country/state-list', params: options });
+    return this.request({ request: 'post', url: 'country/state-list',  params });
 }
 
 
