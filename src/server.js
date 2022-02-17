@@ -1,8 +1,6 @@
-/* global Y */
 'use strict'
-const resellerclub = require("./lib/resellerclub");
+const resellerclub = require("./lib");
 const  api = require("@cocreate/api");
-const { checkAvailability } = require("./lib/resellerclub");
 
 class CoCreateDomain {
 	constructor(wsManager) {
@@ -16,6 +14,7 @@ class CoCreateDomain {
 			this.wsManager.on('domain',	(socket, data) => this.sendDomain(socket, data));
 		}
 	}
+
 	async sendDomain(socket, data) {
 		let params = data['data'];
         let type = data['type'];
@@ -104,13 +103,10 @@ class CoCreateDomain {
 					let tlds_list = ["company","business","com", "net", "biz", "tk","org","club","site","info","online","xyz"];
 					let domainName = params['domain-name']
 					let tlds = params['tlds']
-					console.log("-------tlds ", tlds)
-					tlds_list = validationForm( (typeof tlds != 'undefined' && tlds.length > 0) ? tlds : tlds_list, domainName);
-					console.log("tlds ", tlds_list)
+					params['tlds'] = validationForm( (typeof tlds != 'undefined' && tlds.length > 0) ? tlds : tlds_list, domainName);
 					var allPricing = await resellerclub.getResellerCostPricing({params, options: { apiUrl }});
-					let res = await resellerclub.checkAvailability({ domainName, tlds: tlds_list, suggestAlternatives: true})
-					console.log('----res', res)
-					response = await mergeDomains(allPricing, res, tlds_list, domainName)
+					let res = await resellerclub.checkAvailability({ params })
+					response = await mergeDomains(allPricing, res, params['tlds'], domainName)
 					break;
 			}
 			this.wsManager.send(socket, this.moduleName, { type, response })
@@ -130,7 +126,6 @@ class CoCreateDomain {
 }
 
 module.exports = CoCreateDomain;
-
 
 async function getElementFromArray($array, keyFind){
 	for(var key in $array){
@@ -169,14 +164,13 @@ async function getDomainsPrice($allPricing, $domains){
 	return $domainsWithPrice;
 }
 
-async function mergeDomains(allPricing, res_reseller, tlds_list, domainName){
+async function mergeDomains(allPricing, res_reseller, tlds, domainName){
 	let $data = await getDomainsPrice(allPricing, res_reseller)
 	let $domains = []
-	for(var tld in tlds_list){
+	for(var tld in tlds){
 		let $domain = {};
-		let $fulldomainname = domainName + "." + tlds_list[tld];
+		let $fulldomainname = domainName + "." + tlds[tld];
 		let row = await getElementFromArray($data, $fulldomainname);
-		// console.log('row', row)
 		$domain['name'] = $fulldomainname;
 		$domain['status'] = row[$fulldomainname]['status'];
 		$domain['price'] = typeof row[$fulldomainname]['price'] != 'undefined' ? row[$fulldomainname]['price'] : null;

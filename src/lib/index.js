@@ -96,10 +96,11 @@ this.request = ({ request, url, params, options }) => {
  * @return array API output.
  * @throws \Resellerclub\ApiConnectionException
  */
-resellerclub.checkAvailability = ({ domainName, tlds, suggestAlternatives, options}) => {
-    suggestAlternatives = typeof suggestAlternatives !== 'undefined' ? suggestAlternatives : false;
+resellerclub.checkAvailability = ({ params, options}) => {
+    let suggestAlternatives =  params['suggest-alternative']
+    params['suggest-alternative'] = typeof suggestAlternatives !== 'undefined' ? suggestAlternatives : false;
     options = {apiUrl: 'https://domaincheck.httpapi.com'}
-    return this.request({ request: 'get', url: 'domains/available', params: { 'domain-name': domainName, tlds, 'suggest-alternative': suggestAlternatives }, options});
+    return this.request({ request: 'get', url: 'domains/available', params, options});
 };
 
 /**
