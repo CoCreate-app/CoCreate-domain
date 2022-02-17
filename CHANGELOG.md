@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.1...v1.3.2) (2022-02-17)
+
+
+### Bug Fixes
+
+* update checkAvailability, relocate reseller lib to lib ([b897dc5](https://github.com/CoCreate-app/CoCreate-domain/commit/b897dc5d1c1a9a37b6cea267637d68d4da981a03))
+
 ## [1.3.1](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.0...v1.3.1) (2022-02-16)
 
 
