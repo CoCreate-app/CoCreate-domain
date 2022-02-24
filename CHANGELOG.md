@@ -1,3 +1,12 @@
+## [1.3.3](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.2...v1.3.3) (2022-02-24)
+
+
+### Bug Fixes
+
+* CoCreate.config replace CoCreate.app with * ([a027e0c](https://github.com/CoCreate-app/CoCreate-domain/commit/a027e0c064879a5b02f58f8080fcbe1b4af587a8))
+* get environemt and keys using dot notation ([75abb51](https://github.com/CoCreate-app/CoCreate-domain/commit/75abb51d125cb656ee7bed9e5a6261fca134314c))
+* use dot notation to get evnironment and keys ([e174dd5](https://github.com/CoCreate-app/CoCreate-domain/commit/e174dd5d3540092d879378e6a28b2ae83cce2484))
+
 ## [1.3.2](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.1...v1.3.2) (2022-02-17)
 
 
