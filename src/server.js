@@ -19,7 +19,6 @@ class CoCreateDomain {
 		let params = data['data'];
         let action = data['action'];
 		let environment;
-		let environment1;
 
     	 // connect domain reseller api
     	 try{
@@ -30,7 +29,6 @@ class CoCreateDomain {
 			} else {
 			  environment = org.apis[this.moduleName].environment;
 			}
-			console.log('org', environment)
 
 			var apiUrl = org.apis[this.moduleName][environment].apiUrl;//'https://httpapi.com'
             let apiKeys = {
@@ -38,8 +36,8 @@ class CoCreateDomain {
 				'clientSecret': org.apis[this.moduleName][environment].clientSecret,
 				apiUrl
 			}
-			console.log("domain ", action, apiKeys)
-            resellerclub.connect(apiKeys)
+
+			resellerclub.connect(apiKeys)
 				.then(res => console.log(res))
 				.catch(err => console.log(err));
             					

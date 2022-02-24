@@ -43,7 +43,6 @@ this.request = ({ request, url, params, options }) => {
             options = typeof options !== 'undefined' ? options : false;
             ext = typeof options['ext'] !== 'undefined' ? options['ext'] : 'json';
             apiUrl = typeof options['apiUrl'] !== 'undefined' ? options['apiUrl'] : this.apiUrl;
-            console.log('options', options, 'ext', ext)
             url_completa = apiUrl + '/api/' + url + '.' + ext;
             console.log(url_completa)          
             console.log(Qs.stringify(params_function, { arrayFormat: "repeat" }))
