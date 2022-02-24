@@ -17,8 +17,9 @@ class CoCreateDomain {
 
 	async sendDomain(socket, data) {
 		let params = data['data'];
-        let type = data['type'];
+        let action = data['action'];
 		let environment;
+		let environment1;
 
     	 // connect domain reseller api
     	 try{
@@ -27,15 +28,17 @@ class CoCreateDomain {
 			  environment = params['environment'];
 			  delete params['environment'];  
 			} else {
-			  environment = org['apis.' + this.moduleName + '.environment'];
+			  environment = org.apis[this.moduleName].environment;
 			}
-			var apiUrl = org['apis.'+this.moduleName+'.'+environment+'.apiUrl'];//'https://httpapi.com'
+			console.log('org', environment)
+
+			var apiUrl = org.apis[this.moduleName][environment].apiUrl;//'https://httpapi.com'
             let apiKeys = {
-				'clientID' :org['apis.'+this.moduleName+'.'+environment+'.clientID'],
-				'clientSecret':org['apis.'+this.moduleName+'.'+environment+'.clientSecret'],
+				'clientID': org.apis[this.moduleName][environment].clientID,
+				'clientSecret': org.apis[this.moduleName][environment].clientSecret,
 				apiUrl
 			}
-			console.log("domain ", type, apiKeys)
+			console.log("domain ", action, apiKeys)
             resellerclub.connect(apiKeys)
 				.then(res => console.log(res))
 				.catch(err => console.log(err));
@@ -45,13 +48,13 @@ class CoCreateDomain {
     	   	return false;
     	 }
 	 
-        let isDelete = (type.indexOf('Delete') != -1);
-        if (type.indexOf('Record') !== -1)
-        	type = type.substr(0, type.indexOf('Record')).toLowerCase();
+        let isDelete = (action.indexOf('Delete') != -1);
+        if (action.indexOf('Record') !== -1)
+        	action = action.substr(0, action.indexOf('Record')).toLowerCase();
 
 		let response;
 		try {
-			switch (type) {
+			switch (action) {
 				case 'executeAction':
 					console.log("params ", params)
 				break;
@@ -65,7 +68,7 @@ class CoCreateDomain {
 				case 'ipv6':
 				case 'svr':
 				case 'ns':
-					response = await resellerclub.dnsRecord({ type, params, options: { apiUrl }, isDelete });
+					response = await resellerclub.dnsRecord({ action, params, options: { apiUrl }, isDelete });
 					break;
 				case "customer":
 					if (!isDelete) {
@@ -109,19 +112,19 @@ class CoCreateDomain {
 					response = await mergeDomains(allPricing, res, params['tlds'], domainName)
 					break;
 			}
-			this.wsManager.send(socket, this.moduleName, { type, response })
+			this.wsManager.send(socket, this.moduleName, { action, response })
 		
 		} catch (error) {
-			this.handleError(socket, type, error)
+			this.handleError(socket, action, error)
 		}
 	}
 
-	handleError(socket, type, error) {
+	handleError(socket, action, error) {
 		const response = {
 		  'object': 'error',
 		  'data': error || error.response || error.response.data || error.response.body || error.message || error,
 		};
-		this.wsManager.send(socket, this.moduleName, { type, response })
+		this.wsManager.send(socket, this.moduleName, { action, response })
 	}	
 }
 
