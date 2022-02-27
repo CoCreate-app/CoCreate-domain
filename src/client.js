@@ -32,7 +32,7 @@ const CoCreateDomain = {
 
 api.init({
 	name: CoCreateDomain.name, 
-	module:	CoCreateDomain
+	component:	CoCreateDomain
 });
 
 export default CoCreateDomain;
