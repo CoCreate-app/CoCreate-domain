@@ -1,3 +1,10 @@
+## [1.3.11](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.10...v1.3.11) (2022-03-24)
+
+
+### Bug Fixes
+
+* bump cdn version ([51bb28e](https://github.com/CoCreate-app/CoCreate-domain/commit/51bb28ee4eb329a4045457b1c1c2108dbe002b20))
+
 ## [1.3.10](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.9...v1.3.10) (2022-03-22)
 
 
