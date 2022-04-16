@@ -1,3 +1,10 @@
+## [1.3.14](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.13...v1.3.14) (2022-04-16)
+
+
+### Bug Fixes
+
+* bump version to 1.14.1. contains modal message bug fixes ([02edef0](https://github.com/CoCreate-app/CoCreate-domain/commit/02edef045a8267eda2678d4a07d42b4275a6685f))
+
 ## [1.3.13](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.12...v1.3.13) (2022-04-15)
 
 
