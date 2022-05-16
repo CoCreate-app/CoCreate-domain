@@ -11,11 +11,11 @@ class CoCreateDomain {
 	
 	init() {
 		if (this.wsManager) {
-			this.wsManager.on('domain',	(socket, data) => this.sendDomain(socket, data));
+			this.wsManager.on('domain',	(socket, data, socketInfo) => this.sendDomain(socket, data, socketInfo));
 		}
 	}
 
-	async sendDomain(socket, data) {
+	async sendDomain(socket, data, socketInfo) {
 		let params = data['data'];
         let action = data['action'];
 		let environment;
@@ -110,7 +110,7 @@ class CoCreateDomain {
 					response = await mergeDomains(allPricing, res, params['tlds'], domainName)
 					break;
 			}
-			this.wsManager.send(socket, this.name, { action, response })
+			this.wsManager.send(socket, this.name, { action, response }, socketInfo)
 		
 		} catch (error) {
 			this.handleError(socket, action, error)
@@ -122,7 +122,7 @@ class CoCreateDomain {
 		  'object': 'error',
 		  'data': error || error.response || error.response.data || error.response.body || error.message || error,
 		};
-		this.wsManager.send(socket, this.name, { action, response })
+		this.wsManager.send(socket, this.name, { action, response }, socketInfo)
 	}	
 }
 
