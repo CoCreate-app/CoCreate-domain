@@ -1,3 +1,11 @@
+## [1.3.22](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.21...v1.3.22) (2022-05-19)
+
+
+### Bug Fixes
+
+* bump cdn version to 1.15.4 ([a1e85db](https://github.com/CoCreate-app/CoCreate-domain/commit/a1e85db1eb6aaab417c74184d4e0fa35a601dc80))
+* get orgId from socketInfo ([e30c3a8](https://github.com/CoCreate-app/CoCreate-domain/commit/e30c3a8a516bd5f325a2ff6c4b4e6b6aadeadf30))
+
 ## [1.3.21](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.20...v1.3.21) (2022-05-14)
 
 
