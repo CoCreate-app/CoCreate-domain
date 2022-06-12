@@ -1,3 +1,12 @@
+## [1.3.29](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.28...v1.3.29) (2022-06-12)
+
+
+### Bug Fixes
+
+* bump cdn version to 1.15.13 ([5537d0a](https://github.com/CoCreate-app/CoCreate-domain/commit/5537d0afca03817cefb7155318a55d7311834a8e))
+* update dependencies ([59ae321](https://github.com/CoCreate-app/CoCreate-domain/commit/59ae3215e8c15e1381fecc16adadb08ebc57fda0))
+* update modal btn to actions ([3f4cd78](https://github.com/CoCreate-app/CoCreate-domain/commit/3f4cd78e6635220b55e2dc36f6341aaaf998535a))
+
 ## [1.3.28](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.27...v1.3.28) (2022-06-02)
 
 
