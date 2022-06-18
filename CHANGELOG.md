@@ -1,3 +1,10 @@
+## [1.3.33](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.32...v1.3.33) (2022-06-18)
+
+
+### Bug Fixes
+
+* typo type - action ([87f661f](https://github.com/CoCreate-app/CoCreate-domain/commit/87f661f1903754107650afb12a110691d803f4af))
+
 ## [1.3.32](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.31...v1.3.32) (2022-06-18)
 
 
