@@ -113,11 +113,11 @@ class CoCreateDomain {
 			this.wsManager.send(socket, this.name, { action, response }, socketInfo)
 		
 		} catch (error) {
-			this.handleError(socket, action, error)
+			this.handleError(socket, action, error, socketInfo)
 		}
 	}
 
-	handleError(socket, action, error) {
+	handleError(socket, action, error, socketInfo) {
 		const response = {
 		  'object': 'error',
 		  'data': error || error.response || error.response.data || error.response.body || error.message || error,

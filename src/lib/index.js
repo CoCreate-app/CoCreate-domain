@@ -693,13 +693,13 @@ mx -> https://manage.resellerclub.com/kb/node/1102
 cname -> https://manage.resellerclub.com/kb/node/1175
 */
 
-resellerclub.dnsRecord = ({ type, params, options, isDelete }) => {
+resellerclub.dnsRecord = ({ action, params, options, isDelete }) => {
     let keys_obj = Object.keys(params);
     let url = '';
     if(isDelete)
-        url = 'dns/manage/delete-'+type+'-record'
+        url = 'dns/manage/delete-'+action+'-record'
     else
-        url = ( keys_obj.indexOf('current-value') != -1 && keys_obj.indexOf('new-value') != -1 ) ? 'dns/manage/update-'+type+'-record' : 'dns/manage/add-'+type+'-record';
+        url = ( keys_obj.indexOf('current-value') != -1 && keys_obj.indexOf('new-value') != -1 ) ? 'dns/manage/update-'+action+'-record' : 'dns/manage/add-'+action+'-record';
     return this.request({ request: 'post', url, params, options});
 }
 
