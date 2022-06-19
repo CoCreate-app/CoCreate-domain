@@ -1,3 +1,10 @@
+## [1.3.34](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.33...v1.3.34) (2022-06-19)
+
+
+### Bug Fixes
+
+* update templates to use placeholder ([de8e60b](https://github.com/CoCreate-app/CoCreate-domain/commit/de8e60bd746289120bccd87f4e46a76ce0ef9459))
+
 ## [1.3.33](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.32...v1.3.33) (2022-06-18)
 
 
