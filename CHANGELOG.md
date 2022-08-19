@@ -1,3 +1,10 @@
+## [1.3.44](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.43...v1.3.44) (2022-08-19)
+
+
+### Bug Fixes
+
+* renamed order-by and order-type to filter-order-name and filter-order-type ([b658b46](https://github.com/CoCreate-app/CoCreate-domain/commit/b658b4629ca62d0c53ef59c9570fd79667582377))
+
 ## [1.3.43](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.42...v1.3.43) (2022-08-01)
 
 
