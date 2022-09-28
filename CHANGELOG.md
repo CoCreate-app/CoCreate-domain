@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.47...v1.4.0) (2022-09-28)
+
+
+### Features
+
+* config is accessible from socket.config ([ab9f000](https://github.com/CoCreate-app/CoCreate-domain/commit/ab9f000b433efa799d4b8c0f5d36abd920a8e31b))
+
 ## [1.3.47](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.46...v1.3.47) (2022-09-22)
 
 
