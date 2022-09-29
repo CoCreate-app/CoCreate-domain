@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.0...v1.4.1) (2022-09-29)
+
+
+### Bug Fixes
+
+* config renameed to CoCreateConfig ([2f9745b](https://github.com/CoCreate-app/CoCreate-domain/commit/2f9745b1f11e0617476e541f0a2a10f50b839e61))
+
 # [1.4.0](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.3.47...v1.4.0) (2022-09-28)
 
 
