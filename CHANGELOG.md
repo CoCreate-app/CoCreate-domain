@@ -1,3 +1,10 @@
+## [1.4.7](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.6...v1.4.7) (2022-10-01)
+
+
+### Bug Fixes
+
+* bump dependencies ([33a92a7](https://github.com/CoCreate-app/CoCreate-domain/commit/33a92a7819730372391614bdafcf8db738aced0e))
+
 ## [1.4.6](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.5...v1.4.6) (2022-09-30)
 
 
