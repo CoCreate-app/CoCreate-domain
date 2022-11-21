@@ -1,3 +1,10 @@
+## [1.4.14](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.13...v1.4.14) (2022-11-21)
+
+
+### Bug Fixes
+
+* replaced document_id with document._id ([c5600f5](https://github.com/CoCreate-app/CoCreate-domain/commit/c5600f5cef9126a458f5edda9f8d21882baf32fc))
+
 ## [1.4.13](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.12...v1.4.13) (2022-11-21)
 
 
