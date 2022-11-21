@@ -1,3 +1,12 @@
+## [1.4.11](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.10...v1.4.11) (2022-11-21)
+
+
+### Bug Fixes
+
+* bump cdn to 1.28.7 ([cb61508](https://github.com/CoCreate-app/CoCreate-domain/commit/cb615089a6467c8e3742323ad6f9be7f6e9553cf))
+* bump cdn to 1.28.8 ([c8f3b35](https://github.com/CoCreate-app/CoCreate-domain/commit/c8f3b354732270f8560c64d2397b75671f2ca632))
+* filter-order attributes renamed to filter-sort ([71dfeb0](https://github.com/CoCreate-app/CoCreate-domain/commit/71dfeb07162dbfec96fe0ce3d1c87451fe45f322))
+
 ## [1.4.10](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.9...v1.4.10) (2022-10-02)
 
 
