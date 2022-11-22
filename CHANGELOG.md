@@ -1,3 +1,11 @@
+## [1.4.16](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.15...v1.4.16) (2022-11-22)
+
+
+### Bug Fixes
+
+* apply src: {{source}} to CoCreate.config ([b4d50b9](https://github.com/CoCreate-app/CoCreate-domain/commit/b4d50b945366a3b8d74e234226c26da81357f06a))
+* workflow docs ([4191a1c](https://github.com/CoCreate-app/CoCreate-domain/commit/4191a1c5ccbed612a518acf851edf713639a20a5))
+
 ## [1.4.15](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.14...v1.4.15) (2022-11-21)
 
 
