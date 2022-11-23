@@ -47,7 +47,7 @@ this.request = ({ request, url, params, options }) => {
             console.log(url_completa)          
             console.log(Qs.stringify(params_function, { arrayFormat: "repeat" }))
 
-            if(request === 'get'){
+            if (request === 'get'){
                 axios.get(url_completa, {
                     params: params_function,
                     paramsSerializer: function (params) {
@@ -696,7 +696,7 @@ cname -> https://manage.resellerclub.com/kb/node/1175
 resellerclub.dnsRecord = ({ action, params, options, isDelete }) => {
     let keys_obj = Object.keys(params);
     let url = '';
-    if(isDelete)
+    if (isDelete)
         url = 'dns/manage/delete-'+action+'-record'
     else
         url = ( keys_obj.indexOf('current-value') != -1 && keys_obj.indexOf('new-value') != -1 ) ? 'dns/manage/update-'+action+'-record' : 'dns/manage/add-'+action+'-record';

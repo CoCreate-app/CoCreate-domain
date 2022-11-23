@@ -131,7 +131,7 @@ module.exports = CoCreateDomain;
 async function getElementFromArray($array, keyFind){
 	for(var key in $array){
 		for(var j in $array[key]){
-			if(keyFind == j)
+			if (keyFind == j)
 				return $array[key];
 		}
 	}
@@ -142,13 +142,13 @@ async function getDomainsPrice($allPricing, $domains){
 	let $domainsWithPrice = [];
 	let $classKey = '';
 	let num_domains = Object.keys($domains).length;
-	if(num_domains  > 0) {
+	if (num_domains  > 0) {
 		for(var key in $domains){
 			let domain = key;
 			var row = {};
 			row[domain] = {};
 			row[domain]['status'] = ( $domains[domain].hasOwnProperty('status') && typeof $domains[domain]['status'] != 'undefined' ) ? $domains[domain]['status'] : '';
-			if(row[domain]['status'] == 'available' ) {
+			if (row[domain]['status'] == 'available' ) {
 				$classKey = $domains[domain]['classkey'];
 				row[domain]['classKey'] = $classKey;
 				let $prices = $allPricing[$classKey]['addnewdomain'];
@@ -184,7 +184,7 @@ async function mergeDomains(allPricing, res_reseller, tlds, domainName){
 
 function validationForm(tlds, domainName){
     let tlds_list = [];
-	if(typeof tlds != 'undefined' && tlds.length > 0)
+	if (typeof tlds != 'undefined' && tlds.length > 0)
 		tlds_list = tlds
 
 	if (domainName != ""){
