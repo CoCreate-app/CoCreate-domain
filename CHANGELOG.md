@@ -1,3 +1,10 @@
+## [1.4.33](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.32...v1.4.33) (2022-12-13)
+
+
+### Bug Fixes
+
+* removed un used devDependencies ([45b0573](https://github.com/CoCreate-app/CoCreate-domain/commit/45b05733903c73c74443ce9d8e52b87129ab2f58))
+
 ## [1.4.32](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.31...v1.4.32) (2022-12-13)
 
 
