@@ -1,3 +1,10 @@
+## [1.4.35](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.34...v1.4.35) (2022-12-15)
+
+
+### Bug Fixes
+
+* add missing dev dependency style-loader ([e8eba04](https://github.com/CoCreate-app/CoCreate-domain/commit/e8eba04aa30400e8bd73089e18a98157a68227ec))
+
 ## [1.4.34](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.33...v1.4.34) (2022-12-15)
 
 
