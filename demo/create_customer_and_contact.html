@@ -1,17 +1,12 @@
  <!DOCTYPE html>
 <html>
 <head>
- <title>Domain Customer with module crud</title>
-
-  <link href="https://cdn.cocreate.app/CoCreate.min.css" rel="stylesheet">
-
-	<style>
-
-
-	</style>
-</head>     
+	<title>Domain Customer with module crud</title>
+	<link href="https://cdn.cocreate.app/CoCreate.min.css" rel="stylesheet">
+</head>
+<body>
       
-      <form realtime="true" id="customer-form" collection="modules">
+    <form realtime="true" id="customer-form" collection="modules">
 		
 		<input document_id="jgjkghkjgkj" type="text" name="username" get-value="#email"  domain="username" placeholder="username" value="testcust+1@example.com"/>
 		<input type="text" name="email" domain="email" placeholder="Email" id="email" class="floating-label" value="testcust+1@example.com"/>
@@ -31,69 +26,48 @@
 		<!--<button class='createCustomerReseller submitBtn'>Send</button>-->
 		<button type="button" actions="registerCustomer, registerContact" id="register">click to sEND</button>
 	</form>
-
-
-
-  <script>
-    var CoCreateConfig = {
-      apiKey: 'c2b08663-06e3-440c-ef6f-13978b42883a',
-            organization_id: '5ff747727005da1c272740ab'
-    }
-    
-  </script>
   
-<!--  <script src="http://52.207.107.241:8080/js/socket.io.js"></script>
-  <script src="http://52.207.107.241:8080/js/CoCreate.js"></script>
-  -->
-  <!--<script src="http://52.207.107.241:8080/js/CoCreate-select2.js"></script>-->
-  <!--<script src="http://52.207.107.241:8080/js/CoCreate-floating-label.js"></script>-->
-  <!--<script src="https://cdn.cocreate.app/CoCreate.min.js"></script>-->
-  <script src="../js/Cocreate-APISocket.js"></script>
-  <script src="../js/Cocreate-domain.js"></script>
-    
-  <!--<script src="https://server.cocreate.app/CoCreateJS/dist/CoCreate.js"></script>-->
-  <!--<script src="https://server.cocreate.app/CoCreate-components/CoCreate-action/dist/CoCreate-action.js"></script>-->
 
+	<script type="text/javascript" >	
+		/*
+		setTimeout(function(){
+				console.log("Stage end eventRegisterCustomer");
+				document.dispatchEvent(new CustomEvent('eventRegisterCustomer'));
+				}, 5000)
+		*/
 
-<script type="text/javascript" >
+		var cocreateDomainRegisterAPi = new CocreateDomainAPi();
 
+		function registerCustomer(){
+			var btn = document.querySelector('button#register')
+			let dataToSend = cocreateDomainRegisterAPi.getDataJSON(btn,cocreateDomainRegisterAPi);
+			dataToSend['type'] = '.customerRecordBtn';
+			dataToSend = cocreateDomainRegisterAPi.manipulateDataToSend(btn,dataToSend);
+			console.log('customer from local => ',dataToSend)
+			console.log(dataToSend)
+			cocreateDomainRegisterAPi.socket(dataToSend,cocreateDomainRegisterAPi);
+		}
 
+		function registerContact(){
+		console.log("REgister registerContact")
+			var btn = document.querySelector('button#register')
+			let dataToSend = cocreateDomainRegisterAPi.getDataJSON(btn,cocreateDomainRegisterAPi);
+			var localstorage = window.sessionStorage
+			dataToSend['customer_id'] = localstorage['customer-id'];
+			dataToSend['type'] = '.contactRecordBtn';
+			dataToSend = cocreateDomainRegisterAPi.manipulateDataToSend(btn,dataToSend);
+			console.log('contact from local => ',dataToSend)
+			cocreateDomainRegisterAPi.socket(dataToSend,cocreateDomainRegisterAPi);
+		}
+			
+			
+		CoCreate.actions.registerEvent('registerCustomer', registerCustomer, window, 'eventRegisterCustomer')
+		CoCreate.actions.registerEvent('registerContact', registerContact, window, 'eventregisterContact')
 		
-/*
-setTimeout(function(){
-          console.log("Stage end eventRegisterCustomer");
-          document.dispatchEvent(new CustomEvent('eventRegisterCustomer'));
-        }, 5000)
-*/
+	</script>
 
-var cocreateDomainRegisterAPi = new CocreateDomainAPi();
+	<script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
 
-function registerCustomer(){
-	var btn = document.querySelector('button#register')
-	let dataToSend = cocreateDomainRegisterAPi.getDataJSON(btn,cocreateDomainRegisterAPi);
-	dataToSend['type'] = '.customerRecordBtn';
-	dataToSend = cocreateDomainRegisterAPi.manipulateDataToSend(btn,dataToSend);
-	console.log('customer from local => ',dataToSend)
-	console.log(dataToSend)
-    cocreateDomainRegisterAPi.socket(dataToSend,cocreateDomainRegisterAPi);
-}
-
-function registerContact(){
-console.log("REgister registerContact")
-	var btn = document.querySelector('button#register')
-	let dataToSend = cocreateDomainRegisterAPi.getDataJSON(btn,cocreateDomainRegisterAPi);
-	var localstorage = window.sessionStorage
-	dataToSend['customer_id'] = localstorage['customer-id'];
-	dataToSend['type'] = '.contactRecordBtn';
-	dataToSend = cocreateDomainRegisterAPi.manipulateDataToSend(btn,dataToSend);
-	console.log('contact from local => ',dataToSend)
-    cocreateDomainRegisterAPi.socket(dataToSend,cocreateDomainRegisterAPi);
-}
-  	
-  	
-  	CoCreate.actions.registerEvent('registerCustomer', registerCustomer, window, 'eventRegisterCustomer')
-    CoCreate.actions.registerEvent('registerContact', registerContact, window, 'eventregisterContact')
-      
-  </script>
-
+</body>
+</html>
 
