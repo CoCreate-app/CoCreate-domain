@@ -1,3 +1,10 @@
+## [1.4.45](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.44...v1.4.45) (2022-12-30)
+
+
+### Bug Fixes
+
+* update config sources to use template  braces with entry on src ([51cec40](https://github.com/CoCreate-app/CoCreate-domain/commit/51cec40469d4d5f801a9ff2eee4aa885aad5a40b))
+
 ## [1.4.44](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.43...v1.4.44) (2022-12-29)
 
 
