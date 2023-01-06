@@ -1,3 +1,11 @@
+## [1.4.49](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.48...v1.4.49) (2023-01-06)
+
+
+### Bug Fixes
+
+* bump dependencies, worklow [@v3](https://github.com/v3) ([86a0c53](https://github.com/CoCreate-app/CoCreate-domain/commit/86a0c5325ef97c45c0e77c70313bffa009e387c5))
+* edit in github btn styles ([50117e8](https://github.com/CoCreate-app/CoCreate-domain/commit/50117e82df9bc144e68f645dc38b8fb96d1d238e))
+
 ## [1.4.48](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.47...v1.4.48) (2023-01-05)
 
 
