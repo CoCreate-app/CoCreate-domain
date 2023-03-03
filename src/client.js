@@ -2,7 +2,7 @@ import api from '@cocreate/api'
 
 const CoCreateDomain = {
 	name: 'domain',
-	actions: {
+	endPoints: {
 		activateDns: {},
 		cnameRecord: {},
 		cnameRecordDelete: {},
@@ -30,9 +30,6 @@ const CoCreateDomain = {
 	}
 }
 
-api.init({
-	name: CoCreateDomain.name, 
-	component:	CoCreateDomain
-});
+api.init(CoCreateDomain);
 
 export default CoCreateDomain;
