@@ -8,8 +8,8 @@
       
     <form realtime="true" id="customer-form" collection="modules">
 		
-		<input document_id="jgjkghkjgkj" type="text" name="username" get-value="#email"  domain="username" placeholder="username" value="testcust+1@example.com"/>
-		<input type="text" name="email" domain="email" placeholder="Email" id="email" class="floating-label" value="testcust+1@example.com"/>
+		<input document_id="jgjkghkjgkj" type="text" name="username" domain="username" placeholder="username" value="testcust+1@example.com"/>
+		<input type="text" name="email" domain="email" placeholder="Email" id="email" class="floating-label" value="testcust+1@example.com" input-target="[name='username']" input-attribute="value" input-events="input, onload" />
 		<input type="text" name="passwd"  domain="passwd" placeholder="passwd" value="C123456789"/>
 		<input type="text" name="name"  domain="name" placeholder="name" value="Jane Doe"/>
 		<input type="text" name="company"  domain="company" placeholder="company" value="N/A"/>

@@ -1,3 +1,10 @@
+## [1.4.59](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.58...v1.4.59) (2023-03-15)
+
+
+### Bug Fixes
+
+* actions object renamed to endPoints ([21f6a77](https://github.com/CoCreate-app/CoCreate-domain/commit/21f6a77af282db9255525dc46953c0451eaa704a))
+
 ## [1.4.58](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.4.57...v1.4.58) (2023-02-01)
 
 
