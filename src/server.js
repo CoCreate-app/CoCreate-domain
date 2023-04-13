@@ -48,7 +48,7 @@ class CoCreateDomain {
 	 
         let isDelete = (action.indexOf('Delete') != -1);
         if (action.indexOf('Record') !== -1)
-        	action = action.substr(0, action.indexOf('Record')).toLowerCase();
+        	action = action.substring(0, action.indexOf('Record')).toLowerCase();
 
 		let response;
 		try {
