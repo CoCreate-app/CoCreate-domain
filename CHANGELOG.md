@@ -1,3 +1,10 @@
+## [1.5.7](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.5.6...v1.5.7) (2023-04-13)
+
+
+### Bug Fixes
+
+* replaced substr with substring ([f1d9582](https://github.com/CoCreate-app/CoCreate-domain/commit/f1d9582fac4dbfede4e337ab2d8016ac2f2a5f12))
+
 ## [1.5.6](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.5.5...v1.5.6) (2023-04-11)
 
 
