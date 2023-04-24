@@ -1,3 +1,10 @@
+## [1.6.3](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.2...v1.6.3) (2023-04-24)
+
+
+### Bug Fixes
+
+* workflow node version updated  16 ([f210bf7](https://github.com/CoCreate-app/CoCreate-domain/commit/f210bf7a36d25911d7a6e7c828378d66378bbb27))
+
 ## [1.6.2](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.1...v1.6.2) (2023-04-24)
 
 
