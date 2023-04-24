@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.0...v1.6.1) (2023-04-24)
+
+
+### Bug Fixes
+
+* removed uglifyjs-webpack-plugin ([2191daa](https://github.com/CoCreate-app/CoCreate-domain/commit/2191daa3e36d7a2e9d6633ad8e29439e59505c54))
+
 # [1.6.0](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.5.7...v1.6.0) (2023-04-24)
 
 
