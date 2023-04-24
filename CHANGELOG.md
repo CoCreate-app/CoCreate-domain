@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.3...v1.6.4) (2023-04-24)
+
+
+### Bug Fixes
+
+* updated worrkflows to v3 and node version 16 ([dea0768](https://github.com/CoCreate-app/CoCreate-domain/commit/dea0768233f73a80aad68fc76cd0bc41f36228ba))
+
 ## [1.6.3](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.2...v1.6.3) (2023-04-24)
 
 
