@@ -31,13 +31,13 @@ class CoCreateDomain {
 			}
 
 			var apiUrl = org.apis[this.name][environment].apiUrl;//'https://httpapi.com'
-            let apiKeys = {
+            let keys = {
 				'clientID': org.apis[this.name][environment].clientID,
 				'clientSecret': org.apis[this.name][environment].clientSecret,
 				apiUrl
 			}
 
-			resellerclub.connect(apiKeys)
+			resellerclub.connect(keys)
 				.then(res => console.log(res))
 				.catch(err => console.log(err));
             					
