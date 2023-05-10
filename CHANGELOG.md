@@ -1,3 +1,11 @@
+## [1.6.9](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.8...v1.6.9) (2023-05-10)
+
+
+### Bug Fixes
+
+* apikey renamed to key ([c435375](https://github.com/CoCreate-app/CoCreate-domain/commit/c43537594fea9484c5fd5db3f791981dc581f40a))
+* apikey renamed to key ([65fb323](https://github.com/CoCreate-app/CoCreate-domain/commit/65fb323b06c7a24042af891088794968f8546d7a))
+
 ## [1.6.8](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.7...v1.6.8) (2023-05-06)
 
 
