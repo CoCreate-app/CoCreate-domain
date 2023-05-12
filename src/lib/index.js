@@ -663,7 +663,7 @@ resellerclub.getContact = ({ contactId }) => {
  * @throws \Resellerclub\ApiConnectionException
  */
 resellerclub.searchContact = ({ contactId, params, count, page }) => {
-    // ToDo: handle page and count
+    // TODO: handle page and count
     page = typeof page !== 'undefined' ? page : 1;
     count = typeof count !== 'undefined' ? count : 10;
     params['no-of-records'] = count;
