@@ -1,145 +1,311 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Search Domain</title>
-		<link rel="icon" type="images/png" sizes="32x32" href="https://cocreate.app/images/favicon.ico">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Search Domain</title>
+        <link
+            rel="icon"
+            type="images/png"
+            sizes="32x32"
+            href="https://cocreate.app/images/favicon.ico" />
 
-		<!-- CoCreateCSS -->
-		<link rel="stylesheet" href="https://cdn.cocreate.app/latest/CoCreate.min.css" type="text/css" parse="true"/>
-		
-		<link rel="manifest" href="/manifest.webmanifest" />
-	</head>
-	
-	<style type="text/css">
-		.domain-price{visibility:hidden}
-		.domain-price.available{visibility:visible}
-		.icon.available:before{
-			color:green;
-			font-family: 'Font Awesome 5 Free';
-			content: "\f058";
-			font-weight: 900;
-		}
-		
-		.icon.Unavailable:before, .icon.unknown:before, .icon.regthroughothers:before, .icon.regthroughus:before{
-			color:red;
-			font-family: 'Font Awesome 5 Free';
-			content: "\f05e";
-			font-weight: 900;
-		}
-		.hidden.false{display: block;}
-		.tab.active{background:gainsboro;}
-	</style>
-	
-	<body class="padding:20px">
+        <!-- CoCreateCSS -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.cocreate.app/latest/CoCreate.min.css"
+            type="text/css"
+            parse="true" />
 
-		<div class="margin-top:20px display:flex">
-			<div class="padding:14px_21px border-radius:2px_2px_0_0 font-size:20px cursor:pointer background:silver background:darkgrey:hover background:gainsboro tab background:red@sm" show="#register" hide="#transfer">
-			 	<a href="#register"  toggle="active" toggle-target=".tab">Register</a>
-			</div>
-			<div class="padding:14px_21px border-radius:2px_2px_0_0 font-size:20px cursor:pointer background:silver background:darkgrey:hover tab" show="#transfer" hide="#register">
-			 	<a href="#transfer" toggle="active" toggle-target=".tab">Transfer</a>
-			</div>
-		</div>
-	
-		<div id='register' class="padding:10px background:gainsboro">
-		  
-			<form>
-				<div class="">
-					<label class="padding:5px"><input domain="checkAvailability.tlds" name="tlds" type="checkbox" value="net"/> net</label>
-					<label><input domain="checkAvailability.tlds" type="checkbox" name="tlds" value="com"/> com</label>
-				</div>
-				<div class="">
-					<input domain="checkAvailability.domain-name" type="text" class="floating-label" placeholder="Find your perfect domain" value="">
-					<a actions="checkAvailability" class="position:relative bottom:30px right:12px float:right z-index:5 font-size:20px padding:0px">
-						<i class="height:20px fill:#505050" src="/assets/svg/search.svg"></i>
-					</a>
-				</div>
-			</form>
-		  
-			<div class="card template margin:10px_0 background:white border-radius:5px padding:10px" template_id="checkAvailability">
-					
-				<div class="display:flex justify-content:space-between align-items:center width:100%">
-					
-					<div class="display:flex">
-						<div class="display:flex align-items:center">
-							<span class="icon status font-size:20px margin-right:10px"></span>
-						</div>
-						<div class="display:flex align-items:center  flex-wrap:wrap">
-							<h3 class="margin-right:10px">{{data.name}}</h3>
-							<div class="display:flex domain-price {{data.status}}">
-								<span>$</span><span>{{data.price}}</span><span>/year</span>
-							</div>
-						</div>
-					</div>
-					
-					<div class="display:flex">
-						<span class="margin-right:10px"><i class="height:16px fill:#505050" src="/assets/svg/heart.svg"></i></span>
-						<span><i class="height:16px fill:#505050" src="/assets/svg/shopping-cart.svg"></i></span>
-					</div>
-				</div>
-				<!--<h3 value="test.hey.name"></h3>-->
-				<form realtime="true" id="customer-form" collection="modules">
-					<input type="hidden" name="domain-name" domain="domain-name" value="name" placeholder="domain-name"/>
-				</form>
-			</div>
-		</div>
-				
-		<div id="transfer" class="background:gainsboro padding:10px" hidden>
-			<form>
-				<div  class="display:flex flex-wrap:wrap">
-					<div Class="flex-grow:1 padding:5px">
-						<input type="text" class="floating-label" name="domain-name"  domain="domain-name" placeholder="Domain Name" required="">
-					</div>
-					<div class="flex-grow:1 padding:5px">
-						<input type="text" name="transfer_auth_code" id="transfer_auth_code" class="floating-label" placeholder="Transfer Auth Code" required="">
-					</div>
-				</div>
-				<div class="margin:20px_5px padding:10px background:white border-left:3px_dodgerblue_solid">
-					<p>The Domain Transfer Auth Code</p>
-					<small style="font-weight: normal;">(Also known as: "Transfer Secret" or "EPP Auth Code")</small>
-					<p class="padding-top:10px">Needs to be obtained from the current Registrar of the domain name that you wish to transfer.</p>
-				</div>
-				<div class="padding:5px">
-					<button type="button" class="btn checkTransferRecordBtn">Check Transfer</button>
-				
-					<div class="card margin:10px" template_id="checktransfer">
-						<button type="button" class="btn btn-primary transfer_domain hidden status" id="transfer_domain">Transfer</button>
-					</div>
-				</div>
-			</form>
-		</div>
-			
-		<form hidden>
-			<input type="text" name="domain-name" domain="domain-name" value="name" placeholder="domain-name"/>
-			<select  name="years" domain="years" >
-				<option value="1">1 year</option>
-				<option value="2">2 year</option>
-			</select>
-			purchase-privacy <input type="checkbox" name="purchase-privacy" domain="purchase-privacy" placeholder="purchase-privacy"/><br>
-			protect-privacy <input type="checkbox" name="protect-privacy" domain="protect-privacy" placeholder="protect-privacy"/>
-			
-			<input type="text" name="ns" domain="ns" value="ns1.onlyfordemo.net,ns2.onlyfordemo.net" placeholder="ns"/>
-			<input type="text" name="customer-id" domain="customer-id" value="22216052" placeholder="customer-id"/>
-			<input type="text" name="contact-id" domain="contact-id" value="91369147" input-target=".contact-id" input-attribute="value" input-events="input, onload" placeholder="contact-id"/>
-			<input type="text" name="reg-contact-id" domain="reg-contact-id" class="contact-id" placeholder="reg-contact-id"/>
-			<input type="text" name="admin-contact-id" domain="admin-contact-id" class="contact-id" placeholder="admin-contact-id"/>
-			<input type="text" name="tech-contact-id" domain="tech-contact-id" class="contact-id" placeholder="tech-contact-id"/>
-			<input type="text" name="billing-contact-id" domain="billing-contact-id" class="contact-id" placeholder="billing-contact-id"/>
-			<input type="text" name="invoice-option" domain="invoice-option" value="NoInvoice" placeholder="invoice-option"/>
-			<input type="text" name="auto-renew" domain="auto-renew" placeholder="auto-renew"/>
-			<input type="text" name="attr-name" domain="attr-name" placeholder="attr-name"/>
-			<input type="text" name="attr-value" domain="attr-value" placeholder="attr-value"/>
-			<input type="text" name="discount-amount" domain="discount-amount" placeholder="discount-amount"/>
-			
-			<button class="btn btn-primary registerRecordBtn">Buy</button>
-		
-		</form>
+        <link rel="manifest" href="/manifest.webmanifest" />
+    </head>
 
-		<script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
-		<!--<script src="../dist/CoCreate-domain.js"></script>-->
+    <style type="text/css">
+        .domain-price {
+            visibility: hidden;
+        }
+        .domain-price.available {
+            visibility: visible;
+        }
+        .icon.available:before {
+            color: green;
+            font-family: "Font Awesome 5 Free";
+            content: "\f058";
+            font-weight: 900;
+        }
 
-	</body>
+        .icon.Unavailable:before,
+        .icon.unknown:before,
+        .icon.regthroughothers:before,
+        .icon.regthroughus:before {
+            color: red;
+            font-family: "Font Awesome 5 Free";
+            content: "\f05e";
+            font-weight: 900;
+        }
+        .hidden.false {
+            display: block;
+        }
+        .tab.active {
+            background: gainsboro;
+        }
+    </style>
+
+    <body class="padding:20px">
+        <div class="margin-top:20px display:flex">
+            <div
+                class="padding:14px_21px border-radius:2px_2px_0_0 font-size:20px cursor:pointer background:silver background:darkgrey:hover background:gainsboro tab background:red@sm"
+                show="#register"
+                hide="#transfer">
+                <a href="#register" toggle="active" toggle-target=".tab"
+                    >Register</a
+                >
+            </div>
+            <div
+                class="padding:14px_21px border-radius:2px_2px_0_0 font-size:20px cursor:pointer background:silver background:darkgrey:hover tab"
+                show="#transfer"
+                hide="#register">
+                <a href="#transfer" toggle="active" toggle-target=".tab"
+                    >Transfer</a
+                >
+            </div>
+        </div>
+
+        <div id="register" class="padding:10px background:gainsboro">
+            <form>
+                <div class="">
+                    <label class="padding:5px"
+                        ><input
+                            domain="checkAvailability.tlds"
+                            name="tlds"
+                            type="checkbox"
+                            value="net" />
+                        net</label
+                    >
+                    <label
+                        ><input
+                            domain="checkAvailability.tlds"
+                            type="checkbox"
+                            name="tlds"
+                            value="com" />
+                        com</label
+                    >
+                </div>
+                <div class="">
+                    <input
+                        domain="checkAvailability.domain-name"
+                        type="text"
+                        class="floating-label"
+                        placeholder="Find your perfect domain"
+                        value="" />
+                    <a
+                        actions="checkAvailability"
+                        class="position:relative bottom:30px right:12px float:right z-index:5 font-size:20px padding:0px">
+                        <i
+                            class="height:20px fill:#505050"
+                            src="/assets/svg/search.svg"></i>
+                    </a>
+                </div>
+            </form>
+
+            <div
+                class="card template margin:10px_0 background:white border-radius:5px padding:10px"
+                template_id="checkAvailability">
+                <div
+                    class="display:flex justify-content:space-between align-items:center width:100%">
+                    <div class="display:flex">
+                        <div class="display:flex align-items:center">
+                            <span
+                                class="icon status font-size:20px margin-right:10px"></span>
+                        </div>
+                        <div
+                            class="display:flex align-items:center flex-wrap:wrap">
+                            <h3 class="margin-right:10px">{{data.name}}</h3>
+                            <div
+                                class="display:flex domain-price {{data.status}}">
+                                <span>$</span><span>{{data.price}}</span
+                                ><span>/year</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="display:flex">
+                        <span class="margin-right:10px"
+                            ><i
+                                class="height:16px fill:#505050"
+                                src="/assets/svg/heart.svg"></i
+                        ></span>
+                        <span
+                            ><i
+                                class="height:16px fill:#505050"
+                                src="/assets/svg/shopping-cart.svg"></i
+                        ></span>
+                    </div>
+                </div>
+                <!--<h3 value="test.hey.name"></h3>-->
+                <form realtime="true" id="customer-form" collection="modules">
+                    <input
+                        type="hidden"
+                        name="domain-name"
+                        domain="domain-name"
+                        value="name"
+                        placeholder="domain-name" />
+                </form>
+            </div>
+        </div>
+
+        <div id="transfer" class="background:gainsboro padding:10px" hidden>
+            <form>
+                <div class="display:flex flex-wrap:wrap">
+                    <div class="flex-grow:1 padding:5px">
+                        <input
+                            type="text"
+                            class="floating-label"
+                            name="domain-name"
+                            domain="domain-name"
+                            placeholder="Domain Name"
+                            required="" />
+                    </div>
+                    <div class="flex-grow:1 padding:5px">
+                        <input
+                            type="text"
+                            name="transfer_auth_code"
+                            id="transfer_auth_code"
+                            class="floating-label"
+                            placeholder="Transfer Auth Code"
+                            required="" />
+                    </div>
+                </div>
+                <div
+                    class="margin:20px_5px padding:10px background:white border-left:3px_dodgerblue_solid">
+                    <p>The Domain Transfer Auth Code</p>
+                    <small style="font-weight: normal"
+                        >(Also known as: "Transfer Secret" or "EPP Auth
+                        Code")</small
+                    >
+                    <p class="padding-top:10px">
+                        Needs to be obtained from the current Registrar of the
+                        domain name that you wish to transfer.
+                    </p>
+                </div>
+                <div class="padding:5px">
+                    <button type="button" class="btn checkTransferRecordBtn">
+                        Check Transfer
+                    </button>
+
+                    <div class="card margin:10px" template_id="checktransfer">
+                        <button
+                            type="button"
+                            class="btn btn-primary transfer_domain hidden status"
+                            id="transfer_domain">
+                            Transfer
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <form hidden>
+            <input
+                type="text"
+                name="domain-name"
+                domain="domain-name"
+                value="name"
+                placeholder="domain-name" />
+            <select name="years" domain="years">
+                <option value="1">1 year</option>
+                <option value="2">2 year</option>
+            </select>
+            purchase-privacy
+            <input
+                type="checkbox"
+                name="purchase-privacy"
+                domain="purchase-privacy"
+                placeholder="purchase-privacy" /><br />
+            protect-privacy
+            <input
+                type="checkbox"
+                name="protect-privacy"
+                domain="protect-privacy"
+                placeholder="protect-privacy" />
+
+            <input
+                type="text"
+                name="ns"
+                domain="ns"
+                value="ns1.onlyfordemo.net,ns2.onlyfordemo.net"
+                placeholder="ns" />
+            <input
+                type="text"
+                name="customer-id"
+                domain="customer-id"
+                value="22216052"
+                placeholder="customer-id" />
+            <input
+                type="text"
+                name="contact-id"
+                domain="contact-id"
+                value="91369147"
+                input-target=".contact-id"
+                input-attribute="value"
+                input-events="input, onload"
+                placeholder="contact-id" />
+            <input
+                type="text"
+                name="reg-contact-id"
+                domain="reg-contact-id"
+                class="contact-id"
+                placeholder="reg-contact-id" />
+            <input
+                type="text"
+                name="admin-contact-id"
+                domain="admin-contact-id"
+                class="contact-id"
+                placeholder="admin-contact-id" />
+            <input
+                type="text"
+                name="tech-contact-id"
+                domain="tech-contact-id"
+                class="contact-id"
+                placeholder="tech-contact-id" />
+            <input
+                type="text"
+                name="billing-contact-id"
+                domain="billing-contact-id"
+                class="contact-id"
+                placeholder="billing-contact-id" />
+            <input
+                type="text"
+                name="invoice-option"
+                domain="invoice-option"
+                value="NoInvoice"
+                placeholder="invoice-option" />
+            <input
+                type="text"
+                name="auto-renew"
+                domain="auto-renew"
+                placeholder="auto-renew" />
+            <input
+                type="text"
+                name="attr-name"
+                domain="attr-name"
+                placeholder="attr-name" />
+            <input
+                type="text"
+                name="attr-value"
+                domain="attr-value"
+                placeholder="attr-value" />
+            <input
+                type="text"
+                name="discount-amount"
+                domain="discount-amount"
+                placeholder="discount-amount" />
+
+            <button class="btn btn-primary registerRecordBtn">Buy</button>
+        </form>
+
+        <script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
+        <!--<script src="../dist/CoCreate-domain.js"></script>-->
+    </body>
 </html>
