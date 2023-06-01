@@ -1,41 +1,34 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-<head>
- <title>Domain Customer | Canme record</title>
+    <head>
+        <title>Domain Customer | Canme record</title>
+    </head>
+    <body>
+        <h1>DKIM1</h1>
+        <form style="margin: 1em 0em">
+            <input domain="executeAction.id" value="id-two" />
 
- </head>
- <body>   
-    <h1>DKIM1</h1>
-    <form style="margin: 1em 0em;">
-        
-        <input domain="executeAction.id" value="id-two">
+            <button actions="executeAction">Excuete1</button>
+        </form>
+        <h1>DKIM2</h1>
+        <form style="margin: 1em 0em">
+            <input domain="executeAction.id" value="id-three" />
 
-        <button 
-        		actions='executeAction'>Excuete1</button>
-    </form>
-    <h1>DKIM2</h1>
-    <form style="margin: 1em 0em;">
-        
-        <input domain="executeAction.id" value="id-three">
+            <button id="id-two" actions="executeAction">exce2</button>
+        </form>
+        <h1>Cname</h1>
+        <form style="margin: 1em 0em">
+            <input
+                type="text"
+                domain="cnameRecord.domain-name"
+                value="cocreatejs.com"
+                placeholder="Domain Id"
+                class="floating-label" />
 
-        <button id="id-two"
-        		actions='executeAction'>exce2</button>
-    </form>
-    <h1>Cname</h1>
-    <form style="margin: 1em 0em;">
-        <input 
-                type="text" 
-                domain="cnameRecord.domain-name" 
-                value="cocreatejs.com" 
-                placeholder="Domain Id" 
-                class="floating-label">
-        
-        <button id="id-three"
-        		actions='cnameRecord'>Exce3</button>
-	
-	</form>
+            <button id="id-three" actions="cnameRecord">Exce3</button>
+        </form>
 
-  <!--CoCreateJS-->
-  <script src="https://cdn.cocreate.app/latest/CoCreate.min.js" ></script>
-</body>
+        <!--CoCreateJS-->
+        <script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
+    </body>
 </html>

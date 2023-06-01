@@ -1,24 +1,69 @@
+<!DOCTYPE html>
 <form collection="organization">
+    <input
+        type="text"
+        name="name"
+        domain="contactRecord.name"
+        placeholder="name" />
+    <input
+        type="text"
+        name="company"
+        domain="contactRecord.company"
+        placeholder="company" />
+    <input
+        type="text"
+        name="email"
+        domain="contactRecord.email"
+        placeholder="email" />
+    <input
+        type="text"
+        name="address-line-1"
+        domain="contactRecord.address-line-1"
+        placeholder="address-line-1" />
+    <input
+        type="text"
+        name="city"
+        domain="contactRecord.city"
+        placeholder="city" />
+    <input
+        type="text"
+        name="country"
+        domain="contactRecord.country"
+        placeholder="country" />
+    <input
+        type="text"
+        name="zipcode"
+        domain="contactRecord.zipcode"
+        placeholder="zipcode" />
+    <input
+        type="text"
+        name="phone-cc"
+        domain="contactRecord.phone-cc"
+        placeholder="phone-cc" />
+    <input
+        type="text"
+        name="phone"
+        domain="contactRecord.phone"
+        placeholder="phone" />
+    <input
+        type="text"
+        name="customer_id"
+        domain="contactRecord.customer_id"
+        placeholder="customer-id" />
+    <input
+        type="text"
+        name="contact_type"
+        domain="contactRecord.contact_type"
+        placeholder="contact_type('Contact')" />
 
+    <input
+        document_id=""
+        name="contact-id"
+        domain="contactRecordDelete.contact-id" />
 
-<input type="text" name="name" domain="contactRecord.name" placeholder="name"/>
-<input type="text" name="company" domain="contactRecord.company" placeholder="company"/>
-<input type="text" name="email" domain="contactRecord.email" placeholder="email"/>
-<input type="text" name="address-line-1" domain="contactRecord.address-line-1" placeholder="address-line-1"/>
-<input type="text" name="city" domain="contactRecord.city" placeholder="city"/>
-<input type="text" name="country" domain="contactRecord.country" placeholder="country"/>
-<input type="text" name="zipcode" domain="contactRecord.zipcode" placeholder="zipcode"/>
-<input type="text" name="phone-cc" domain="contactRecord.phone-cc" placeholder="phone-cc"/>
-<input type="text" name="phone" domain="contactRecord.phone" placeholder="phone"/>
-<input type="text" name="customer_id" domain="contactRecord.customer_id" placeholder="customer-id"/>
-<input type="text" name="contact_type" domain="contactRecord.contact_type" placeholder="contact_type('Contact')"/>
-
-<input document_id="" name='contact-id' domain="contactRecordDelete.contact-id">
-
-
-<button actions='contactRecord'>Send</button>
-<button actions='contactRecordDelete'>Delete</button>
+    <button actions="contactRecord">Send</button>
+    <button actions="contactRecordDelete">Delete</button>
 </form>
-  
+
 <!--<script src="../../dist/CoCreate-domain.js"></script>-->
 <script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>

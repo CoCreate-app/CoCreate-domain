@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Domain Customer | CNAME record</title>
-    <link rel="manifest" href="/manifest.webmanifest">
-</head>  
-<body>
-  <h1>Update cname</h1>
-  <form>	
-    <input type="text" 
-        domain="cnameRecord.domain-name" 
-        value="cocreatejs.com" 
-        placeholder="Domain Id" class="floating-label">
-    <input type="text" 
-        domain="cnameRecord.current-value" 
-        placeholder="current-value" class="floating-label">
-    <input type="text" 
-        domain="cnameRecord.new-value" 
-        placeholder="new-value" class="floating-label">
+    <head>
+        <title>Domain Customer | CNAME record</title>
+        <link rel="manifest" href="/manifest.webmanifest" />
+    </head>
+    <body>
+        <h1>Update cname</h1>
+        <form>
+            <input
+                type="text"
+                domain="cnameRecord.domain-name"
+                value="cocreatejs.com"
+                placeholder="Domain Id"
+                class="floating-label" />
+            <input
+                type="text"
+                domain="cnameRecord.current-value"
+                placeholder="current-value"
+                class="floating-label" />
+            <input
+                type="text"
+                domain="cnameRecord.new-value"
+                placeholder="new-value"
+                class="floating-label" />
 
-		 <button actions='cnameRecord'>SendData Cname</button>
-		    
-	</form>
+            <button actions="cnameRecord">SendData Cname</button>
+        </form>
 
-    <!-- CoCreateJS -->
-    <script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
-    <!-- <script src="../dist/CoCreate-domain.js"></script> -->
-
-
-  </body>
+        <!-- CoCreateJS -->
+        <script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
+        <!-- <script src="../dist/CoCreate-domain.js"></script> -->
+    </body>
 </html>

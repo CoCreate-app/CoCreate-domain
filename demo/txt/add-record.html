@@ -1,32 +1,39 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-<head>
- <title>Domain Customer | txt record</title>
+    <head>
+        <title>Domain Customer | txt record</title>
 
-    <link rel="manifest" href="/manifest.webmanifest">
-</head>
-  <body>  
-      <h1>Add txt RECORD to Domain</h1>
-      <form realtime="true" id="customer-form" collection="modules">
-      	
-<!--
+        <link rel="manifest" href="/manifest.webmanifest" />
+    </head>
+    <body>
+        <h1>Add txt RECORD to Domain</h1>
+        <form realtime="true" id="customer-form" collection="modules">
+            <!--
 domain-name	
 value	String	-->
 
-<input type="text" domain="txtRecord.domain-name" value="cocreatejs.com" placeholder="Domain Id" class="floating-label">
-<input type="text" domain="txtRecord.value" placeholder="Value TXT" class="floating-label">
+            <input
+                type="text"
+                domain="txtRecord.domain-name"
+                value="cocreatejs.com"
+                placeholder="Domain Id"
+                class="floating-label" />
+            <input
+                type="text"
+                domain="txtRecord.value"
+                placeholder="Value TXT"
+                class="floating-label" />
 
-      	<!--
+            <!--
 		<input type="text" document_id="5debebdd189f212c8ebd0156" name="customer-id" id="customer-id"  domain="customer-id" placeholder="Id customer" class="floating-label">
 		<input type="text" document_id="5debebdd189f212c8ebd0156" name="contact-id"  id="contact-id" placeholder="Contact ID" class="floating-label">
 		
 		-->
-		 
-		 <button actions='txtRecord'>SendData txt</button>
-		    
-	</form>
 
-<!--<script src="../../dist/CoCreate-domain.js"></script>-->
-<script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
-</body>
+            <button actions="txtRecord">SendData txt</button>
+        </form>
+
+        <!--<script src="../../dist/CoCreate-domain.js"></script>-->
+        <script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
+    </body>
 </html>

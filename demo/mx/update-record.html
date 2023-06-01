@@ -1,36 +1,47 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-<head>
- <title>Domain Customer | MX record</title>
+    <head>
+        <title>Domain Customer | MX record</title>
 
- <head>     
-      <h1>update  RECORD to Domain</h1>
-      <form realtime="true" id="customer-form" collection="modules">
-      	
-<!--
+        <head>
+            <h1>update RECORD to Domain</h1>
+            <form realtime="true" id="customer-form" collection="modules">
+                <!--
 domain-name	
 value	String	-->
 
-<input type="text" domain="mxRecord.domain-name" value="cocreatejs.com" placeholder="Domain Id" class="floating-label">
-<input type="text" domain="mxRecord.current-value" placeholder="current-value" class="floating-label">
-<input type="text" domain="mxRecord.new-value" placeholder="new-value" class="floating-label">
+                <input
+                    type="text"
+                    domain="mxRecord.domain-name"
+                    value="cocreatejs.com"
+                    placeholder="Domain Id"
+                    class="floating-label" />
+                <input
+                    type="text"
+                    domain="mxRecord.current-value"
+                    placeholder="current-value"
+                    class="floating-label" />
+                <input
+                    type="text"
+                    domain="mxRecord.new-value"
+                    placeholder="new-value"
+                    class="floating-label" />
 
-      	<!--
+                <!--
 		<input type="text" document_id="5debebdd189f212c8ebd0156" name="customer-id" id="customer-id"  domain="customer-id" placeholder="Id customer" class="floating-label">
 		<input type="text" document_id="5debebdd189f212c8ebd0156" name="contact-id"  id="contact-id" placeholder="Contact ID" class="floating-label">
 		
 		-->
-		 
-		 <button actions='mxRecordBtn'>SendData MX</button>
-		    
-	</form>
 
+                <button actions="mxRecordBtn">SendData MX</button>
+            </form>
 
+            <!--CoCreateJS-->
 
+            <!--CoCreate Plugins-->
 
-<!--CoCreateJS-->
-
-<!--CoCreate Plugins-->
-
-<!--<script src="../../dist/CoCreate-domain.js"></script>-->
-<script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
+            <!--<script src="../../dist/CoCreate-domain.js"></script>-->
+            <script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
+        </head>
+    </head>
+</html>
