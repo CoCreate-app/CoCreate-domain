@@ -1,3 +1,10 @@
+## [1.6.12](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.11...v1.6.12) (2023-06-02)
+
+
+### Bug Fixes
+
+* format demo html ([70dcf02](https://github.com/CoCreate-app/CoCreate-domain/commit/70dcf024160eb12158781d2ed5259ae5cd9bcb39))
+
 ## [1.6.11](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.10...v1.6.11) (2023-05-21)
 
 
