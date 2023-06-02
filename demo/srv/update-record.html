@@ -1,29 +1,43 @@
- <!DOCTYPE html>
-<html>
-<head>
- <title>Domain Customer | UPDATE record</title>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Domain Customer | UPDATE record</title>
 
- <head>     
-      <h1>Add  RECORD to Domain</h1>
-      <form realtime="true" id="customer-form" collection="modules">
-      	
-<!--
+        <head>
+            <h1>Add RECORD to Domain</h1>
+            <form realtime="true" id="customer-form" collection="modules">
+                <!--
 domain-name	
 value	String	-->
 
-<input type="text" domain="domain-name" value="cocreatejs.com" placeholder="Domain Id" class="floating-label">
-<input type="text" domain="current-value" placeholder="current-value" class="floating-label">
-<input type="text" domain="new-value" placeholder="new-value" class="floating-label">
+                <input
+                    type="text"
+                    domain="domain-name"
+                    value="cocreatejs.com"
+                    placeholder="Domain Id"
+                    class="floating-label" />
+                <input
+                    type="text"
+                    domain="current-value"
+                    placeholder="current-value"
+                    class="floating-label" />
+                <input
+                    type="text"
+                    domain="new-value"
+                    placeholder="new-value"
+                    class="floating-label" />
 
-      	<!--
+                <!--
 		<input type="text" document_id="5debebdd189f212c8ebd0156" name="customer-id" id="customer-id"  domain="customer-id" placeholder="Id customer" class="floating-label">
 		<input type="text" document_id="5debebdd189f212c8ebd0156" name="contact-id"  id="contact-id" placeholder="Contact ID" class="floating-label">
 		
 		-->
-		 
-		 <button class='srvRecordBtn'>SendData srv</button>
-		    
-	</form>
 
-<!--<script src="../../js/Cocreate-domain.js"></script>-->
-<script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
+                <button class="srvRecordBtn">SendData srv</button>
+            </form>
+
+            <!--<script src="../../js/Cocreate-domain.js"></script>-->
+            <script src="https://cdn.cocreate.app/latest/CoCreate.min.js"></script>
+        </head>
+    </head>
+</html>
