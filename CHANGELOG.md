@@ -1,3 +1,10 @@
+## [1.6.20](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.19...v1.6.20) (2023-06-11)
+
+
+### Bug Fixes
+
+* @cocreate/cli moved to dependencies ([86bf091](https://github.com/CoCreate-app/CoCreate-domain/commit/86bf091dad9a36d8230ba724498ebcd87817ef87))
+
 ## [1.6.19](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.18...v1.6.19) (2023-06-11)
 
 
