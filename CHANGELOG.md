@@ -1,3 +1,10 @@
+## [1.6.26](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.25...v1.6.26) (2023-06-11)
+
+
+### Bug Fixes
+
+* testing workflow ([0596d86](https://github.com/CoCreate-app/CoCreate-domain/commit/0596d8692eef789d8951cbf127a3049de845e95c))
+
 ## [1.6.25](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.24...v1.6.25) (2023-06-11)
 
 
