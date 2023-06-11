@@ -1,3 +1,10 @@
+## [1.6.21](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.20...v1.6.21) (2023-06-11)
+
+
+### Bug Fixes
+
+* postintall error ([4eb2879](https://github.com/CoCreate-app/CoCreate-domain/commit/4eb287933dbea72fbb1a14f74168960b6e0be692))
+
 ## [1.6.20](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.19...v1.6.20) (2023-06-11)
 
 
