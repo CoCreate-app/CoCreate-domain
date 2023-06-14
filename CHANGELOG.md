@@ -1,3 +1,10 @@
+## [1.6.29](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.28...v1.6.29) (2023-06-14)
+
+
+### Bug Fixes
+
+* Update dependencies versions for [@cocreate](https://github.com/cocreate) libraries ([add24f9](https://github.com/CoCreate-app/CoCreate-domain/commit/add24f9be998a2e80207d19570e0374fb3ac8d12))
+
 ## [1.6.28](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.27...v1.6.28) (2023-06-11)
 
 
