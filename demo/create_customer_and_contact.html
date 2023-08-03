@@ -8,9 +8,9 @@
         <link rel="manifest" href="/manifest.webmanifest" />
     </head>
     <body>
-        <form realtime="true" id="customer-form" collection="modules">
+        <form realtime="true" id="customer-form" array="modules">
             <input
-                document_id="jgjkghkjgkj"
+                object="jgjkghkjgkj"
                 type="text"
                 name="username"
                 domain="username"
@@ -113,14 +113,14 @@
             /*
 		setTimeout(function(){
 				console.log("Stage end eventRegisterCustomer");
-				document.dispatchEvent(new CustomEvent('eventRegisterCustomer'));
+				object.dispatchEvent(new CustomEvent('eventRegisterCustomer'));
 				}, 5000)
 		*/
 
             var cocreateDomainRegisterAPi = new CocreateDomainAPi();
 
             function registerCustomer() {
-                var btn = document.querySelector("button#register");
+                var btn = object.querySelector("button#register");
                 let dataToSend = cocreateDomainRegisterAPi.getDataJSON(
                     btn,
                     cocreateDomainRegisterAPi
@@ -140,7 +140,7 @@
 
             function registerContact() {
                 console.log("REgister registerContact");
-                var btn = document.querySelector("button#register");
+                var btn = object.querySelector("button#register");
                 let dataToSend = cocreateDomainRegisterAPi.getDataJSON(
                     btn,
                     cocreateDomainRegisterAPi

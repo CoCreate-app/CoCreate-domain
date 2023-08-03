@@ -4,8 +4,8 @@ module.exports = {
     "host": "",
     "sources": [
         {
-            "collection": "files",
-            "document": {
+            "array": "files",
+            "object": {
                 "_id": "60282fe871064611a678a19f",
                 "name": "index.html",
                 "path": "/docs/domain/index.html",
