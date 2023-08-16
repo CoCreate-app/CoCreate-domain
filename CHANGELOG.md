@@ -1,3 +1,17 @@
+# [1.7.0](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.29...v1.7.0) (2023-08-16)
+
+
+### Bug Fixes
+
+* crud attributes renamed ([c00f774](https://github.com/CoCreate-app/CoCreate-domain/commit/c00f7749eaebe5717ab1610b9146258c74a867b3))
+* replace -target -selector ([ba60696](https://github.com/CoCreate-app/CoCreate-domain/commit/ba606960f4912b96b9759cee6dffa6a31f7d3340))
+* webpack.config and package.json make use of mode=production instead of process.env ([9fb1b3a](https://github.com/CoCreate-app/CoCreate-domain/commit/9fb1b3a2cd8100ce2b76d46d01a207651389b552))
+
+
+### Features
+
+* name attribute and variable renamed to key ([37202c5](https://github.com/CoCreate-app/CoCreate-domain/commit/37202c5ae194caf57a96e2e8cca31109872cb161))
+
 ## [1.6.29](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.6.28...v1.6.29) (2023-06-14)
 
 
