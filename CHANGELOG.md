@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.8.1...v1.9.0) (2023-08-21)
+
+
+### Features
+
+* Update cocreate dependencies for the latest features and bug fixes ([555041b](https://github.com/CoCreate-app/CoCreate-domain/commit/555041b7640c494fddbdc035a4e1a297dda00872))
+
 ## [1.8.1](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.8.0...v1.8.1) (2023-08-21)
 
 
