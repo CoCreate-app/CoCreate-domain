@@ -1,3 +1,11 @@
+## [1.10.5](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.10.4...v1.10.5) (2023-11-03)
+
+
+### Bug Fixes
+
+* removed apikey.js ([3fae7a4](https://github.com/CoCreate-app/CoCreate-domain/commit/3fae7a4062641d968fe6d151deceea4650a02f2a))
+* update dependencies to the lates versions ([7e59131](https://github.com/CoCreate-app/CoCreate-domain/commit/7e5913123c73ee21bc6b0aff4dd66e0ae9a1a09c))
+
 ## [1.10.4](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.10.3...v1.10.4) (2023-10-25)
 
 
