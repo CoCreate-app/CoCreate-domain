@@ -1,3 +1,10 @@
+## [1.10.6](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.10.5...v1.10.6) (2023-11-09)
+
+
+### Bug Fixes
+
+* update host ([c982679](https://github.com/CoCreate-app/CoCreate-domain/commit/c9826795257fecb63f0c3a0dd99c963e1b07b2e4))
+
 ## [1.10.5](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.10.4...v1.10.5) (2023-11-03)
 
 
