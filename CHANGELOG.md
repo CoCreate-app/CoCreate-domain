@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.13.0...v1.13.1) (2023-12-09)
+
+
+### Bug Fixes
+
+* getOrg() renamed to getOrganization() ([1830425](https://github.com/CoCreate-app/CoCreate-domain/commit/183042509458b7e54c54baf6e90012a1b3520608))
+
 # [1.13.0](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.12.0...v1.13.0) (2023-11-25)
 
 
