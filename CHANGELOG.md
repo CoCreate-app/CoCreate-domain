@@ -1,3 +1,10 @@
+## [1.13.2](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.13.1...v1.13.2) (2024-02-05)
+
+
+### Bug Fixes
+
+* Removed https://cdn.cocreate.app/latest/CoCreate.min.css ([6fe1270](https://github.com/CoCreate-app/CoCreate-domain/commit/6fe1270db08a2d086a349fafc2b432213c27eb81))
+
 ## [1.13.1](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.13.0...v1.13.1) (2023-12-09)
 
 
