@@ -1,3 +1,10 @@
+## [1.14.3](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.14.2...v1.14.3) (2026-02-04)
+
+
+### Bug Fixes
+
+* update worklow ([9e68e82](https://github.com/CoCreate-app/CoCreate-domain/commit/9e68e82ed91bb5b4b8320a0b7b98d887deb57b99))
+
 ## [1.14.2](https://github.com/CoCreate-app/CoCreate-domain/compare/v1.14.1...v1.14.2) (2025-05-01)
 
 
