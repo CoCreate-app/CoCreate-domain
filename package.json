@@ -46,7 +46,7 @@
     "webpack-log": "^3.0.1"
   },
   "dependencies": {
-    "@cocreate/api": "^1.22.3",
+    "@cocreate/api": "^1.22.5",
     "axios": "^0.21.1",
     "qs": "^6.10.1"
   }
